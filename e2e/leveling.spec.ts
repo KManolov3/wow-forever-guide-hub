@@ -178,8 +178,8 @@ test.describe("M. Leveling guide", () => {
     await expect(image).toHaveAttribute("src", /maps\/zones\/tirisfal\.webp$/);
     expect(await image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
 
-    await expect(dialog.locator(".hub-pin")).toHaveText(["Deathknell", "Brill", "Undercity"]);
-    await expect(dialog.locator(".hub-pin.active")).toHaveText("Undercity");
+    await expect(dialog.locator(".hub-label")).toHaveText(["Deathknell", "Brill", "Undercity"]);
+    await expect(dialog.locator(".hub-pin.active .hub-label")).toHaveText("Undercity");
     await expect(dialog.locator(".zone-hubs li.active")).toContainText("This step");
 
     await page.keyboard.press("Escape");
@@ -187,7 +187,7 @@ test.describe("M. Leveling guide", () => {
     await expect(open).toBeFocused();
   });
 
-  test("TC-77 the route map opens the selected zone's map; a visit there selects that step", async ({ page }) => {
+  test("TC-77 the route map opens the selected zone's map; choosing another trip stays in the dialog", async ({ page }) => {
     await loadGuide(page);
     await steps(page)
       .filter({ has: page.locator(".step-name", { hasText: /^The Barrens$/ }) })
@@ -197,14 +197,46 @@ test.describe("M. Leveling guide", () => {
     await page.locator(".route-map").getByRole("button", { name: "Open The Barrens map" }).click();
 
     const dialog = page.getByRole("dialog", { name: /The Barrens/ });
-    await expect(dialog.locator(".hub-pin")).toHaveText(["The Crossroads", "Ratchet", "Camp Taurajo"]);
-    await expect(dialog.locator(".hub-pin.active")).toHaveText(["The Crossroads"]);
+    await expect(dialog.locator(".hub-label")).toHaveText(["The Crossroads", "Ratchet", "Camp Taurajo"]);
+    await expect(dialog.locator(".hub-pin.active .hub-label")).toHaveText(["The Crossroads"]);
 
-    const visits = dialog.locator(".zone-visits button");
-    expect(await visits.count()).toBeGreaterThanOrEqual(3);
-    await visits.filter({ hasText: "Camp Taurajo" }).first().click();
-    await expect(dialog).toBeHidden();
-    await expect(currentStep(page).locator(".step-meta")).toContainText("visit 3 of 3");
+    const trips = dialog.locator(".zone-trips > li");
+    expect(await trips.count()).toBeGreaterThanOrEqual(3);
+    await expect(trips.filter({ hasText: "Wailing Caverns" })).toContainText("Dungeon");
+    await expect(dialog.locator(".zone-trip")).toHaveCount(1);
+    await expect(dialog.locator(".zone-trip")).toContainText("Getting there");
+
+    await trips.filter({ hasText: "Visit 3 of 3" }).getByRole("button").click();
+    await expect(dialog).toBeVisible();
+    await expect(trips.filter({ hasText: "Visit 3 of 3" }).locator(".zone-trip")).toContainText("Camp Taurajo");
+    await expect(dialog.locator(".hub-pin.active .hub-label")).toHaveText(["The Crossroads", "Camp Taurajo"]);
+
+    await dialog.getByRole("button", { name: /^Ratchet, used on step/ }).click();
+    await expect(trips.filter({ hasText: "Visit 2 of 3" }).locator(".zone-trip")).toBeVisible();
+
+    await page.keyboard.press("Escape");
+    await expect(currentStep(page).locator(".step-meta")).toContainText("visit 2 of 3");
+  });
+
+  test("TC-79 the zone map's route buttons walk the route across zones", async ({ page }) => {
+    await loadGuide(page);
+    await currentStep(page).getByRole("button", { name: "Open Durotar map" }).click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toHaveAccessibleName(/Durotar/);
+    const nav = dialog.getByRole("navigation", { name: "Route" });
+    await expect(nav.getByRole("button", { name: /Previous step/ })).toBeDisabled();
+
+    await nav.getByRole("button", { name: /Next step.*The Barrens/ }).click();
+    await expect(dialog).toHaveAccessibleName(/The Barrens/);
+    await expect(dialog.locator(".zone-trips > li.current")).toContainText("Visit 1 of 3");
+
+    await nav.getByRole("button", { name: /Previous step/ }).click();
+    await expect(dialog).toHaveAccessibleName(/Durotar/);
+
+    await dialog.locator(".zone-trip").getByRole("checkbox").check();
+    await expect(dialog.locator(".zone-trips > li.current")).toContainText("✓");
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("checkbox", { name: /^Mark step 1,/ })).toBeChecked();
   });
 
   test("TC-78 the zone map fits a 375 px phone", async ({ page }) => {

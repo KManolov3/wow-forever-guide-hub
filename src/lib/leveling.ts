@@ -224,3 +224,16 @@ export function hubsForStep(step: GuideStep): StepHubs {
 /** Whether a hub name appears in a zone's hub list. */
 export const zoneHasHub = (zoneId: string, name: string) =>
   (ZONE_HUBS[zoneId] ?? []).some((h) => hubKey(h.name) === hubKey(name));
+
+/** Route indexes of the steps shown on a zone's map: visits to the zone and to dungeons whose entrance is there. */
+export const zoneSteps = (route: GuideStep[], zoneId: string) =>
+  route.flatMap((s, i) => (s.place.zone.id === zoneId ? [i] : []));
+
+/** For each hub on a zone's map, keyed by its name, the route indexes of the zone's steps that use it. */
+export function hubSteps(route: GuideStep[], zoneId: string): Map<string, number[]> {
+  const result = new Map((ZONE_HUBS[zoneId] ?? []).map((h) => [h.name, [] as number[]]));
+  for (const i of zoneSteps(route, zoneId)) {
+    for (const h of hubsForStep(route[i]).hubs) if (h.active) result.get(h.name)!.push(i);
+  }
+  return result;
+}

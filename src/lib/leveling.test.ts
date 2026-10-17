@@ -8,6 +8,7 @@ import {
   buildRoute,
   findPlace,
   hubNames,
+  hubSteps,
   hubsForStep,
   isStartingZone,
   levelBand,
@@ -15,6 +16,7 @@ import {
   timelineRows,
   travelBetween,
   zoneHasHub,
+  zoneSteps,
 } from "./leveling";
 
 const place = (id: string) => findPlace(id)!;
@@ -315,5 +317,31 @@ describe("zone maps and hubs", () => {
     const excavation = hubsForStep(route.find((s) => s.place.id === "excavation-site")!);
     expect(excavation.zone.id).toBe("wetlands");
     expect(excavation.elsewhere).toEqual(["Hammerfall", "Orgrimmar", "Thunder Bluff"]);
+  });
+});
+
+describe("zone trips", () => {
+  const route = buildRoute("durotar");
+  const ids = (steps: number[]) => steps.map((i) => route[i].id);
+
+  it("lists a zone's visits and the dungeons entered from it, in route order", () => {
+    expect(ids(zoneSteps(route, "barrens"))).toEqual(
+      route.filter((s) => s.place.zone.id === "barrens").map((s) => s.id),
+    );
+    expect(ids(zoneSteps(route, "barrens"))).toEqual(expect.arrayContaining(["barrens-1", "barrens-2", "barrens-3"]));
+    expect(ids(zoneSteps(route, "durotar"))).toEqual(expect.arrayContaining(["durotar-1", "ragefire-chasm-1"]));
+  });
+
+  it("maps each hub to the steps that use it", () => {
+    const byHub = hubSteps(route, "barrens");
+    expect([...byHub.keys()]).toEqual(["The Crossroads", "Ratchet", "Camp Taurajo"]);
+    expect(ids(byHub.get("The Crossroads")!)).toContain("barrens-1");
+    expect(ids(byHub.get("Ratchet")!)).toContain("barrens-2");
+    expect(ids(byHub.get("Camp Taurajo")!)).toContain("barrens-3");
+    for (const steps of byHub.values()) expect(steps).toEqual([...steps].sort((a, b) => a - b));
+  });
+
+  it("gives a zone without hubs an empty map", () => {
+    expect(hubSteps(route, "wetlands").size).toBe(0);
   });
 });

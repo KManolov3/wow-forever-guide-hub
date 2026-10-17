@@ -829,16 +829,22 @@ Answers are matched by the start of their label. Tank answers used below, in que
 - **Steps:** Select the Ruins of Lordaeron step, click "Open Tirisfal Glades map", then press Esc.
 - **Expected:** A dialog titled Tirisfal Glades shows `maps/zones/tirisfal.webp` with pins for Deathknell, Brill and Undercity. Undercity is highlighted, and the hub list tags it "This step". Esc closes the dialog and focus returns to the button.
 
-### TC-77 The route map opens the selected zone's map; a visit there selects that step
+### TC-77 The route map opens the selected zone's map; choosing another trip stays in the dialog
 - **PRD:** FR-30
-- **Steps:** Select the first Barrens step, click "Open The Barrens map" in the route map's toolbar, then click the visit whose hub is Camp Taurajo.
-- **Expected:** Pins for The Crossroads, Ratchet and Camp Taurajo, with The Crossroads highlighted. Clicking the visit closes the dialog and selects The Barrens, visit 3 of 3.
+- **Steps:** Select the first Barrens step and click "Open The Barrens map" in the route map's toolbar. Click the "Visit 3 of 3" trip, then the Ratchet pin, then press Esc.
+- **Expected:** Pins for The Crossroads, Ratchet and Camp Taurajo, with The Crossroads highlighted. The trip list includes Wailing Caverns tagged "Dungeon", and only the shown trip is expanded, with "Getting there". After clicking Visit 3 of 3 the dialog stays open, that trip is expanded and The Crossroads and Camp Taurajo are highlighted. The Ratchet pin expands Visit 2 of 3. After closing, the guide's selected step is The Barrens, visit 2 of 3.
 
 ### TC-78 The zone map fits a 375 px phone
 - **PRD:** FR-30, UX "Layout"
 - **Preconditions:** viewport 375×812
 - **Steps:** Open the Durotar map from step 1, then close it with the close button.
 - **Expected:** The dialog lies within the 375 px viewport, with no horizontal scroll; the close button closes it.
+
+### TC-79 The zone map's route buttons walk the route across zones
+- **PRD:** FR-30
+- **Steps:** Open the Durotar map from step 1. Click "Next step", then "Previous step", tick the expanded trip's "done" checkbox and press Esc.
+- **Expected:** "Previous step" is disabled on step 1. "Next step" switches the dialog to The Barrens with Visit 1 of 3 shown; "Previous step" returns to Durotar. Ticking the checkbox marks the trip done in the list, and after closing, step 1 is ticked in the guide.
+
 ### TC-70 "My level" jumps to a covering step
 - **PRD:** FR-27
 - **Steps:** Enter 27 in "My level" and click "Find step".
@@ -882,7 +888,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | Guide starts in the chosen zone, skips other starting zones and Alliance dungeons | TC-66 |
 | Guide timeline shows three Barrens visits; bars and map zones select steps; map follows the continent | TC-68, TC-69 |
 | Route map is the in-game map with clickable zone outlines, zoom and pan | TC-74 |
-| Zone map opens from the step or route map, pins hubs with the step's highlighted, fits 375 px | TC-76, TC-77, TC-78 |
+| Zone map opens from the step or route map, pins hubs with the step's highlighted, switches trips and steps in place, fits 375 px | TC-76, TC-77, TC-78, TC-79 |
 | "My level" lookup; progress survives reload and resets | TC-70, TC-71 |
 | Route rule tests pass; guide has no horizontal scroll at 375 px | Vitest `src/lib/leveling.test.ts`; TC-72 |
 | Data quality tests pass for all 9 class files | Not a browser test (Vitest `src/data/classes/classes.test.ts`); TC-10 checks the visible counts |
@@ -919,7 +925,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-26 | TC-68 |
 | FR-27 | TC-70 |
 | FR-28 | TC-71 |
-| FR-30 | TC-76, TC-77, TC-78 |
+| FR-30 | TC-76, TC-77, TC-78, TC-79 |
 | FR-29 | Not automated: check the "Left out on purpose" panel lists the skipped zones and dungeons with reasons |
 
 ## Suspected discrepancies between code and PRD (to confirm during execution)

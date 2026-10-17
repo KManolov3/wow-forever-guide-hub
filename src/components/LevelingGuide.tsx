@@ -223,7 +223,10 @@ export function LevelingGuide({ start, onStartChange }: Props) {
         zoneId={openZone}
         route={route}
         selected={selected}
+        done={done}
         onSelect={select}
+        onToggleDone={toggleDone}
+        onOpenZone={setOpenZone}
         onClose={() => setOpenZone(null)}
       />
     </main>

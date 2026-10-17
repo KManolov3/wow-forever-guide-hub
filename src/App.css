@@ -1367,9 +1367,11 @@
 }
 
 .zone-dialog {
-  width: min(980px, calc(100vw - 24px));
+  width: min(1220px, calc(100vw - 24px));
   max-height: calc(100vh - 24px);
   padding: 14px 16px 16px;
+  overflow: auto;
+  overscroll-behavior: contain;
   background: var(--panel);
   color: var(--text);
   border: 1px solid var(--gold-dim);
@@ -1386,6 +1388,28 @@
   font-size: 0.85rem;
   color: var(--muted);
   font-weight: 600;
+}
+
+.zone-dialog-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+  gap: 16px;
+  align-items: start;
+}
+
+.zone-trips-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.zone-map-hint {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
 }
 
 .zone-map {
@@ -1415,8 +1439,23 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  padding: 2px 4px 2px 0;
   transform: translate(-7px, -50%);
-  pointer-events: none;
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.hub-pin:disabled {
+  cursor: default;
+}
+
+.hub-pin:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
 }
 
 .hub-dot {
@@ -1440,6 +1479,39 @@
     0 0 6px #1a1208;
 }
 
+.hub-pin:not(:disabled):hover .hub-label {
+  text-decoration: underline;
+}
+
+.hub-steps {
+  display: flex;
+  gap: 2px;
+}
+
+.hub-steps span {
+  min-width: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: rgba(26, 18, 8, 0.85);
+  border: 1px solid #fff4dc66;
+  color: #fff4dc;
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.hub-steps span.done {
+  opacity: 0.55;
+}
+
+.hub-steps span.current {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1208;
+}
+
 .hub-pin.active .hub-dot {
   width: 18px;
   height: 18px;
@@ -1457,14 +1529,7 @@
   font-size: 0.85rem;
 }
 
-.zone-dialog-body {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 8px 24px;
-  margin-top: 12px;
-}
-
-.zone-dialog-body h3 {
+.zone-dialog h3 {
   margin: 0 0 6px;
   font-family: Cinzel, Georgia, serif;
   color: var(--gold);
@@ -1477,7 +1542,7 @@
 }
 
 .zone-hubs,
-.zone-visits {
+.zone-trips {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1504,22 +1569,200 @@
   vertical-align: middle;
 }
 
-.zone-visits button {
+.zone-trips {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.zone-trips button {
   display: grid;
   grid-template-columns: 2em minmax(0, 1fr) auto;
+  align-items: start;
   gap: 8px;
   width: 100%;
-  padding: 4px 6px;
+  padding: 5px 8px 5px 4px;
   background: none;
   border: 1px solid transparent;
   border-radius: 4px;
+  color: inherit;
   text-align: left;
 }
 
-.zone-visits button:hover,
-.zone-visits button.current {
+.zone-trips button:hover {
   background: var(--panel-2);
+}
+
+.zone-trips button.current {
+  background: var(--panel-2);
+  border-color: var(--gold);
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+
+.zone-trips button.done .trip-name {
+  color: var(--muted);
+}
+
+.trip-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.trip-name {
+  font-weight: 600;
+}
+
+.zone-trips button.current .trip-name {
+  color: var(--gold);
+}
+
+.trip-kind {
+  margin-left: 6px;
+  padding: 0 5px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.trip-done {
+  margin-left: 6px;
+  color: var(--green);
+}
+
+.zone-trips li.current {
+  scroll-margin-top: 8px;
+}
+
+.zone-trip {
+  margin: 4px 0 6px;
+  padding: 10px 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.zone-trip p {
+  margin: 0 0 6px;
+}
+
+.trip-hubs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.hub-chip {
+  padding: 0 6px;
+  border-radius: 3px;
+  background: var(--gold);
+  color: #1a1208;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.hub-chip.elsewhere {
+  background: none;
+  border: 1px dashed var(--gold-dim);
+  color: var(--text);
+}
+
+.trip-focus {
+  margin: 0 0 8px;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+.trip-focus li {
+  margin-bottom: 3px;
+}
+
+.trip-done-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.zone-route-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.zone-route-nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 48%;
+  padding: 6px 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 1rem;
+  text-align: left;
+}
+
+.zone-route-nav button:last-child {
+  text-align: right;
+}
+
+.zone-route-nav button:not(:disabled):hover {
   border-color: var(--gold-dim);
+}
+
+.zone-route-nav button:disabled {
+  opacity: 0.4;
+}
+
+.zone-route-nav button > span:not([aria-hidden]) {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nav-target {
+  font-size: 0.85rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .zone-dialog-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* The map stays in view while the trips below it scroll, so choosing one shows its hubs at once. */
+  .zone-map-column {
+    position: sticky;
+    top: -14px;
+    z-index: 2;
+    margin: 0 -16px;
+    padding: 0 16px 6px;
+    background: var(--panel);
+  }
+
+  .zone-trips li.current {
+    scroll-margin-top: calc((100vw - 24px) * 0.667 + 24px);
+  }
+
+  .zone-trips-column {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1529,6 +1772,21 @@
 
   .hub-pin.active .hub-label {
     font-size: 0.72rem;
+  }
+
+  /* Only the shown trip's step fits beside a label at this width; the hub list has the rest. */
+  .hub-steps span:not(.current) {
+    display: none;
+  }
+
+  .hub-steps span {
+    min-width: 15px;
+    font-size: 0.6rem;
+    line-height: 13px;
+  }
+
+  .zone-map-hint {
+    display: none;
   }
 }
 
