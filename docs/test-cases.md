@@ -1,6 +1,6 @@
 # Browser test cases: WoW Forever Talent Calculator (v1)
 
-Manual / agent-driven browser test cases derived from [docs/PRD.md](PRD.md). Expected results follow the PRD; where the current code appears to behave differently, the case carries a **Suspected discrepancy** note so a failure there is expected and should be reported, not "fixed" in the test.
+Manual / agent-driven browser test cases derived from [docs/PRD.md](PRD.md). They are automated with Playwright in [`e2e/`](../e2e) (`npm run test:e2e`), one test per case named after its `TC-` id. Expected results follow the PRD; where the current code appears to behave differently, the case carries a **Suspected discrepancy** note so a failure there is expected and should be reported, not "fixed" in the test.
 
 ## Conventions
 
@@ -362,7 +362,7 @@ Prepared links:
   3. Click Mind Flay (T3C3) once, then click Improved Mind Flay twice.
 - **Expected:**
   - Step 2: "Improved Mind Flay, rank 0 of 2" (locked).
-  - Step 3: "Mind Flay, rank 1 of 1" and "Improved Mind Flay, rank 2 of 2". Build `0 / 0 / 13`. The hash is `#/priest/0-0-5500000112` (PRD form). The code may write `#/priest/--5500000112`.
+  - Step 3: "Mind Flay, rank 1 of 1" and "Improved Mind Flay, rank 2 of 2". Build `0 / 0 / 13`. The hash is `#/priest/0-0-550000012` (PRD form). The code may write `#/priest/--550000012`.
 
 ### TC-27 Same-tier prerequisite: Paladin Divine Precision requires Holy Shock
 - **PRD:** Talent rules › Prerequisites (same-tier example)
