@@ -93,7 +93,7 @@ The calculator is one screen: header (with the class quiz button), class picker,
 | FR-16 | Footer | Show controls help, a link to the data source, a beta-data disclaimer and "Not affiliated with Blizzard Entertainment". | Must |
 | FR-17 | Quiz | A "Find my class" button in the header opens the class quiz in a modal dialog; Esc or the close button closes it without changing the build. | Must |
 | FR-18 | Quiz | Show one question at a time with "Question N of 8" progress; choosing an answer moves to the next question; "Back" returns to the previous one with the earlier answer marked. | Must |
-| FR-19 | Quiz | After the last question, show the best match (class, spec, match %, and the reasons from the answers) and the next two classes; "Retake quiz" starts over. Reopening the dialog shows the last results until the quiz is retaken or the page reloads. | Must |
+| FR-19 | Quiz | After the last question, show the best match (class, spec, match %, a class tagline and the reasons from the answers) and the next two classes; "Retake quiz" starts over. Reopening the dialog shows the last results until the quiz is retaken or the page reloads. | Must |
 | FR-20 | Quiz | "Open <Class> talents" closes the quiz, selects that class with an empty build, and marks the recommended tree "Suggested" until the class changes. | Must |
 
 ## Talent rules
@@ -147,7 +147,9 @@ The checks run in order on every click; the first failed check stops it, and the
 
 The quiz scores every spec against the answers and recommends the class whose best spec scores highest. It runs entirely in the browser and stores nothing.
 
-**Questions (in order):** group role, class fantasy, main activity (solo, dungeons and raids, PvP), pet companion, rotation complexity, fight style (burst, damage over time, crowd control, support), survival style, and faction.
+**Tone.** The quiz is written for experienced WoW players. Each question is a joke scenario built on WoW and gamer stereotypes (pulling before the healer has mana, Tarren Mill on fire, "Can it tank?"), so the answer that leads to each trait is not obvious. Reasons on the result use the same voice, and the best match ends with a one-line class send-off.
+
+**Questions (in order), by what they measure:** group role, class fantasy, main activity (solo, dungeons and raids, PvP), pet companion, rotation complexity, fight style (burst, damage over time, crowd control, support), survival style, and faction (where you hearth to).
 
 **Scoring**
 
@@ -157,7 +159,7 @@ The quiz scores every spec against the answers and recommends the class whose be
 - Reasons are the answers that added points to the recommended spec.
 - Faction: Alliance excludes Shaman and Horde excludes Paladin, as in Classic; "Not decided yet" excludes nothing.
 
-Questions and spec profiles live in `src/data/quiz.ts`; the scoring is a pure function in `src/lib/quiz.ts`. Automated tests check that every spec of every class has exactly one profile and that every class can be the top recommendation for some set of answers.
+Questions, spec profiles and class taglines live in `src/data/quiz.ts`; the scoring is a pure function in `src/lib/quiz.ts`. Automated tests check that every spec of every class has exactly one profile and that every class can be the top recommendation for some set of answers.
 
 ## Data model and content
 

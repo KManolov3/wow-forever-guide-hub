@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { CLASSES } from "../data/classes";
-import { QUIZ, SPECS } from "../data/quiz";
+import { CLASS_TAGLINES, QUIZ, SPECS } from "../data/quiz";
 import type { WowClass } from "../data/types";
 import { type Answers, type ClassMatch, recommendClasses } from "../lib/quiz";
 import { Icon } from "./Icon";
@@ -51,6 +51,7 @@ export function ClassQuiz({ open, onClose, onChoose }: Props) {
 
       {!done ? (
         <>
+          {step === 0 && <p className="quiz-intro">Eight questions. No wrong answers. Several deeply revealing ones.</p>}
           <div className="quiz-progress">
             <span>
               Question {step + 1} of {QUIZ.length}
@@ -78,9 +79,9 @@ export function ClassQuiz({ open, onClose, onChoose }: Props) {
         </>
       ) : best ? (
         <div className="quiz-results">
-          <p className="quiz-eyebrow">Your best match</p>
+          <p className="quiz-eyebrow">The Titans have judged you</p>
           <Result match={best} primary onChoose={onChoose} />
-          {others.length > 0 && <p className="quiz-eyebrow">Also worth a look</p>}
+          {others.length > 0 && <p className="quiz-eyebrow">Your future alts</p>}
           {others.slice(0, RUNNERS_UP).map((m) => (
             <Result key={m.cls.id} match={m} onChoose={onChoose} />
           ))}
@@ -123,6 +124,7 @@ function Result({
           {cls.name} <span className="quiz-spec">· {tree.name}</span>
         </h3>
         <p className="quiz-percent">{percent}% match</p>
+        {primary && CLASS_TAGLINES[cls.id] && <p className="quiz-tagline">{CLASS_TAGLINES[cls.id]}</p>}
         {primary && reasons.length > 0 && (
           <ul className="quiz-reasons">
             {reasons.map((r) => (

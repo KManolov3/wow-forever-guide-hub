@@ -624,6 +624,18 @@
   font-variant-numeric: tabular-nums;
 }
 
+.quiz-intro {
+  margin: 0 0 12px;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.quiz-tagline {
+  margin: 6px 0 0;
+  font-style: italic;
+  color: var(--text);
+}
+
 .quiz-reasons {
   margin: 8px 0 0;
   padding-left: 18px;

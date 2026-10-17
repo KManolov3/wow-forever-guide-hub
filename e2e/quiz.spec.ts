@@ -3,19 +3,21 @@ import { classButton, expect, expectSummary, load, selectClass, talentButtons, t
 
 const dialog = (page: Page) => page.getByRole("dialog", { name: "Find your class" });
 const openQuiz = (page: Page) => page.getByRole("button", { name: "Find my class" }).click();
-const option = (page: Page, label: string) => dialog(page).getByRole("button", { name: label, exact: true });
+/** Answer button whose label starts with `prefix`. */
+const option = (page: Page, prefix: string) =>
+  dialog(page).getByRole("button", { name: new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`) });
 const progress = (page: Page) => dialog(page).locator(".quiz-progress span");
 const results = (page: Page) => dialog(page).locator(".quiz-result");
 
 const TANK = [
-  "Hold the enemies' attention and take the hits",
-  "A master of weapons and combat",
-  "Dungeons and raids",
-  "I'd rather fight alone",
-  "Lots of tools to master",
-  "Controlling the battlefield",
-  "Heavy armour, hard to kill",
-  "Not decided yet",
+  "Marking skull",
+  '"Raised among Arathi steel',
+  "Molten Core",
+  "Pets path into the next pack",
+  "All of them",
+  "Them rooted, feared",
+  "Me. Encased in metal",
+  "Wherever the queue is shorter",
 ];
 
 async function answerAll(page: Page, labels: string[]) {
@@ -31,7 +33,7 @@ test.describe("L. Class quiz", () => {
     await openQuiz(page);
     await expect(dialog(page)).toBeVisible();
     await expect(progress(page)).toHaveText("Question 1 of 8");
-    await expect(dialog(page).getByRole("group", { name: "What do you want to do in a dungeon group?" })).toBeVisible();
+    await expect(dialog(page).getByRole("group", { name: /^The dungeon group finally has five people/ })).toBeVisible();
 
     await page.keyboard.press("Escape");
     await expect(dialog(page)).toBeHidden();
@@ -46,14 +48,14 @@ test.describe("L. Class quiz", () => {
   test("TC-60 one question at a time with progress and Back", async ({ page }) => {
     await load(page, "#/mage");
     await openQuiz(page);
-    await expect(dialog(page).getByRole("button", { name: "Back" })).toBeHidden();
-    await option(page, "Keep everyone alive").click();
+    await expect(dialog(page).getByRole("button", { name: "Back", exact: true })).toBeHidden();
+    await option(page, "Staring at green bars").click();
     await expect(progress(page)).toHaveText("Question 2 of 8");
 
-    await dialog(page).getByRole("button", { name: "Back" }).click();
+    await dialog(page).getByRole("button", { name: "Back", exact: true }).click();
     await expect(progress(page)).toHaveText("Question 1 of 8");
-    await expect(option(page, "Keep everyone alive")).toHaveAttribute("aria-pressed", "true");
-    await expect(option(page, "Deal damage up close")).toHaveAttribute("aria-pressed", "false");
+    await expect(option(page, "Staring at green bars")).toHaveAttribute("aria-pressed", "true");
+    await expect(option(page, "Glued to the boss")).toHaveAttribute("aria-pressed", "false");
   });
 
   test("TC-61 results show best match, reasons and two runners-up; retake starts over", async ({ page }) => {
@@ -64,7 +66,8 @@ test.describe("L. Class quiz", () => {
     await expect(results(page)).toHaveCount(3);
     const best = results(page).first();
     await expect(best).toHaveAccessibleName(/^Warrior, Protection, \d+% match$/);
-    await expect(best.locator(".quiz-reasons li").first()).toHaveText("You want to tank");
+    await expect(best.locator(".quiz-reasons li").first()).toHaveText("You were born to mark skull and pull early");
+    await expect(best.locator(".quiz-tagline")).toHaveText(/^Rage is a resource/);
     await expect(dialog(page).getByRole("button", { name: /^Open \w+ talents$/ })).toHaveCount(3);
 
     await page.keyboard.press("Escape");
@@ -95,24 +98,24 @@ test.describe("L. Class quiz", () => {
 
   test("TC-63 faction answer filters faction-locked classes", async ({ page }) => {
     const healer = (faction: string) => [
-      "Keep everyone alive",
-      "A champion of the Light",
-      "Dungeons and raids",
-      "No preference",
-      "Easy to pick up, so I can focus on the world",
-      "Making my allies stronger",
-      "Heavy armour, hard to kill",
+      "Staring at green bars",
+      '"Blessed by the Light',
+      "Molten Core",
+      "I whisper the seller",
+      "One.",
+      "Nobody. I got distracted",
+      "Me. Encased in metal",
       faction,
     ];
 
     await load(page, "#/mage");
     await openQuiz(page);
-    await answerAll(page, healer("Horde"));
+    await answerAll(page, healer("Orgrimmar"));
     await expect(results(page).first()).toHaveAccessibleName(/^Priest, Holy/);
     await expect(results(page).filter({ hasText: "Paladin" })).toHaveCount(0);
 
     await dialog(page).getByRole("button", { name: "Retake quiz" }).click();
-    await answerAll(page, healer("Alliance"));
+    await answerAll(page, healer("Goldshire"));
     await expect(results(page).first()).toHaveAccessibleName(/^Paladin, Holy/);
     await expect(results(page).filter({ hasText: "Shaman" })).toHaveCount(0);
   });

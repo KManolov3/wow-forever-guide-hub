@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CLASSES } from "../data/classes";
-import { FACTION_CLASSES, QUIZ, SPECS, type QuizQuestion, type SpecProfile } from "../data/quiz";
+import { CLASS_TAGLINES, FACTION_CLASSES, QUIZ, SPECS, type QuizQuestion, type SpecProfile } from "../data/quiz";
 import { type Answers, recommendClasses } from "./quiz";
 
 const recommend = (answers: Answers) => recommendClasses(CLASSES, SPECS, QUIZ, answers);
@@ -21,6 +21,10 @@ describe("quiz data", () => {
       expect(q.options.length, q.id).toBeGreaterThanOrEqual(2);
       expect(new Set(q.options.map((o) => o.id)).size, q.id).toBe(q.options.length);
     }
+  });
+
+  it("has a tagline for every class", () => {
+    for (const c of CLASSES) expect(CLASS_TAGLINES[c.id], c.id).toBeTruthy();
   });
 
   it("only restricts known classes to a faction", () => {

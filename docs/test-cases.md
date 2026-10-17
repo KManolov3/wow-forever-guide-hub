@@ -728,7 +728,7 @@ Prepared links:
 
 ## L. Class quiz
 
-Tank answers used below, in question order: "Hold the enemies' attention and take the hits", "A master of weapons and combat", "Dungeons and raids", "I'd rather fight alone", "Lots of tools to master", "Controlling the battlefield", "Heavy armour, hard to kill", "Not decided yet".
+Answers are matched by the start of their label. Tank answers used below, in question order: "Marking skull…", "\"Raised among Arathi steel…", "Molten Core…", "Pets path into the next pack…", "All of them…", "Them rooted, feared…", "Me. Encased in metal…", "Wherever the queue is shorter…".
 
 ### TC-59 Quiz opens from the header and closes without changing the build
 - **PRD:** FR-17
@@ -737,16 +737,16 @@ Tank answers used below, in question order: "Hold the enemies' attention and tak
   1. Click "Find my class".
   2. Press Escape.
   3. Open the quiz again and click the close button (×).
-- **Expected:** Step 1 opens a dialog named "Find your class" showing "Question 1 of 8" and the group-role question. Steps 2 and 3 close it. Points stay `5 / 51` and the hash stays `#/mage/05`.
+- **Expected:** Step 1 opens a dialog named "Find your class" showing "Question 1 of 8" and the dungeon-group question ("The dungeon group finally has five people…"). Steps 2 and 3 close it. Points stay `5 / 51` and the hash stays `#/mage/05`.
 
 ### TC-60 One question at a time with progress and Back
 - **PRD:** FR-18
 - **Preconditions:** `http://localhost:5173/#/mage`, quiz open
 - **Steps:**
   1. Check the Back button on question 1.
-  2. Choose "Keep everyone alive".
+  2. Choose "Staring at green bars…".
   3. Click Back.
-- **Expected:** Step 1: Back is hidden. Step 2: progress reads "Question 2 of 8". Step 3: progress reads "Question 1 of 8" and "Keep everyone alive" has `aria-pressed="true"`; the other options have `false`.
+- **Expected:** Step 1: Back is hidden. Step 2: progress reads "Question 2 of 8". Step 3: progress reads "Question 1 of 8" and "Staring at green bars…" has `aria-pressed="true"`; the other options have `false`.
 
 ### TC-61 Results show best match, reasons and two runners-up; retake starts over
 - **PRD:** FR-19
@@ -755,7 +755,7 @@ Tank answers used below, in question order: "Hold the enemies' attention and tak
   1. Answer with the tank answers.
   2. Press Escape and reopen the quiz.
   3. Click "Retake quiz".
-- **Expected:** Step 1: three results; the first is "Warrior, Protection, N% match" and its first reason is "You want to tank"; each result has an "Open <Class> talents" button. Step 2: the same results are shown. Step 3: the quiz is back at "Question 1 of 8".
+- **Expected:** Step 1: three results; the first is "Warrior, Protection, N% match" and its first reason is "You were born to mark skull and pull early" and its tagline starts "Rage is a resource"; each result has an "Open <Class> talents" button. Step 2: the same results are shown. Step 3: the quiz is back at "Question 1 of 8".
 
 ### TC-62 Opening a result loads the class with the suggested tree marked
 - **PRD:** FR-20
@@ -769,8 +769,8 @@ Tank answers used below, in question order: "Hold the enemies' attention and tak
 - **PRD:** Class quiz "Scoring" (faction)
 - **Preconditions:** `http://localhost:5173/#/mage`, quiz open
 - **Steps:**
-  1. Answer "Keep everyone alive", "A champion of the Light", "Dungeons and raids", "No preference", "Easy to pick up, so I can focus on the world", "Making my allies stronger", "Heavy armour, hard to kill", "Horde".
-  2. Retake with the same answers but "Alliance".
+  1. Answer "Staring at green bars…", "\"Blessed by the Light…", "Molten Core…", "I whisper the seller…", "One. …", "Nobody. I got distracted…", "Me. Encased in metal…", "Orgrimmar…" (Horde).
+  2. Retake with the same answers but "Goldshire…" (Alliance).
 - **Expected:** Step 1: the best match is Priest · Holy and no result is Paladin. Step 2: the best match is Paladin · Holy and no result is Shaman.
 
 ### TC-64 Quiz fits a 375 px phone without horizontal scroll
