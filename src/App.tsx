@@ -88,7 +88,7 @@ export default function App() {
             aria-pressed={c.id === cls.id}
           >
             <Icon name={c.icon ?? `classicon_${c.id}`} label={c.name} size={36} className="round" />
-            <span>{c.name}</span>
+            <span className="class-label">{c.name}</span>
           </button>
         ))}
       </nav>

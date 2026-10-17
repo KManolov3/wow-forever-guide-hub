@@ -8,8 +8,10 @@ import {
   emptyBuild,
   encodeBuild,
   removePoint,
+  requiredLevel,
   totalPoints,
 } from "./talents";
+import { findClass } from "../data/classes";
 
 const talent = (id: string, tier: number, column: number, maxRank: number, requires?: string): Talent => ({
   id,
@@ -99,5 +101,51 @@ describe("talent rules", () => {
 
   it("drops invalid points when decoding", () => {
     expect(decodeBuild(cls, "0010000009")[0]).toEqual({});
+  });
+});
+
+describe("required level", () => {
+  it("is not shown for an empty build", () => {
+    expect(requiredLevel(0)).toBe(0);
+  });
+
+  it("is level 10 for the first point", () => {
+    expect(requiredLevel(1)).toBe(10);
+  });
+
+  it("is level 60 for a full 51-point build", () => {
+    expect(requiredLevel(TOTAL_POINTS)).toBe(60);
+  });
+});
+
+describe("decoding same-tier prerequisites", () => {
+  const sameTier: WowClass = {
+    ...cls,
+    trees: [
+      {
+        id: "one",
+        name: "one",
+        talents: [talent("a", 1, 1, 5), talent("dependent", 1, 2, 2, "prereq"), talent("prereq", 1, 3, 1)],
+      },
+      tree("two"),
+      tree("three"),
+    ],
+  };
+
+  it("keeps a dependent that sits in a lower column than its prerequisite", () => {
+    expect(decodeBuild(sameTier, "021")[0]).toEqual({ dependent: 2, prereq: 1 });
+  });
+
+  it("still drops the dependent when its prerequisite is missing", () => {
+    expect(decodeBuild(sameTier, "52")[0]).toEqual({ a: 5 });
+  });
+
+  it("restores a Paladin Holy build with Divine Precision and Holy Shock", () => {
+    const paladin = findClass("paladin")!;
+    const build = decodeBuild(paladin, "55320003200011");
+    expect(build[0]["divine-precision"]).toBe(1);
+    expect(build[0]["holy-shock"]).toBe(1);
+    expect(totalPoints(build)).toBe(22);
+    expect(encodeBuild(paladin, build)).toBe("55320003200011--");
   });
 });

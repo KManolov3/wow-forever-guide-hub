@@ -68,6 +68,11 @@
   background: var(--panel-2);
 }
 
+.class-label {
+  font-family: Cinzel, Georgia, serif;
+  font-weight: 600;
+}
+
 /* Summary bar */
 .summary {
   display: flex;
@@ -152,6 +157,7 @@
 .tree-header h2 {
   margin: 0;
   font-family: Cinzel, Georgia, serif;
+  color: var(--gold);
   font-size: 1.1rem;
   flex: 1;
 }
