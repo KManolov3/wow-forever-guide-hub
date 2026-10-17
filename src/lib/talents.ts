@@ -20,7 +20,7 @@ export const totalPoints = (build: Build) =>
   build.reduce((sum, ranks) => sum + treePoints(ranks), 0);
 
 export const requiredLevel = (points: number) =>
-  points === 0 ? 0 : FIRST_TALENT_LEVEL - 1 + points;
+  points === 0 ? 0 : FIRST_TALENT_LEVEL + points;
 
 export const tierRequirement = (tier: number) => (tier - 1) * POINTS_PER_TIER;
 
