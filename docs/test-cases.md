@@ -726,6 +726,59 @@ Prepared links:
   3. List network requests other than localhost, `wow.zamimg.com` and Google Fonts.
 - **Expected:** The cookie is empty, both storage lengths are `0`, and there are no analytics or other third-party requests.
 
+## L. Class quiz
+
+Tank answers used below, in question order: "Hold the enemies' attention and take the hits", "A master of weapons and combat", "Dungeons and raids", "I'd rather fight alone", "Lots of tools to master", "Controlling the battlefield", "Heavy armour, hard to kill", "Not decided yet".
+
+### TC-59 Quiz opens from the header and closes without changing the build
+- **PRD:** FR-17
+- **Preconditions:** `http://localhost:5173/#/mage/05`
+- **Steps:**
+  1. Click "Find my class".
+  2. Press Escape.
+  3. Open the quiz again and click the close button (×).
+- **Expected:** Step 1 opens a dialog named "Find your class" showing "Question 1 of 8" and the group-role question. Steps 2 and 3 close it. Points stay `5 / 51` and the hash stays `#/mage/05`.
+
+### TC-60 One question at a time with progress and Back
+- **PRD:** FR-18
+- **Preconditions:** `http://localhost:5173/#/mage`, quiz open
+- **Steps:**
+  1. Check the Back button on question 1.
+  2. Choose "Keep everyone alive".
+  3. Click Back.
+- **Expected:** Step 1: Back is hidden. Step 2: progress reads "Question 2 of 8". Step 3: progress reads "Question 1 of 8" and "Keep everyone alive" has `aria-pressed="true"`; the other options have `false`.
+
+### TC-61 Results show best match, reasons and two runners-up; retake starts over
+- **PRD:** FR-19
+- **Preconditions:** `http://localhost:5173/#/mage`, quiz open
+- **Steps:**
+  1. Answer with the tank answers.
+  2. Press Escape and reopen the quiz.
+  3. Click "Retake quiz".
+- **Expected:** Step 1: three results; the first is "Warrior, Protection, N% match" and its first reason is "You want to tank"; each result has an "Open <Class> talents" button. Step 2: the same results are shown. Step 3: the quiz is back at "Question 1 of 8".
+
+### TC-62 Opening a result loads the class with the suggested tree marked
+- **PRD:** FR-20
+- **Preconditions:** `http://localhost:5173/#/mage/05`, quiz open
+- **Steps:**
+  1. Answer with the tank answers and click "Open Warrior talents".
+  2. Select Mage in the class picker.
+- **Expected:** Step 1: the dialog closes, Warrior is selected, Points `0 / 51`, the hash is `#/warrior/` (or `#/warrior`), and only the Protection tree shows a "Suggested" badge. Step 2: no tree shows the badge.
+
+### TC-63 Faction answer filters faction-locked classes
+- **PRD:** Class quiz "Scoring" (faction)
+- **Preconditions:** `http://localhost:5173/#/mage`, quiz open
+- **Steps:**
+  1. Answer "Keep everyone alive", "A champion of the Light", "Dungeons and raids", "No preference", "Easy to pick up, so I can focus on the world", "Making my allies stronger", "Heavy armour, hard to kill", "Horde".
+  2. Retake with the same answers but "Alliance".
+- **Expected:** Step 1: the best match is Priest · Holy and no result is Paladin. Step 2: the best match is Paladin · Holy and no result is Shaman.
+
+### TC-64 Quiz fits a 375 px phone without horizontal scroll
+- **PRD:** UX "Layout", User story 7
+- **Preconditions:** viewport 375×812, `http://localhost:5173/#/mage`
+- **Steps:** Open the quiz, check horizontal scroll, answer with the tank answers and check again.
+- **Expected:** No horizontal scroll on the questions or the results, and the dialog lies within the 375 px viewport.
+
 ---
 
 ## Acceptance criteria coverage
@@ -743,6 +796,8 @@ Prepared links:
 | Copying a link and reloading restores the same class and build | TC-47, TC-49 |
 | A link with illegal points loads with those points dropped | TC-50 |
 | No horizontal scroll at 375 px; no console errors | TC-56, TC-01, TC-57 |
+| Class quiz recommends a class and spec, lists two runners-up, and opens the class with the suggested tree | TC-61, TC-62 |
+| Quiz respects the faction answer; no horizontal scroll at 375 px | TC-63, TC-64 |
 | Data quality tests pass for all 9 class files | Not a browser test (Vitest `src/data/classes/classes.test.ts`); TC-10 checks the visible counts |
 
 ## FR coverage
@@ -765,6 +820,10 @@ Prepared links:
 | FR-14 | TC-46, TC-47, TC-48 |
 | FR-15 | TC-49, TC-50, TC-51, TC-52 |
 | FR-16 | TC-03 |
+| FR-17 | TC-59 |
+| FR-18 | TC-60 |
+| FR-19 | TC-61 |
+| FR-20 | TC-62 |
 
 ## Suspected discrepancies between code and PRD (to confirm during execution)
 

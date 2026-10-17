@@ -18,6 +18,8 @@ interface Props {
   cls: WowClass;
   build: Build;
   treeIndex: number;
+  /** Marks the tree as the spec the class quiz recommended. */
+  suggested?: boolean;
   onAdd: (talent: Talent) => void;
   onRemove: (talent: Talent) => void;
   onReset: () => void;
@@ -25,7 +27,7 @@ interface Props {
 
 const COLUMNS = 4;
 
-export function TalentTreeView({ cls, build, treeIndex, onAdd, onRemove, onReset }: Props) {
+export function TalentTreeView({ cls, build, treeIndex, suggested = false, onAdd, onRemove, onReset }: Props) {
   const tree = cls.trees[treeIndex];
   const ranks = build[treeIndex];
   const spent = treePoints(ranks);
@@ -33,10 +35,11 @@ export function TalentTreeView({ cls, build, treeIndex, onAdd, onRemove, onReset
   const [hovered, setHovered] = useState<Talent | null>(null);
 
   return (
-    <section className="tree">
+    <section className={`tree ${suggested ? "suggested" : ""}`}>
       <header className="tree-header">
         <Icon name={tree.icon} label={tree.name} size={28} className="round" />
         <h2>{tree.name}</h2>
+        {suggested && <span className="suggested-badge">Suggested</span>}
         <span className="tree-points">{spent}</span>
         <button className="link-button" onClick={onReset} disabled={spent === 0} title="Reset tree">
           Reset
