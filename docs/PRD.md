@@ -263,7 +263,7 @@ The look follows the in-game talent frame: dark parchment panels, gold accents, 
 - **Theme:** dark only. Background near-black, panels dark brown, gold (#F8B700) for maxed talents and headings, green (#1EFF00) for learnable talents, red for unmet requirements.
 - **Type:** Cinzel for titles, tree and class names; Inter for body text.
 - **Icons:** game icons from the Wowhead CDN; when an icon fails to load, show the talent's initials on a dark tile.
-- **Leveling guide charts:** zone visits in blue and dungeons in orange on the timeline; on the map, route zones are tinted by level band on a single blue ramp (1–19 darkest to 50–60 lightest) over the in-game map, with labels, level ranges and a legend so colour is never the only cue; the selected zone is outlined in gold and other starting zones are shaded out.
+- **Leveling guide charts:** zone visits in blue and dungeons in orange on the timeline; on the map, route zones are tinted by level band in five hues running cool to hot (teal 1–19, blue 20–29, violet 30–39, magenta 40–49, red 50–60), chosen to stay distinguishable over the parchment map with colour-blind vision, and separated by thin dark borders; zone outlines do not overlap. Labels, level ranges and a legend mean colour is never the only cue; the selected zone is outlined in gold and other starting zones are shaded out.
 - **Tooltips:** game-style dark-blue panels; open to the right of talents in columns 1–2 and to the left in columns 3–4 so they stay inside the tree.
 - **Layout:** three trees side by side on desktop (each at least 290 px wide); they wrap to one column on narrow screens. No horizontal page scroll down to 375 px wide. Talent cells are 52 px (46 px under 400 px wide).
 

@@ -710,11 +710,12 @@
 
 /* Leveling guide */
 .guide {
-  --band-0: #184f95;
-  --band-1: #256abf;
-  --band-2: #3987e5;
-  --band-3: #6da7ec;
-  --band-4: #9ec5f4;
+  /* Cool to hot as zone levels rise; checked for colour-blind separation over the parchment map. */
+  --band-0: #2fc39a;
+  --band-1: #5598e7;
+  --band-2: #6250d6;
+  --band-3: #a0287e;
+  --band-4: #e34948;
   --zone-bar: #3987e5;
   --dungeon-bar: #d95926;
   display: flex;
@@ -1189,40 +1190,48 @@
 }
 
 .zone-shape {
-  fill-opacity: 0.4;
-  stroke-width: 0.9;
-  stroke-opacity: 0.9;
+  fill-opacity: 0.58;
+  stroke: #1a1208;
+  stroke-width: 0.7;
+  stroke-opacity: 0.55;
+  stroke-linejoin: round;
   cursor: pointer;
   outline: none;
   transition: fill-opacity 0.15s;
 }
 
 .zone-shape.band-0,
-.zone-swatch.band-0 { fill: var(--band-0); stroke: var(--band-0); }
+.zone-swatch.band-0 { fill: var(--band-0); }
 .zone-shape.band-1,
-.zone-swatch.band-1 { fill: var(--band-1); stroke: var(--band-1); }
+.zone-swatch.band-1 { fill: var(--band-1); }
 .zone-shape.band-2,
-.zone-swatch.band-2 { fill: var(--band-2); stroke: var(--band-2); }
+.zone-swatch.band-2 { fill: var(--band-2); }
 .zone-shape.band-3,
-.zone-swatch.band-3 { fill: var(--band-3); stroke: var(--band-3); }
+.zone-swatch.band-3 { fill: var(--band-3); }
 .zone-shape.band-4,
-.zone-swatch.band-4 { fill: var(--band-4); stroke: var(--band-4); }
+.zone-swatch.band-4 { fill: var(--band-4); }
+
+.zone-swatch {
+  fill-opacity: 0.85;
+}
 
 .zone-shape.done {
-  fill-opacity: 0.12;
+  fill-opacity: 0.2;
 }
 
 .zone-shape:hover,
 .zone-shape:focus-visible {
-  fill-opacity: 0.5;
-  stroke: var(--text);
+  fill-opacity: 0.72;
+  stroke: #fff4dc;
+  stroke-opacity: 1;
   stroke-width: 1.2;
 }
 
 .zone-shape.current {
-  fill-opacity: 0.55;
+  fill-opacity: 0.74;
   stroke: var(--gold);
-  stroke-width: 1.6;
+  stroke-opacity: 1;
+  stroke-width: 1.8;
 }
 
 .zone-shape.other-start {

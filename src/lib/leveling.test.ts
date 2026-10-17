@@ -89,6 +89,41 @@ describe("leveling data", () => {
     }
   });
 
+  it("does not let neighbouring zone outlines overlap", () => {
+    const inside = (pts: [number, number][], x: number, y: number) => {
+      let hit = false;
+      for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+        const [xi, yi] = pts[i];
+        const [xj, yj] = pts[j];
+        if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit;
+      }
+      return hit;
+    };
+    const shapes = ZONES.filter((z) => ZONE_SHAPES[z.id]).map((z) => {
+      const pts = polygon(z.id);
+      const xs = pts.map((p) => p[0]);
+      const ys = pts.map((p) => p[1]);
+      return { z, pts, box: [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)] };
+    });
+    const overlaps: string[] = [];
+    for (let i = 0; i < shapes.length; i++) {
+      for (let j = i + 1; j < shapes.length; j++) {
+        const a = shapes[i];
+        const b = shapes[j];
+        if (a.z.continent !== b.z.continent) continue;
+        let shared = 0;
+        // Count whole map pixels inside both outlines; a few are allowed for rounding along shared borders.
+        for (let x = Math.ceil(Math.max(a.box[0], b.box[0])); x <= Math.min(a.box[2], b.box[2]); x++) {
+          for (let y = Math.ceil(Math.max(a.box[1], b.box[1])); y <= Math.min(a.box[3], b.box[3]); y++) {
+            if (inside(a.pts, x + 0.5, y + 0.5) && inside(b.pts, x + 0.5, y + 0.5)) shared++;
+          }
+        }
+        if (shared > 6) overlaps.push(`${a.z.id} / ${b.z.id}: ${shared} px`);
+      }
+    }
+    expect(overlaps).toEqual([]);
+  });
+
   it("gives every starting zone its races", () => {
     for (const id of STARTING_ZONES) expect(ZONES.find((z) => z.id === id)?.startingRaces, id).toBeTruthy();
   });
