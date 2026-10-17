@@ -808,7 +808,13 @@ Answers are matched by the start of their label. Tank answers used below, in que
 - **PRD:** FR-25
 - **Preconditions:** `http://localhost:5173/#/leveling`
 - **Steps:** Select the Silverpine Forest step; switch the map to Kalimdor; click The Barrens marker twice.
-- **Expected:** Kalimdor is shown first; selecting Silverpine switches to "Route map of Eastern Kingdoms". The Barrens marker selects visit 1 of 3, then visit 2 of 3, and the caption names the selected step.
+- **Expected:** Kalimdor is shown first; selecting Silverpine switches to "Route map of Eastern Kingdoms". The Barrens zone outline selects visit 1 of 3, then visit 2 of 3, and the caption names the selected step.
+
+### TC-74 Route map is the in-game map with clickable zones, zoom and pan
+- **PRD:** FR-25
+- **Preconditions:** `http://localhost:5173/#/leveling`
+- **Steps:** Check the map image loads; click "Show the whole continent", "Zoom in", drag the map sideways, then "Show the whole continent" again; select Wailing Caverns and click the Durotar outline.
+- **Expected:** The map image is `maps/kalimdor.webp` and loads. The whole-continent button is disabled when nothing is zoomed; zooming in shrinks the view and enables it; dragging pans; the button restores the full view. Clicking Durotar selects step 1.
 
 ### TC-70 "My level" jumps to a covering step
 - **PRD:** FR-27
@@ -852,6 +858,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | Quiz respects the faction answer; no horizontal scroll at 375 px | TC-63, TC-64 |
 | Guide starts in the chosen zone, skips other starting zones and Alliance dungeons | TC-66 |
 | Guide timeline shows three Barrens visits; bars and map zones select steps; map follows the continent | TC-68, TC-69 |
+| Route map is the in-game map with clickable zone outlines, zoom and pan | TC-74 |
 | "My level" lookup; progress survives reload and resets | TC-70, TC-71 |
 | Route rule tests pass; guide has no horizontal scroll at 375 px | Vitest `src/lib/leveling.test.ts`; TC-72 |
 | Data quality tests pass for all 9 class files | Not a browser test (Vitest `src/data/classes/classes.test.ts`); TC-10 checks the visible counts |
@@ -884,7 +891,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-22 | TC-66 |
 | FR-23 | TC-67 |
 | FR-24 | TC-68 |
-| FR-25 | TC-69 |
+| FR-25 | TC-69, TC-74 |
 | FR-26 | TC-68 |
 | FR-27 | TC-70 |
 | FR-28 | TC-71 |

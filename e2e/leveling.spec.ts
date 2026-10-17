@@ -86,7 +86,7 @@ test.describe("M. Leveling guide", () => {
 
     await steps(page).filter({ hasText: "Silverpine Forest" }).locator(".step-main").click();
     await expect(continentTab(page, "Eastern Kingdoms")).toHaveAttribute("aria-pressed", "true");
-    await expect(page.getByRole("img", { name: "Route map of Eastern Kingdoms" })).toBeVisible();
+    await expect(page.getByRole("group", { name: "Route map of Eastern Kingdoms" })).toBeVisible();
 
     await continentTab(page, "Kalimdor").click();
     const marker = page.getByRole("button", { name: /^The Barrens, levels 10–33, 3 visits$/ });
@@ -95,6 +95,42 @@ test.describe("M. Leveling guide", () => {
     await marker.click();
     await expect(currentStep(page).locator(".step-meta")).toContainText("visit 2 of 3");
     await expect(page.locator(".map-caption")).toContainText(`Step ${(await currentStep(page).locator(".step-number").textContent())!}:`);
+  });
+
+  test("TC-74 the route map is the in-game map with clickable zones, zoom and pan", async ({ page }) => {
+    await loadGuide(page);
+    const map = page.getByRole("group", { name: "Route map of Kalimdor" });
+    const image = map.locator("image");
+    const href = (await image.getAttribute("href"))!;
+    expect(href).toMatch(/maps\/kalimdor\.webp$/);
+    expect((await page.request.get(href)).ok()).toBe(true);
+
+    const viewWidth = async () => Number((await map.getAttribute("viewBox"))!.split(" ")[2]);
+    const viewX = async () => Number((await map.getAttribute("viewBox"))!.split(" ")[0]);
+
+    const whole = page.getByRole("button", { name: "Show the whole continent" });
+    await whole.click();
+    await expect(whole).toBeDisabled();
+    const full = await viewWidth();
+
+    await page.getByRole("button", { name: "Zoom in" }).click();
+    expect(await viewWidth()).toBeLessThan(full);
+    await expect(whole).toBeEnabled();
+
+    const box = (await map.boundingBox())!;
+    const before = await viewX();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, { steps: 5 });
+    await page.mouse.up();
+    expect(await viewX()).toBeLessThan(before);
+
+    await whole.click();
+    expect(await viewWidth()).toBe(full);
+
+    await steps(page).filter({ hasText: "Wailing Caverns" }).locator(".step-main").click();
+    await page.getByRole("button", { name: /^Durotar, levels 1–10, 1 visit$/ }).click();
+    await expect(currentStep(page).locator(".step-name")).toHaveText("Durotar");
   });
 
   test("TC-70 'My level' jumps to a step covering that level", async ({ page }) => {

@@ -1,8 +1,28 @@
 import { describe, expect, it } from "vitest";
-import { CONTEXT_ZONES, DUNGEONS, ROUTE, STARTING_ZONES, ZONES } from "../data/leveling";
+import { CONTEXT_ZONES, DUNGEONS, LANDMARKS, type MapPoint, ROUTE, STARTING_ZONES, ZONES } from "../data/leveling";
+import { MAP_HEIGHT, MAP_WIDTH, ZONE_SHAPES } from "../data/mapShapes";
 import { MAX_LEVEL, buildRoute, findPlace, isStartingZone, levelBand, stepForLevel, timelineRows, travelBetween } from "./leveling";
 
 const place = (id: string) => findPlace(id)!;
+const polygon = (id: string) => ZONE_SHAPES[id].points.split(" ").map((p) => p.split(",").map(Number) as [number, number]);
+
+/** Distance from a point to a polygon's outline; 0 inside it. */
+function distanceToZone(p: MapPoint, id: string) {
+  const pts = polygon(id);
+  let inside = false;
+  let best = Infinity;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const [xi, yi] = pts[i];
+    const [xj, yj] = pts[j];
+    if (yi > p.y !== yj > p.y && p.x < ((xj - xi) * (p.y - yi)) / (yj - yi) + xi) inside = !inside;
+    const dx = xj - xi;
+    const dy = yj - yi;
+    const t = Math.max(0, Math.min(1, ((p.x - xi) * dx + (p.y - yi) * dy) / (dx * dx + dy * dy || 1)));
+    best = Math.min(best, Math.hypot(p.x - (xi + t * dx), p.y - (yi + t * dy)));
+  }
+  return inside ? 0 : best;
+}
+
 /** Steps may start this many levels below a place's range: a completionist arrives a little ahead of the quests. */
 const EARLY_TOLERANCE = 2;
 
@@ -24,13 +44,32 @@ describe("leveling data", () => {
     }
   });
 
-  it("keeps every map marker on the map", () => {
-    const points = [...ZONES.map((z) => z.map), ...DUNGEONS.map((d) => place(d.id).map), ...CONTEXT_ZONES.map((z) => z.map)];
-    for (const p of points) {
-      expect(p.x).toBeGreaterThanOrEqual(0);
-      expect(p.x).toBeLessThanOrEqual(100);
-      expect(p.y).toBeGreaterThanOrEqual(0);
-      expect(p.y).toBeLessThanOrEqual(100);
+  it("has a map outline for every zone with Horde quests that is on the maps", () => {
+    for (const z of ZONES.filter((z) => !z.offMap && !z.noHordeQuests)) {
+      expect(ZONE_SHAPES[z.id], z.id).toBeDefined();
+      expect(polygon(z.id).length, z.id).toBeGreaterThanOrEqual(3);
+      expect(distanceToZone(ZONE_SHAPES[z.id].anchor, z.id), `${z.id} anchor`).toBe(0);
+    }
+  });
+
+  it("keeps every map point on the map image", () => {
+    const points = [
+      ...Object.keys(ZONE_SHAPES).flatMap(polygon),
+      ...DUNGEONS.map((d) => [d.map.x, d.map.y]),
+      ...CONTEXT_ZONES.map((z) => [z.map.x, z.map.y]),
+      ...LANDMARKS.map((l) => [l.map.x, l.map.y]),
+    ];
+    for (const [x, y] of points) {
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(MAP_WIDTH);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(y).toBeLessThanOrEqual(MAP_HEIGHT);
+    }
+  });
+
+  it("puts each dungeon entrance in its zone or on an island just off its coast", () => {
+    for (const d of DUNGEONS.filter((d) => ZONE_SHAPES[d.zone])) {
+      expect(distanceToZone(d.map, d.zone), d.id).toBeLessThanOrEqual(20);
     }
   });
 
@@ -50,13 +89,13 @@ describe("shared route", () => {
 
   it("visits every non-starting zone and every dungeon at least once", () => {
     const visited = new Set(ROUTE.map((s) => s.place));
-    for (const z of ZONES.filter((z) => !isStartingZone(z.id))) expect(visited.has(z.id), z.id).toBe(true);
+    for (const z of ZONES.filter((z) => !isStartingZone(z.id) && !z.noHordeQuests)) expect(visited.has(z.id), z.id).toBe(true);
     for (const d of DUNGEONS) expect(visited.has(d.id), d.id).toBe(true);
   });
 
   it("leaves out dungeons that are hard for the Horde to reach", () => {
     const names = ROUTE.map((s) => place(s.place).name);
-    for (const name of ["The Deadmines", "The Stockade", "Gnomeregan", "Hall of Thanes", "Excavation Site"]) {
+    for (const name of ["The Deadmines", "The Stockade", "Gnomeregan", "Hall of Thanes"]) {
       expect(names).not.toContain(name);
     }
   });
@@ -120,6 +159,10 @@ describe("buildRoute", () => {
     expect(barrens.every((s) => s.visits === barrens.length)).toBe(true);
   });
 
+  it("sends Skyborne off Zephras Isle by airship", () => {
+    expect(buildRoute("zephras-isle")[1].travel).toMatch(/^Airship from Zephras Isle to Skywatcher Plateau/);
+  });
+
   it("sends Undead to Kalimdor by zeppelin after Tirisfal", () => {
     expect(buildRoute("tirisfal")[1].travel).toBe("Zeppelin from Undercity to Orgrimmar, then head to The Barrens.");
   });
@@ -138,6 +181,12 @@ describe("travelBetween", () => {
   it("uses the Grom'gol zeppelin to and from Stranglethorn", () => {
     expect(travelBetween(place("stranglethorn"), place("desolace"))).toMatch(/^Zeppelin from Grom'gol to Orgrimmar/);
     expect(travelBetween(place("sm-library"), place("stranglethorn"))).toMatch(/^Zeppelin from Undercity to Grom'gol/);
+  });
+
+  it("takes the Powderfuse Port ship from Riverglades to Tanaris", () => {
+    expect(travelBetween(place("krol-dok"), place("tanaris"))).toBe(
+      "Boat from Powderfuse Port to Steamwheedle Port, then head to Tanaris.",
+    );
   });
 
   it("does not take a zeppelin between two zones far from either port", () => {

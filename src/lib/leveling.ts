@@ -12,6 +12,7 @@ import {
   type Zone,
   ZONES,
 } from "../data/leveling";
+import { ZONE_SHAPES } from "../data/mapShapes";
 
 /** A zone or dungeon, resolved to what the guide needs to show and draw it. */
 export interface Place {
@@ -21,8 +22,8 @@ export interface Place {
   /** The zone itself, or the zone a dungeon's entrance is in. */
   zone: Zone;
   continent: Continent;
-  /** Marker position on the continent map. */
-  map: MapPoint;
+  /** Marker position on the continent map image; absent when the place is not drawn there. */
+  map?: MapPoint;
   levels: [number, number];
   isNew: boolean;
   unconfirmed?: string;
@@ -57,7 +58,7 @@ export function findPlace(id: string): Place | undefined {
       kind: "zone",
       zone,
       continent: zone.continent,
-      map: zone.map,
+      map: zone.offMap ? undefined : ZONE_SHAPES[id]?.anchor,
       levels: zone.levels,
       isNew: !!zone.isNew,
       unconfirmed: zone.unconfirmed,
@@ -72,7 +73,7 @@ export function findPlace(id: string): Place | undefined {
     kind: "dungeon",
     zone: entrance,
     continent: entrance.continent,
-    map: { x: entrance.map.x + dungeon.offset.x, y: entrance.map.y + dungeon.offset.y },
+    map: dungeon.map,
     levels: dungeon.levels,
     isNew: !!dungeon.isNew,
     unconfirmed: dungeon.unconfirmed,
@@ -85,8 +86,7 @@ function place(id: string): Place {
   return found;
 }
 
-const portContinent = (port: Port): Continent =>
-  port === "orgrimmar" || port === "ratchet" ? "kalimdor" : "eastern-kingdoms";
+const portContinent = (port: Port): Continent => zoneById.get(PORT_ZONES[port])!.continent;
 
 export { isStartingZone } from "../data/startingZones";
 
@@ -155,7 +155,7 @@ export function buildRoute(start: StartingZoneId): GuideStep[] {
       focus: s.focus,
       visit,
       visits: totals.get(s.place.id)!,
-      travel: prev ? travelBetween(prev.place, s.place) : undefined,
+      travel: !prev ? undefined : i === 1 && prev.place.zone.exit ? prev.place.zone.exit : travelBetween(prev.place, s.place),
     };
   });
 }

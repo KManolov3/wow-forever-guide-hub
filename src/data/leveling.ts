@@ -4,14 +4,14 @@ import type { StartingZoneId } from "./startingZones";
 
 export type Continent = "kalimdor" | "eastern-kingdoms";
 
-/** Where a zone is drawn on its continent's schematic map, 0-100 on each axis (x east, y south). */
+/** A position on a continent map image, in its pixels (see `mapShapes.ts`). */
 export interface MapPoint {
   x: number;
   y: number;
 }
 
 /** Transport hubs that link the two continents. */
-export type Port = "orgrimmar" | "ratchet" | "undercity" | "gromgol" | "booty-bay";
+export type Port = "orgrimmar" | "ratchet" | "steamwheedle" | "undercity" | "gromgol" | "booty-bay" | "powderfuse";
 
 export interface Zone {
   id: string;
@@ -21,7 +21,6 @@ export interface Zone {
   levels: [number, number];
   /** Horde (or neutral) quest hubs; empty when not announced. */
   hubs: string[];
-  map: MapPoint;
   /** Nearest port for crossing to the other continent. */
   port: Port;
   /** Race(s) that start here; set only on starting zones. */
@@ -32,6 +31,10 @@ export interface Zone {
   unconfirmed?: string;
   /** Not drawn on the continent maps because its location is unknown. */
   offMap?: boolean;
+  /** How to leave a starting zone when it is not by the usual roads and transports. */
+  exit?: string;
+  /** No Horde quests: on the map and the route only because a dungeon entrance is here. */
+  noHordeQuests?: boolean;
 }
 
 export interface Dungeon {
@@ -40,8 +43,8 @@ export interface Dungeon {
   /** Zone the entrance is in. */
   zone: string;
   levels: [number, number];
-  /** Map offset from the entrance zone's marker, in map units. */
-  offset: MapPoint;
+  /** Entrance on the continent map. */
+  map: MapPoint;
   isNew?: boolean;
   unconfirmed?: string;
 }
@@ -78,7 +81,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [1, 10],
     hubs: ["Valley of Trials", "Razor Hill", "Sen'jin Village"],
-    map: { x: 88, y: 44 },
     port: "orgrimmar",
     startingRaces: "Orc & Troll",
   },
@@ -88,7 +90,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [1, 10],
     hubs: ["Camp Narache", "Bloodhoof Village", "Thunder Bluff"],
-    map: { x: 42, y: 57 },
     port: "orgrimmar",
     startingRaces: "Tauren",
   },
@@ -98,7 +99,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [1, 10],
     hubs: ["Deathknell", "Brill", "Undercity"],
-    map: { x: 26, y: 7 },
     port: "undercity",
     startingRaces: "Undead",
   },
@@ -108,12 +108,13 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [1, 12],
     hubs: [],
-    map: { x: 12, y: 8 },
     port: "orgrimmar",
     startingRaces: "Skyborne (Horde)",
     isNew: true,
-    unconfirmed: "Blizzard has not said where Horde Skyborne arrive after the isle; the guide assumes Orgrimmar.",
+    unconfirmed:
+      "From beta client data: an airship links the isle with Skywatcher Plateau in Mulgore, and Horde Skyborne are then sent to Thrall in Orgrimmar.",
     offMap: true,
+    exit: "Airship from Zephras Isle to Skywatcher Plateau in Mulgore, then head north to The Barrens.",
   },
 
   // Kalimdor
@@ -123,7 +124,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [10, 33],
     hubs: ["The Crossroads", "Ratchet", "Camp Taurajo"],
-    map: { x: 66, y: 50 },
     port: "ratchet",
   },
   {
@@ -132,7 +132,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [15, 27],
     hubs: ["Malaka'jin", "Sun Rock Retreat"],
-    map: { x: 16, y: 36 },
     port: "orgrimmar",
   },
   {
@@ -141,16 +140,14 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [18, 30],
     hubs: ["Zoram'gar Outpost", "Splintertree Post"],
-    map: { x: 42, y: 30 },
     port: "orgrimmar",
   },
   {
     id: "thousand-needles",
     name: "Thousand Needles",
     continent: "kalimdor",
-    levels: [25, 37],
+    levels: [25, 35],
     hubs: ["Freewind Post", "Mirage Raceway"],
-    map: { x: 62, y: 75 },
     port: "ratchet",
   },
   {
@@ -159,7 +156,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [30, 40],
     hubs: ["Shadowprey Village", "Ghost Walker Post"],
-    map: { x: 12, y: 54 },
     port: "orgrimmar",
   },
   {
@@ -168,7 +164,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [35, 45],
     hubs: ["Brackenwall Village"],
-    map: { x: 86, y: 68 },
     port: "ratchet",
   },
   {
@@ -177,11 +172,10 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [40, 50],
     hubs: [],
-    map: { x: 28, y: 66 },
     port: "orgrimmar",
     isNew: true,
     unconfirmed:
-      "Level range and quest hubs are unannounced; preview coverage links its story to Razorfen Downs and Maraudon, so the guide slots it in the mid-40s.",
+      "No published level range or Horde hub. It is entered from southern Desolace through the Valley of Bones, and its quests lead to Maraudon and Razorfen Downs, so the guide places it in the mid-40s.",
   },
   {
     id: "feralas",
@@ -189,7 +183,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [40, 50],
     hubs: ["Camp Mojache"],
-    map: { x: 14, y: 80 },
     port: "ratchet",
   },
   {
@@ -198,8 +191,7 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [40, 50],
     hubs: ["Gadgetzan", "Steamwheedle Port"],
-    map: { x: 76, y: 90 },
-    port: "ratchet",
+    port: "steamwheedle",
   },
   {
     id: "azshara",
@@ -207,7 +199,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [45, 55],
     hubs: ["Valormok"],
-    map: { x: 90, y: 20 },
     port: "orgrimmar",
   },
   {
@@ -216,7 +207,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [48, 55],
     hubs: ["Marshal's Refuge"],
-    map: { x: 44, y: 88 },
     port: "ratchet",
   },
   {
@@ -225,7 +215,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [48, 55],
     hubs: ["Bloodvenom Post"],
-    map: { x: 50, y: 14 },
     port: "orgrimmar",
   },
   {
@@ -234,7 +223,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [53, 60],
     hubs: ["Everlook"],
-    map: { x: 76, y: 8 },
     port: "orgrimmar",
   },
   {
@@ -243,7 +231,6 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [55, 60],
     hubs: ["Cenarion Hold"],
-    map: { x: 22, y: 95 },
     port: "orgrimmar",
   },
   {
@@ -252,10 +239,9 @@ export const ZONES: Zone[] = [
     continent: "kalimdor",
     levels: [60, 60],
     hubs: [],
-    map: { x: 66, y: 22 },
     port: "orgrimmar",
     isNew: true,
-    unconfirmed: "Endgame zone at level 60; quest hubs are not announced.",
+    unconfirmed: "Blizzard calls it an endgame leveling zone but has not published a level range or Horde hub.",
   },
 
   // Eastern Kingdoms
@@ -265,7 +251,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [10, 20],
     hubs: ["The Sepulcher"],
-    map: { x: 12, y: 26 },
     port: "undercity",
   },
   {
@@ -274,7 +259,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [20, 31],
     hubs: ["Tarren Mill"],
-    map: { x: 26, y: 38 },
     port: "undercity",
   },
   {
@@ -283,7 +267,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [30, 40],
     hubs: ["Tarren Mill"],
-    map: { x: 40, y: 24 },
     port: "undercity",
   },
   {
@@ -292,7 +275,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [30, 41],
     hubs: ["Hammerfall"],
-    map: { x: 58, y: 40 },
     port: "undercity",
   },
   {
@@ -301,7 +283,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [30, 45],
     hubs: ["Grom'gol Base Camp", "Nesingwary's Expedition", "Booty Bay"],
-    map: { x: 28, y: 93 },
     port: "gromgol",
   },
   {
@@ -310,7 +291,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [35, 45],
     hubs: ["Kargath"],
-    map: { x: 76, y: 62 },
     port: "gromgol",
   },
   {
@@ -319,7 +299,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [35, 45],
     hubs: ["Stonard"],
-    map: { x: 70, y: 86 },
     port: "gromgol",
   },
   {
@@ -327,11 +306,20 @@ export const ZONES: Zone[] = [
     name: "Riverglades",
     continent: "eastern-kingdoms",
     levels: [35, 45],
-    hubs: ["Neutral goblin port"],
-    map: { x: 90, y: 76 },
-    port: "gromgol",
+    hubs: ["Rog'mar", "Powderfuse Port (neutral)"],
+    port: "powderfuse",
     isNew: true,
-    unconfirmed: "Level range comes from preview coverage (mid-30s to mid-40s); Horde quest hubs are not announced.",
+    unconfirmed:
+      "Sources give 35–45 or 36–44 (Blizzard: mid-30s to mid-40s). Rog'mar, its flight paths and the Powderfuse Port ship come from beta client files.",
+  },
+  {
+    id: "wetlands",
+    name: "Wetlands",
+    continent: "eastern-kingdoms",
+    levels: [20, 30],
+    hubs: [],
+    port: "undercity",
+    noHordeQuests: true,
   },
   {
     id: "hinterlands",
@@ -339,7 +327,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [40, 50],
     hubs: ["Revantusk Village"],
-    map: { x: 76, y: 26 },
     port: "undercity",
   },
   {
@@ -348,7 +335,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [43, 50],
     hubs: ["Thorium Point", "Kargath"],
-    map: { x: 44, y: 58 },
     port: "gromgol",
   },
   {
@@ -357,7 +343,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [45, 55],
     hubs: ["Neutral questgivers by the Dark Portal"],
-    map: { x: 74, y: 97 },
     port: "gromgol",
   },
   {
@@ -366,7 +351,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [50, 58],
     hubs: ["Flame Crest"],
-    map: { x: 44, y: 77 },
     port: "gromgol",
   },
   {
@@ -375,7 +359,6 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [51, 58],
     hubs: ["The Bulwark"],
-    map: { x: 52, y: 9 },
     port: "undercity",
   },
   {
@@ -384,94 +367,101 @@ export const ZONES: Zone[] = [
     continent: "eastern-kingdoms",
     levels: [53, 60],
     hubs: ["Light's Hope Chapel"],
-    map: { x: 82, y: 9 },
     port: "undercity",
   },
 ];
 
 export const DUNGEONS: Dungeon[] = [
-  { id: "ragefire-chasm", name: "Ragefire Chasm", zone: "durotar", levels: [13, 18], offset: { x: -3, y: -6 } },
+  { id: "ragefire-chasm", name: "Ragefire Chasm", zone: "durotar", levels: [13, 18], map: { x: 579, y: 306 } },
   {
     id: "ruins-of-lordaeron",
     name: "Ruins of Lordaeron",
     zone: "tirisfal",
     levels: [15, 20],
-    offset: { x: 2, y: 10 },
+    map: { x: 470, y: 145 },
     isNew: true,
-    unconfirmed: "Level range from preview coverage; quest givers not announced.",
   },
-  { id: "wailing-caverns", name: "Wailing Caverns", zone: "barrens", levels: [17, 24], offset: { x: -7, y: -6 } },
-  { id: "blackfathom-deeps", name: "Blackfathom Deeps", zone: "ashenvale", levels: [24, 32], offset: { x: -10, y: -6 } },
-  { id: "shadowfang-keep", name: "Shadowfang Keep", zone: "silverpine", levels: [22, 30], offset: { x: 8, y: -6 } },
-  { id: "razorfen-kraul", name: "Razorfen Kraul", zone: "barrens", levels: [30, 40], offset: { x: -7, y: 9 } },
-  { id: "sm-graveyard", name: "Scarlet Monastery: Graveyard", zone: "tirisfal", levels: [26, 36], offset: { x: 10, y: -3 } },
+  { id: "wailing-caverns", name: "Wailing Caverns", zone: "barrens", levels: [15, 24], map: { x: 518, y: 352 } },
+  { id: "blackfathom-deeps", name: "Blackfathom Deeps", zone: "ashenvale", levels: [24, 32], map: { x: 463, y: 262 } },
+  { id: "shadowfang-keep", name: "Shadowfang Keep", zone: "silverpine", levels: [22, 30], map: { x: 416, y: 218 } },
+  {
+    id: "excavation-site",
+    name: "Excavation Site: Wetlands",
+    zone: "wetlands",
+    levels: [26, 31],
+    map: { x: 530, y: 322 },
+    isNew: true,
+    unconfirmed: "Sources count 3 to 5 Horde quests; the level range moved from 24–29 to 26–31 during the beta.",
+  },
+  { id: "razorfen-kraul", name: "Razorfen Kraul", zone: "barrens", levels: [30, 40], map: { x: 512, y: 447 } },
+  { id: "sm-graveyard", name: "Scarlet Monastery: Graveyard", zone: "tirisfal", levels: [26, 36], map: { x: 492, y: 126 } },
   {
     id: "city-of-dalaran",
     name: "City of Dalaran",
     zone: "alterac",
     levels: [28, 33],
-    offset: { x: 8, y: -6 },
+    map: { x: 452, y: 196 },
     isNew: true,
-    unconfirmed: "Level range from preview coverage; quest givers not announced.",
+    unconfirmed: "Since Oct 15 the Horde are attacked on sight in Dalaran; the dungeon stays open through the sewer gate. Horde quest givers are not confirmed.",
   },
-  { id: "sm-library", name: "Scarlet Monastery: Library", zone: "tirisfal", levels: [29, 39], offset: { x: 10, y: -3 } },
-  { id: "sm-armory", name: "Scarlet Monastery: Armory", zone: "tirisfal", levels: [32, 42], offset: { x: 10, y: -3 } },
-  { id: "sm-cathedral", name: "Scarlet Monastery: Cathedral", zone: "tirisfal", levels: [35, 45], offset: { x: 10, y: -3 } },
+  { id: "sm-library", name: "Scarlet Monastery: Library", zone: "tirisfal", levels: [29, 39], map: { x: 492, y: 126 } },
+  { id: "sm-armory", name: "Scarlet Monastery: Armory", zone: "tirisfal", levels: [32, 42], map: { x: 492, y: 126 } },
+  { id: "sm-cathedral", name: "Scarlet Monastery: Cathedral", zone: "tirisfal", levels: [35, 45], map: { x: 492, y: 126 } },
   {
     id: "drowned-city",
     name: "The Drowned City",
     zone: "stranglethorn",
     levels: [35, 40],
-    offset: { x: 10, y: -6 },
+    map: { x: 442, y: 566 },
     isNew: true,
-    unconfirmed: "Level range from preview coverage; quest givers not announced.",
+    unconfirmed: "Blizzard's bracket is 35–40; Horde quests are not confirmed.",
   },
-  { id: "razorfen-downs", name: "Razorfen Downs", zone: "barrens", levels: [40, 50], offset: { x: -1, y: 15 } },
-  { id: "uldaman", name: "Uldaman", zone: "badlands", levels: [42, 52], offset: { x: -7, y: -6 } },
+  { id: "razorfen-downs", name: "Razorfen Downs", zone: "barrens", levels: [40, 50], map: { x: 528, y: 470 } },
+  { id: "uldaman", name: "Uldaman", zone: "badlands", levels: [42, 52], map: { x: 574, y: 396 } },
   {
     id: "krol-dok",
     name: "Krol'dok Stronghold",
     zone: "riverglades",
     levels: [40, 45],
-    offset: { x: -8, y: -7 },
+    map: { x: 602, y: 452 },
     isNew: true,
-    unconfirmed: "Sources disagree on the range (40–45 or 40–55); quest givers not announced.",
+    unconfirmed: "Sources disagree on the range (40–45 or 40–55); Horde quests are not confirmed.",
   },
-  { id: "zul-farrak", name: "Zul'Farrak", zone: "tanaris", levels: [44, 54], offset: { x: -9, y: -6 } },
-  { id: "maraudon", name: "Maraudon", zone: "desolace", levels: [46, 55], offset: { x: 9, y: -2 } },
+  { id: "zul-farrak", name: "Zul'Farrak", zone: "tanaris", levels: [44, 54], map: { x: 556, y: 538 } },
+  { id: "maraudon", name: "Maraudon", zone: "desolace", levels: [46, 55], map: { x: 404, y: 402 } },
   {
-    id: "alcaz-island",
-    name: "Alcaz Island Prison",
+    id: "alcaz-prison",
+    name: "Alcaz Prison",
     zone: "dustwallow",
     levels: [48, 53],
-    offset: { x: 8, y: -6 },
+    map: { x: 578, y: 436 },
     isNew: true,
-    unconfirmed: "Level range from preview coverage; quest givers not announced.",
+    unconfirmed: "Blizzard's bracket is 48–53; Horde quests are not confirmed.",
   },
-  { id: "sunken-temple", name: "Sunken Temple", zone: "swamp-of-sorrows", levels: [50, 60], offset: { x: -9, y: -3 } },
-  { id: "blackrock-depths", name: "Blackrock Depths", zone: "burning-steppes", levels: [52, 60], offset: { x: -4, y: -9 } },
-  { id: "lower-blackrock-spire", name: "Lower Blackrock Spire", zone: "burning-steppes", levels: [55, 60], offset: { x: 4, y: -9 } },
-  { id: "dire-maul", name: "Dire Maul", zone: "feralas", levels: [55, 60], offset: { x: 9, y: -6 } },
+  { id: "sunken-temple", name: "Sunken Temple", zone: "swamp-of-sorrows", levels: [50, 60], map: { x: 546, y: 512 } },
+  { id: "blackrock-depths", name: "Blackrock Depths", zone: "burning-steppes", levels: [52, 60], map: { x: 503, y: 437 } },
+  { id: "lower-blackrock-spire", name: "Lower Blackrock Spire", zone: "burning-steppes", levels: [55, 60], map: { x: 511, y: 437 } },
+  { id: "dire-maul", name: "Dire Maul", zone: "feralas", levels: [55, 60], map: { x: 440, y: 482 } },
   {
     id: "blackmaw-hold",
     name: "Blackmaw Hold",
     zone: "azshara",
     levels: [55, 60],
-    offset: { x: -2, y: 8 },
+    map: { x: 622, y: 247 },
     isNew: true,
-    unconfirmed: "Level range from preview coverage; quest givers not announced.",
+    unconfirmed: "Blizzard's bracket is 55–60; Horde quests are not confirmed.",
   },
-  { id: "scholomance", name: "Scholomance", zone: "western-plaguelands", levels: [58, 60], offset: { x: 6, y: 8 } },
-  { id: "stratholme", name: "Stratholme", zone: "eastern-plaguelands", levels: [58, 60], offset: { x: -4, y: -6 } },
-  { id: "upper-blackrock-spire", name: "Upper Blackrock Spire", zone: "burning-steppes", levels: [58, 60], offset: { x: 4, y: -9 } },
+  { id: "scholomance", name: "Scholomance", zone: "western-plaguelands", levels: [58, 60], map: { x: 524, y: 176 } },
+  { id: "stratholme", name: "Stratholme", zone: "eastern-plaguelands", levels: [58, 60], map: { x: 560, y: 108 } },
+  { id: "upper-blackrock-spire", name: "Upper Blackrock Spire", zone: "burning-steppes", levels: [58, 60], map: { x: 511, y: 437 } },
   {
     id: "shapers-terrace",
     name: "Shaper's Terrace",
     zone: "un-goro",
     levels: [58, 60],
-    offset: { x: 9, y: -5 },
+    map: { x: 508, y: 546 },
     isNew: true,
-    unconfirmed: "Level range from preview coverage; quest givers not announced.",
+    unconfirmed: "Blizzard's bracket is 58–60; Horde quests are not confirmed.",
   },
 ];
 
@@ -502,7 +492,10 @@ export const ROUTE: RouteStep[] = [
     place: "ruins-of-lordaeron",
     levels: [16, 20],
     hub: "Undercity",
-    focus: ["New Forsaken dungeon above the Undercity", "Grab its quests in the Undercity while you are on this continent"],
+    focus: [
+      "New Forsaken dungeon above the Undercity, south of Brill",
+      "Eight Horde quests, several of them versions of Master Apothecary Faranell's Unending Torment",
+    ],
   },
   {
     place: "barrens",
@@ -591,8 +584,10 @@ export const ROUTE: RouteStep[] = [
   {
     place: "city-of-dalaran",
     levels: [29, 33],
-    hub: "Tarren Mill",
-    focus: ["New dungeon at Dalaran's old site in Alterac", "Do it alongside the Alterac quests"],
+    focus: [
+      "New dungeon at Dalaran's old site in Alterac, entered through the sewer gate on the Lordamere Lake shore",
+      "The Horde are attacked on sight in the city above, so go straight to the dungeon",
+    ],
   },
   {
     place: "alterac",
@@ -604,7 +599,20 @@ export const ROUTE: RouteStep[] = [
     place: "arathi",
     levels: [30, 34],
     hub: "Hammerfall",
-    focus: ["Hammerfall's first round: Boulderfist ogres, Go'Shek Farm and Witherbark trolls", "Leave the Stromgarde chains for later"],
+    focus: [
+      "Hammerfall's first round: Boulderfist ogres, Go'Shek Farm and Witherbark trolls",
+      "Pick up Dragonmaw Rumors from Zaruk for the Excavation Site",
+      "Leave the Stromgarde chains for later",
+    ],
+  },
+  {
+    place: "excavation-site",
+    levels: [30, 31],
+    hub: "Hammerfall, Orgrimmar, Thunder Bluff",
+    focus: [
+      "New Wetlands dungeon: ride over the Arathi hills to the entrance, avoiding Menethil Harbor",
+      "Dragonmaw Rumors and Open the Maw, Changing Tastes from Orgrimmar's cooking trainer, and the Titan Relic chain that ends in Thunder Bluff and Mulgore",
+    ],
   },
   {
     place: "sm-library",
@@ -626,9 +634,12 @@ export const ROUTE: RouteStep[] = [
   },
   {
     place: "thousand-needles",
-    levels: [33, 36],
+    levels: [33, 35],
     hub: "Mirage Raceway",
-    focus: ["Shimmering Flats racing quests", "Finish the Freewind chains"],
+    focus: [
+      "Shimmering Flats racing quests",
+      "Finish the Freewind chains",
+    ],
   },
   {
     place: "sm-armory",
@@ -657,8 +668,12 @@ export const ROUTE: RouteStep[] = [
   {
     place: "riverglades",
     levels: [36, 40],
-    hub: "Neutral goblin port",
-    focus: ["New zone with 150+ quests: start with its low-level areas", "Expect contested-zone world PvP"],
+    hub: "Rog'mar",
+    focus: [
+      "Fly to Rog'mar from Stonard or Kargath",
+      "New zone with 150+ quests: do its lower-level areas first",
+      "Expect contested-zone world PvP",
+    ],
   },
   {
     place: "drowned-city",
@@ -667,9 +682,12 @@ export const ROUTE: RouteStep[] = [
   },
   {
     place: "stranglethorn",
-    levels: [37, 41],
+    levels: [37, 40],
     hub: "Booty Bay, Grom'gol Base Camp",
-    focus: ["Booty Bay's Bloodsail Buccaneers and Venture Company quests", "Nesingwary's second round"],
+    focus: [
+      "Booty Bay's Bloodsail Buccaneers and Venture Company quests",
+      "Nesingwary's second round",
+    ],
   },
   {
     place: "sm-cathedral",
@@ -702,26 +720,26 @@ export const ROUTE: RouteStep[] = [
     focus: ["Power Stones and Uldaman Reagent Run", "Agmond's Fate and the Badlands dwarf quests"],
   },
   {
+    place: "stranglethorn",
+    levels: [40, 43],
+    hub: "Booty Bay",
+    focus: [
+      "Finish Booty Bay, the pirate chains and the jungle troll quests",
+      "Hand in the completed Green Hills of Stranglethorn",
+    ],
+  },
+  {
     place: "riverglades",
-    levels: [40, 44],
-    hub: "Neutral goblin port",
-    focus: ["Second round: the zone's higher-level areas"],
+    levels: [41, 44],
+    hub: "Rog'mar",
+    focus: [
+      "Second round: the zone's higher-level areas",
+    ],
   },
   {
     place: "krol-dok",
-    levels: [41, 45],
-    focus: ["New contested outdoor dungeon in Riverglades"],
-  },
-  {
-    place: "stranglethorn",
     levels: [42, 45],
-    hub: "Booty Bay",
-    focus: ["Finish Booty Bay, the pirate chains and the jungle troll quests", "Hand in the completed Green Hills of Stranglethorn"],
-  },
-  {
-    place: "shen-dralas",
-    levels: [42, 46],
-    focus: ["New zone continuing the Desolace centaur stories", "Move this step once Blizzard confirms its levels"],
+    focus: ["New contested outdoor dungeon in Riverglades", "Then take the ship from Powderfuse Port to Steamwheedle Port in Tanaris"],
   },
   {
     place: "tanaris",
@@ -730,16 +748,21 @@ export const ROUTE: RouteStep[] = [
     focus: ["Gadgetzan's first round: Wastewander bandits, Southsea pirates and Steamwheedle Port"],
   },
   {
+    place: "zul-farrak",
+    levels: [43, 47],
+    hub: "Gadgetzan",
+    focus: ["Divino-matic Rod, Tiara of the Deep and Scarab Shells", "Gahz'rilla if your group has the mallet"],
+  },
+  {
     place: "feralas",
     levels: [43, 47],
     hub: "Camp Mojache",
     focus: ["Gordunni ogres, Grimtotem and the Woodpaw gnolls"],
   },
   {
-    place: "zul-farrak",
-    levels: [44, 48],
-    hub: "Gadgetzan",
-    focus: ["Divino-matic Rod, Tiara of the Deep and Scarab Shells", "Gahz'rilla if your group has the mallet"],
+    place: "shen-dralas",
+    levels: [44, 47],
+    focus: ["Enter from southern Desolace through the Valley of Bones; the new zone continues the centaur stories", "Move this step once Blizzard confirms its levels"],
   },
   {
     place: "hinterlands",
@@ -778,14 +801,14 @@ export const ROUTE: RouteStep[] = [
     focus: ["Finish the Mojache chains: Lariss Pavilion, Isle of Dread and the yeti cave"],
   },
   {
-    place: "alcaz-island",
+    place: "alcaz-prison",
     levels: [48, 52],
     focus: ["New prison dungeon off the Dustwallow coast"],
   },
   {
     place: "blasted-lands",
     levels: [48, 51],
-    hub: "Neutral questgivers by the Dark Portal",
+    hub: "Stonard (no Horde town in the zone)",
     focus: ["The bloodmages' collection quests for stat elixirs"],
   },
   {
@@ -903,36 +926,43 @@ export const ROUTE: RouteStep[] = [
   {
     place: "mount-hyjal",
     levels: [60, 60],
-    focus: ["Reached from Darkwhisper Gorge", "New endgame zone with several reputations; the leveling route ends here"],
+    focus: ["Ride up through Darkwhisper Gorge in southern Winterspring", "New endgame zone with several reputations; the leveling route ends here"],
   },
 ];
 
 /** Zones without a Horde stop, drawn faintly on the map so the route has its neighbours. */
 export const CONTEXT_ZONES: ContextZone[] = [
-  { name: "Teldrassil", continent: "kalimdor", map: { x: 30, y: 4 } },
-  { name: "Darkshore", continent: "kalimdor", map: { x: 34, y: 16 } },
-  { name: "Moonglade", continent: "kalimdor", map: { x: 58, y: 4 } },
-  { name: "Dun Morogh", continent: "eastern-kingdoms", map: { x: 30, y: 54 } },
-  { name: "Wetlands", continent: "eastern-kingdoms", map: { x: 46, y: 48 } },
-  { name: "Loch Modan", continent: "eastern-kingdoms", map: { x: 62, y: 46 } },
-  { name: "Elwynn Forest", continent: "eastern-kingdoms", map: { x: 24, y: 70 } },
-  { name: "Redridge", continent: "eastern-kingdoms", map: { x: 62, y: 72 } },
-  { name: "Westfall", continent: "eastern-kingdoms", map: { x: 10, y: 80 } },
-  { name: "Duskwood", continent: "eastern-kingdoms", map: { x: 28, y: 82 } },
-  { name: "Deadwind Pass", continent: "eastern-kingdoms", map: { x: 50, y: 90 } },
+  { name: "Teldrassil", continent: "kalimdor", map: { x: 432, y: 72 } },
+  { name: "Darkshore", continent: "kalimdor", map: { x: 462, y: 150 } },
+  { name: "Moonglade", continent: "kalimdor", map: { x: 543, y: 123 } },
+  { name: "Dun Morogh", continent: "eastern-kingdoms", map: { x: 462, y: 378 } },
+  { name: "Wetlands", continent: "eastern-kingdoms", map: { x: 520, y: 305 } },
+  { name: "Loch Modan", continent: "eastern-kingdoms", map: { x: 570, y: 366 } },
+  { name: "Elwynn Forest", continent: "eastern-kingdoms", map: { x: 463, y: 476 } },
+  { name: "Redridge", continent: "eastern-kingdoms", map: { x: 533, y: 478 } },
+  { name: "Westfall", continent: "eastern-kingdoms", map: { x: 418, y: 520 } },
+  { name: "Duskwood", continent: "eastern-kingdoms", map: { x: 472, y: 520 } },
+  { name: "Deadwind Pass", continent: "eastern-kingdoms", map: { x: 509, y: 522 } },
 ];
 
 /** Content the route skips on purpose, and why. */
 export const EXCLUSIONS: Exclusion[] = [
   { name: "Other Horde starting zones", kind: "zone", reason: "Only your own starting zone is on the route." },
   { name: "Dun Morogh, Elwynn Forest, Teldrassil", kind: "zone", reason: "Alliance starting zones." },
-  { name: "Westfall, Redridge, Duskwood, Loch Modan, Wetlands, Darkshore", kind: "zone", reason: "No Horde quests." },
+  {
+    name: "Westfall, Redridge, Duskwood, Loch Modan, Wetlands, Darkshore",
+    kind: "zone",
+    reason: "No Horde quests. The Wetlands' Excavation Site dungeon is on the route, reached from Arathi Highlands.",
+  },
   { name: "Deadwind Pass, Moonglade", kind: "zone", reason: "No Horde leveling quests." },
   { name: "The Deadmines", kind: "dungeon", reason: "Deep in Westfall; a long run through Alliance territory." },
   { name: "The Stockade", kind: "dungeon", reason: "Inside Stormwind City." },
   { name: "Gnomeregan", kind: "dungeon", reason: "Reached through Dun Morogh, next to Ironforge." },
-  { name: "Hall of Thanes", kind: "dungeon", reason: "New dungeon beneath Ironforge." },
-  { name: "Excavation Site", kind: "dungeon", reason: "New dungeon in the Wetlands, between Menethil Harbor and Ironforge." },
+  {
+    name: "Hall of Thanes",
+    kind: "dungeon",
+    reason: "New dungeon inside Old Ironforge; sources disagree on whether it has any Horde quests.",
+  },
   { name: "Raids and battlegrounds", kind: "dungeon", reason: "Not part of leveling." },
 ];
 
@@ -942,6 +972,7 @@ export const TRANSPORTS: { from: Port; to: Port; by: "zeppelin" | "boat" }[] = [
   { from: "orgrimmar", to: "gromgol", by: "zeppelin" },
   { from: "undercity", to: "gromgol", by: "zeppelin" },
   { from: "ratchet", to: "booty-bay", by: "boat" },
+  { from: "steamwheedle", to: "powderfuse", by: "boat" },
 ];
 
 /** Zone each port is in. */
@@ -949,8 +980,10 @@ export const PORT_ZONES: Record<Port, string> = {
   orgrimmar: "durotar",
   ratchet: "barrens",
   undercity: "tirisfal",
+  steamwheedle: "tanaris",
   gromgol: "stranglethorn",
   "booty-bay": "stranglethorn",
+  powderfuse: "riverglades",
 };
 
 export const PORT_NAMES: Record<Port, string> = {
@@ -959,7 +992,21 @@ export const PORT_NAMES: Record<Port, string> = {
   undercity: "Undercity",
   gromgol: "Grom'gol",
   "booty-bay": "Booty Bay",
+  steamwheedle: "Steamwheedle Port",
+  powderfuse: "Powderfuse Port",
 };
+
+/** Cities and ports drawn on the maps. */
+export const LANDMARKS: { name: string; continent: Continent; map: MapPoint; kind: "city" | "port" }[] = [
+  { name: "Orgrimmar", continent: "kalimdor", map: { x: 583, y: 298 }, kind: "city" },
+  { name: "Thunder Bluff", continent: "kalimdor", map: { x: 468, y: 396 }, kind: "city" },
+  { name: "Ratchet", continent: "kalimdor", map: { x: 566, y: 400 }, kind: "port" },
+  { name: "Steamwheedle Port", continent: "kalimdor", map: { x: 590, y: 552 }, kind: "port" },
+  { name: "Undercity", continent: "eastern-kingdoms", map: { x: 466, y: 153 }, kind: "city" },
+  { name: "Grom'gol", continent: "eastern-kingdoms", map: { x: 458, y: 553 }, kind: "port" },
+  { name: "Booty Bay", continent: "eastern-kingdoms", map: { x: 452, y: 612 }, kind: "port" },
+  { name: "Powderfuse Port", continent: "eastern-kingdoms", map: { x: 612, y: 458 }, kind: "port" },
+];
 
 export { STARTING_ZONES, type StartingZoneId } from "./startingZones";
 
@@ -968,5 +1015,8 @@ export const STARTING_FOCUS: Record<StartingZoneId, string[]> = {
   durotar: ["Valley of Trials, then every Razor Hill and Sen'jin Village quest", "Tiragarde Keep, Dustwind Cave and the Echo Isles before crossing into the Barrens"],
   mulgore: ["Camp Narache, then every Bloodhoof Village quest", "Visit Thunder Bluff for its quests before heading north to the Barrens"],
   tirisfal: ["Deathknell, then every Brill quest", "Agamand Mills and the Scarlet Crusade camps before leaving for Kalimdor"],
-  "zephras-isle": ["Follow the isle's route through its villages, shrines and ruins", "The Skyborne zone runs to level 12, so you join the Barrens slightly ahead"],
+  "zephras-isle": [
+    "Follow the isle's route through its villages, shrines and ruins",
+    "The Skyborne zone runs to level 12, so you join the Barrens slightly ahead",
+  ],
 };

@@ -1,5 +1,6 @@
-import { type KeyboardEvent, useState } from "react";
-import { CONTEXT_ZONES, type Continent, type MapPoint, ZONES } from "../data/leveling";
+import { type KeyboardEvent, type PointerEvent, useEffect, useRef, useState } from "react";
+import { CONTEXT_ZONES, type Continent, LANDMARKS, type MapPoint, ZONES } from "../data/leveling";
+import { CONTINENT_MAPS, MAP_HEIGHT, MAP_WIDTH, ZONE_SHAPES } from "../data/mapShapes";
 import { type GuideStep, type Place, isStartingZone, levelBand } from "../lib/leveling";
 
 interface Props {
@@ -14,22 +15,19 @@ const CONTINENTS: { id: Continent; name: string }[] = [
   { id: "eastern-kingdoms", name: "Eastern Kingdoms" },
 ];
 
-/** Cities and ports; `left` puts the label on the marker's left. */
-const CITIES: { name: string; continent: Continent; map: MapPoint; left?: boolean }[] = [
-  { name: "Orgrimmar", continent: "kalimdor", map: { x: 80, y: 33 }, left: true },
-  { name: "Thunder Bluff", continent: "kalimdor", map: { x: 38, y: 49 }, left: true },
-  { name: "Ratchet", continent: "kalimdor", map: { x: 80, y: 57 } },
-  { name: "Undercity", continent: "eastern-kingdoms", map: { x: 24, y: 15 }, left: true },
-  { name: "Grom'gol", continent: "eastern-kingdoms", map: { x: 14, y: 90 }, left: true },
-  { name: "Booty Bay", continent: "eastern-kingdoms", map: { x: 34, y: 101 } },
-];
-
 const BAND_LABELS = ["1–19", "20–29", "30–39", "40–49", "50–60"];
+const MAX_ZOOM = 5;
+/** Zoom the map opens at, centred on the selected step. */
+const START_ZOOM = 1.6;
+/** Pointer movement, in screen pixels, after which a press counts as a drag rather than a click. */
+const DRAG_THRESHOLD = 4;
 
-const W = 440;
-const H = 520;
-const toX = (x: number) => 30 + x * 3.8;
-const toY = (y: number) => 28 + y * 4.5;
+interface View {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 interface Marker {
   key: string;
@@ -43,50 +41,175 @@ interface Marker {
 function markersFor(route: GuideStep[], continent: Continent): Marker[] {
   const markers = new Map<string, Marker>();
   route.forEach((s, i) => {
-    if (s.place.continent !== continent || s.place.zone.offMap) return;
-    const key = s.place.kind === "zone" ? s.place.id : `d:${s.place.map.x},${s.place.map.y}`;
-    const m = markers.get(key) ?? { key, places: [], steps: [], map: s.place.map, kind: s.place.kind };
+    const map = s.place.map;
+    if (s.place.continent !== continent || !map) return;
+    const key = s.place.kind === "zone" ? s.place.id : `d:${map.x},${map.y}`;
+    const m = markers.get(key) ?? { key, places: [], steps: [], map, kind: s.place.kind };
     if (!m.places.some((p) => p.id === s.place.id)) m.places.push(s.place);
     m.steps.push(i);
     markers.set(key, m);
   });
-  // Zones first so dungeon diamonds draw on top of them.
-  return [...markers.values()].sort((a, b) => (a.kind === b.kind ? 0 : a.kind === "zone" ? -1 : 1));
+  return [...markers.values()];
 }
 
 /** The next visit after the selected step, wrapping, so repeated clicks walk through every visit. */
-function nextVisit(steps: number[], selected: number) {
-  return steps.find((i) => i > selected) ?? steps[0];
-}
+const nextVisit = (steps: number[], selected: number) => steps.find((i) => i > selected) ?? steps[0];
 
 const levelText = ([a, b]: [number, number]) => (a === b ? `${a}` : `${a}–${b}`);
 
-/** Schematic map of one continent at a time, with the route's legs and a marker per zone and dungeon. */
+/** The view that shows a continent whole in a viewport of the given aspect (height / width). */
+function fitView(frame: View, aspect: number): View {
+  const width = Math.max(frame.width, frame.height / aspect);
+  const height = width * aspect;
+  return { x: frame.x + (frame.width - width) / 2, y: frame.y + (frame.height - height) / 2, width, height };
+}
+
+/** Keeps a view between the whole-continent view and MAX_ZOOM, and on the map image where it fits. */
+function clampView(v: View, fit: View, aspect: number): View {
+  const width = Math.min(fit.width, Math.max(fit.width / MAX_ZOOM, v.width));
+  const height = width * aspect;
+  const axis = (pos: number, size: number, total: number, centre: number) =>
+    size >= total ? centre - size / 2 : Math.min(total - size, Math.max(0, pos));
+  return {
+    x: axis(v.x, width, MAP_WIDTH, fit.x + fit.width / 2),
+    y: axis(v.y, height, MAP_HEIGHT, fit.y + fit.height / 2),
+    width,
+    height,
+  };
+}
+
+const centredOn = (p: MapPoint, zoom: number, fit: View, aspect: number) => {
+  const width = fit.width / zoom;
+  return clampView({ x: p.x - width / 2, y: p.y - (width * aspect) / 2, width, height: width * aspect }, fit, aspect);
+};
+
+const inView = (p: MapPoint, v: View) => p.x >= v.x && p.x <= v.x + v.width && p.y >= v.y && p.y <= v.y + v.height;
+
+/** The in-game continent map with the route's zones outlined, its legs drawn, and pan and zoom. */
 export function RouteMap({ route, selected, done, onSelect }: Props) {
   const current = route[selected];
   const [shown, setShown] = useState<Continent>(current.place.continent);
   const [followed, setFollowed] = useState(current.id);
-  const [hover, setHover] = useState<{ marker: Marker; x: number; y: number } | null>(null);
+  const [aspect, setAspect] = useState(1.2);
+  const fit = fitView(CONTINENT_MAPS[shown].view, aspect);
+  const initialView = (place: Place, a: number) => {
+    const f = fitView(CONTINENT_MAPS[place.continent].view, a);
+    return place.map ? centredOn(place.map, START_ZOOM, f, a) : f;
+  };
+  const [view, setView] = useState<View>(() => initialView(current.place, aspect));
+  const [hover, setHover] = useState<{ marker: Marker; point: MapPoint } | null>(null);
+  const svg = useRef<SVGSVGElement>(null);
+  const drag = useRef<{ x: number; y: number; view: View; moved: boolean } | null>(null);
 
-  // Follow the selected step to its continent; the tabs can still switch away from it.
-  if (followed !== current.id) {
-    setFollowed(current.id);
-    setShown(current.place.continent);
+  const showContinent = (c: Continent) => {
+    setShown(c);
+    setView(fitView(CONTINENT_MAPS[c].view, aspect));
+  };
+
+  // Match the view's shape to the element's so the map fills the panel, keeping its centre and zoom.
+  useEffect(() => {
+    const el = svg.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      if (width > 0 && height > 0) setAspect(height / width);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  const [sizedFor, setSizedFor] = useState(aspect);
+  if (sizedFor !== aspect) {
+    setSizedFor(aspect);
+    const centre = { x: view.x + view.width / 2, y: view.y + view.height / 2 };
+    const zoomNow = fitView(CONTINENT_MAPS[shown].view, sizedFor).width / view.width;
+    setView(centredOn(centre, zoomNow, fit, aspect));
   }
 
-  const markers = markersFor(route, shown);
-  const prev = route[selected - 1];
-  const crossed = prev && prev.place.continent !== current.place.continent;
-  const startId = route[0].place.id;
-  const otherStarts = ZONES.filter((z) => isStartingZone(z.id) && z.id !== startId && z.continent === shown && !z.offMap);
+  // Follow the selected step to its continent and keep it in view; the tabs can still switch away from it.
+  if (followed !== current.id) {
+    setFollowed(current.id);
+    const target = current.place.map;
+    if (current.place.continent !== shown) {
+      setShown(current.place.continent);
+      setView(initialView(current.place, aspect));
+    } else if (target && !inView(target, view)) {
+      setView(clampView({ ...view, x: target.x - view.width / 2, y: target.y - view.height / 2 }, fit, aspect));
+    }
+  }
 
-  const legs = route.slice(1).flatMap((s, i) => {
-    const from = route[i];
-    if (from.place.continent !== shown || s.place.continent !== shown || from.place.zone.offMap) return [];
-    return [{ from: from.place.map, to: s.place.map, index: i + 1 }];
+  const zoomBy = (factor: number, center: MapPoint = { x: view.x + view.width / 2, y: view.y + view.height / 2 }) => {
+    const width = view.width * factor;
+    const height = view.height * factor;
+    setView(
+      clampView(
+        {
+          x: center.x - ((center.x - view.x) * width) / view.width,
+          y: center.y - ((center.y - view.y) * height) / view.height,
+          width,
+          height,
+        },
+        fit,
+        aspect,
+      ),
+    );
+  };
+
+  /** Converts a pointer position to map coordinates. */
+  const toMap = (clientX: number, clientY: number): MapPoint => {
+    const rect = svg.current!.getBoundingClientRect();
+    return {
+      x: view.x + ((clientX - rect.left) / rect.width) * view.width,
+      y: view.y + ((clientY - rect.top) / rect.height) * view.height,
+    };
+  };
+
+  // Ctrl/⌘ + wheel (and trackpad pinch) zooms; a plain wheel keeps scrolling the page.
+  const zoomAt = useRef({ zoomBy, toMap });
+  useEffect(() => {
+    zoomAt.current = { zoomBy, toMap };
   });
+  useEffect(() => {
+    const el = svg.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      const { zoomBy, toMap } = zoomAt.current;
+      zoomBy(e.deltaY > 0 ? 1.15 : 1 / 1.15, toMap(e.clientX, e.clientY));
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
 
-  const activate = (m: Marker) => onSelect(m.steps.includes(selected) ? nextVisit(m.steps, selected) : m.steps[0]);
+  const onPointerDown = (e: PointerEvent<SVGSVGElement>) => {
+    if (e.button !== 0) return;
+    drag.current = { x: e.clientX, y: e.clientY, view, moved: false };
+  };
+  const onPointerMove = (e: PointerEvent<SVGSVGElement>) => {
+    const d = drag.current;
+    if (!d) return;
+    const dx = e.clientX - d.x;
+    const dy = e.clientY - d.y;
+    if (!d.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+    if (!d.moved) {
+      d.moved = true;
+      svg.current?.setPointerCapture(e.pointerId);
+      setHover(null);
+    }
+    const rect = svg.current!.getBoundingClientRect();
+    const scale = d.view.width / rect.width;
+    setView(clampView({ ...d.view, x: d.view.x - dx * scale, y: d.view.y - dy * scale }, fit, aspect));
+  };
+  const onPointerUp = (e: PointerEvent<SVGSVGElement>) => {
+    if (drag.current?.moved) svg.current?.releasePointerCapture(e.pointerId);
+    // Keep the drag until the click that ends this press has been ignored.
+    setTimeout(() => (drag.current = null));
+  };
+
+  const activate = (m: Marker) => {
+    if (drag.current?.moved) return;
+    onSelect(m.steps.includes(selected) ? nextVisit(m.steps, selected) : m.steps[0]);
+  };
   const onKey = (e: KeyboardEvent, m: Marker) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -94,122 +217,190 @@ export function RouteMap({ route, selected, done, onSelect }: Props) {
     }
   };
 
+  const markers = markersFor(route, shown);
+  const zoneMarkers = markers.filter((m) => m.kind === "zone");
+  const dungeonMarkers = markers.filter((m) => m.kind === "dungeon");
+  const prev = route[selected - 1];
+  const crossed = prev && prev.place.continent !== current.place.continent;
+  const startId = route[0].place.id;
+  const otherStarts = ZONES.filter(
+    (z) => isStartingZone(z.id) && z.id !== startId && z.continent === shown && ZONE_SHAPES[z.id],
+  );
+  const zoom = fit.width / view.width;
+  // Labels and markers shrink less than the map grows, so zooming in reveals more room around them.
+  const k = 1 / Math.sqrt(zoom);
+
+  const legs = route.slice(1).flatMap((s, i) => {
+    const from = route[i].place;
+    if (from.continent !== shown || s.place.continent !== shown || !from.map || !s.place.map) return [];
+    return [{ from: from.map, to: s.place.map, index: i + 1 }];
+  });
+
   const markerLabel = (m: Marker) =>
     m.places.length === 1
       ? `${m.places[0].name}, levels ${levelText(m.places[0].levels)}, ${m.steps.length} visit${m.steps.length === 1 ? "" : "s"}`
       : `${m.places.map((p) => p.name).join(", ")}: ${m.steps.length} visits`;
 
+  const markerProps = (m: Marker) => ({
+    role: "button",
+    tabIndex: 0,
+    "aria-label": markerLabel(m),
+    "aria-pressed": m.steps.includes(selected),
+    onClick: () => activate(m),
+    onKeyDown: (e: KeyboardEvent) => onKey(e, m),
+    onMouseEnter: () => !drag.current?.moved && setHover({ marker: m, point: m.map }),
+    onMouseLeave: () => setHover(null),
+    onFocus: () => setHover({ marker: m, point: m.map }),
+    onBlur: () => setHover(null),
+  });
+
+  const stateClasses = (m: Marker) =>
+    [
+      m.steps.includes(selected) ? "current" : "",
+      m.steps.every((i) => done.has(route[i].id)) ? "done" : "",
+      m.places[0].isNew ? "new" : "",
+    ].join(" ");
+
+  const contextLabels = [
+    ...CONTEXT_ZONES.filter((z) => z.continent === shown),
+    ...otherStarts.map((z) => ({ name: z.name, map: ZONE_SHAPES[z.id].anchor })),
+  ];
+
   return (
     <div className="route-map">
-      <div className="map-tabs" role="group" aria-label="Continent">
-        {CONTINENTS.map((c) => (
-          <button key={c.id} aria-pressed={shown === c.id} onClick={() => setShown(c.id)}>
-            {c.name}
+      <div className="map-toolbar">
+        <div className="map-tabs" role="group" aria-label="Continent">
+          {CONTINENTS.map((c) => (
+            <button key={c.id} aria-pressed={shown === c.id} onClick={() => showContinent(c.id)}>
+              {c.name}
+            </button>
+          ))}
+        </div>
+        <div className="map-zoom" role="group" aria-label="Zoom">
+          <button onClick={() => zoomBy(1 / 1.5)} disabled={zoom >= MAX_ZOOM - 0.01} aria-label="Zoom in">
+            +
           </button>
-        ))}
+          <button onClick={() => zoomBy(1.5)} disabled={zoom <= 1.01} aria-label="Zoom out">
+            −
+          </button>
+          <button onClick={() => setView(fit)} disabled={zoom <= 1.01} aria-label="Show the whole continent">
+            ⤢
+          </button>
+        </div>
       </div>
 
       <div className="map-frame">
-        <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Route map of ${CONTINENTS.find((c) => c.id === shown)!.name}`}>
+        <svg
+          ref={svg}
+          viewBox={`${view.x} ${view.y} ${view.width} ${view.height}`}
+          role="group"
+          aria-label={`Route map of ${CONTINENTS.find((c) => c.id === shown)!.name}`}
+          className={zoom > 1.01 ? "zoomed" : ""}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+          onDoubleClick={(e) => zoomBy(1 / 1.5, toMap(e.clientX, e.clientY))}
+        >
           <defs>
-            <marker id="leg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <marker id="leg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto">
               <path d="M0,0 L10,5 L0,10 z" fill="var(--gold)" />
             </marker>
           </defs>
 
-          {CONTEXT_ZONES.filter((z) => z.continent === shown).map((z) => (
-            <g key={z.name} className="map-context">
-              <circle cx={toX(z.map.x)} cy={toY(z.map.y)} r={9} />
-              <text x={toX(z.map.x)} y={toY(z.map.y) + 20}>
-                {z.name}
-              </text>
-            </g>
-          ))}
+          <image
+            href={`${import.meta.env.BASE_URL}${CONTINENT_MAPS[shown].image}`}
+            x={0}
+            y={0}
+            width={MAP_WIDTH}
+            height={MAP_HEIGHT}
+            className="map-image"
+          />
+
           {otherStarts.map((z) => (
-            <g key={z.id} className="map-context">
-              <circle cx={toX(z.map.x)} cy={toY(z.map.y)} r={9} />
-              <text x={toX(z.map.x)} y={toY(z.map.y) + 20}>
-                {z.name}
-              </text>
-            </g>
+            <polygon key={z.id} className="zone-shape other-start" points={ZONE_SHAPES[z.id].points} />
+          ))}
+
+          {zoneMarkers.map((m) => (
+            <polygon
+              key={m.key}
+              {...markerProps(m)}
+              className={`zone-shape band-${levelBand(m.places[0].levels[0])} ${stateClasses(m)}`}
+              points={ZONE_SHAPES[m.places[0].id].points}
+            />
           ))}
 
           {legs.map((l) => (
             <line
               key={l.index}
               className={`map-leg ${l.index === selected ? "active" : ""}`}
-              x1={toX(l.from.x)}
-              y1={toY(l.from.y)}
-              x2={toX(l.to.x)}
-              y2={toY(l.to.y)}
+              x1={l.from.x}
+              y1={l.from.y}
+              x2={l.to.x}
+              y2={l.to.y}
+              strokeWidth={(l.index === selected ? 1.8 : 0.9) * k}
               markerEnd={l.index === selected ? "url(#leg-arrow)" : undefined}
             />
           ))}
 
-          {CITIES.filter((c) => c.continent === shown).map((c) => (
-            <g key={c.name} className="map-city">
-              <rect x={toX(c.map.x) - 4} y={toY(c.map.y) - 4} width={8} height={8} />
-              <text x={toX(c.map.x) + (c.left ? -8 : 8)} y={toY(c.map.y) + 4} textAnchor={c.left ? "end" : "start"}>
+          {LANDMARKS.filter((c) => c.continent === shown).map((c) => (
+            <g key={c.name} className={`map-landmark ${c.kind}`} aria-hidden="true">
+              <rect x={c.map.x - 2.2 * k} y={c.map.y - 2.2 * k} width={4.4 * k} height={4.4 * k} />
+              <text x={c.map.x + 4.5 * k} y={c.map.y + 2.6 * k} fontSize={7.5 * k}>
                 {c.name}
               </text>
             </g>
           ))}
 
-          {markers.map((m) => {
-            const x = toX(m.map.x);
-            const y = toY(m.map.y);
-            const isCurrent = m.steps.includes(selected);
-            const allDone = m.steps.every((i) => done.has(route[i].id));
-            const place = m.places[0];
-            const classes = ["map-marker", m.kind, isCurrent ? "current" : "", allDone ? "done" : "", place.isNew ? "new" : ""];
+          {contextLabels.map((z) => (
+            <text key={z.name} className="map-context" x={z.map.x} y={z.map.y} fontSize={8 * k} aria-hidden="true">
+              {z.name}
+            </text>
+          ))}
+
+          {zoneMarkers.map((m) => (
+            <g key={m.key} className={`zone-label ${stateClasses(m)}`} aria-hidden="true">
+              <text x={m.map.x} y={m.map.y} fontSize={9.5 * k}>
+                {m.places[0].name}
+              </text>
+              <text className="zone-label-levels" x={m.map.x} y={m.map.y + 9 * k} fontSize={7.5 * k}>
+                {levelText(m.places[0].levels)}
+                {m.steps.length > 1 && ` · ×${m.steps.length}`}
+              </text>
+            </g>
+          ))}
+
+          {dungeonMarkers.map((m) => {
+            const r = 4 * k;
             return (
-              <g
-                key={m.key}
-                className={classes.join(" ")}
-                role="button"
-                tabIndex={0}
-                aria-label={markerLabel(m)}
-                aria-pressed={isCurrent}
-                onClick={() => activate(m)}
-                onKeyDown={(e) => onKey(e, m)}
-                onMouseEnter={() => setHover({ marker: m, x, y })}
-                onMouseLeave={() => setHover(null)}
-                onFocus={() => setHover({ marker: m, x, y })}
-                onBlur={() => setHover(null)}
-              >
-                {m.kind === "zone" ? (
-                  <>
-                    <circle className="hit" cx={x} cy={y} r={22} />
-                    <circle className={`zone-dot band-${levelBand(place.levels[0])}`} cx={x} cy={y} r={11} />
-                    <text className="zone-name" x={x} y={y + 24}>
-                      {place.name}
-                    </text>
-                    {m.steps.length > 1 && (
-                      <text className="zone-visits" x={x + 10} y={y - 8}>
-                        ×{m.steps.length}
-                      </text>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <rect className="hit" x={x - 13} y={y - 13} width={26} height={26} />
-                    <rect className="dungeon-dot" x={x - 6} y={y - 6} width={12} height={12} transform={`rotate(45 ${x} ${y})`} />
-                  </>
-                )}
+              <g key={m.key} {...markerProps(m)} className={`map-marker dungeon ${stateClasses(m)}`}>
+                <circle className="hit" cx={m.map.x} cy={m.map.y} r={r * 2.2} />
+                <rect
+                  className="dungeon-dot"
+                  x={m.map.x - r}
+                  y={m.map.y - r}
+                  width={r * 2}
+                  height={r * 2}
+                  strokeWidth={1.2 * k}
+                  transform={`rotate(45 ${m.map.x} ${m.map.y})`}
+                />
               </g>
             );
           })}
         </svg>
 
         {route[0].place.zone.offMap && (
-          <p className="map-note">{route[0].place.name} floats in the skies of Skywall and is not on this map.</p>
+          <p className="map-note">{route[0].place.name} floats in the skies of Skywall and is not on these maps.</p>
         )}
 
-        {hover && (
+        {hover && inView(hover.point, view) && (
           <div
             className="viz-tooltip"
             role="tooltip"
-            style={{ left: `${(hover.x / W) * 100}%`, top: `${(hover.y / H) * 100}%` }}
+            style={{
+              left: `${((hover.point.x - view.x) / view.width) * 100}%`,
+              top: `${((hover.point.y - view.y) / view.height) * 100}%`,
+            }}
           >
             {hover.marker.places.map((p) => (
               <div key={p.id}>
@@ -228,16 +419,16 @@ export function RouteMap({ route, selected, done, onSelect }: Props) {
       </div>
 
       <p className="map-caption" aria-live="polite">
-        <strong>Step {selected + 1}:</strong>{" "}
-        {current.travel ? current.travel : `Start in ${current.place.name}.`}
+        <strong>Step {selected + 1}:</strong> {current.travel ? current.travel : `Start in ${current.place.name}.`}
         {crossed && " This step crosses to the other continent."}
       </p>
+      <p className="map-hint">Drag to pan · double-click or Ctrl/⌘ + scroll to zoom · click a zone to step through its visits</p>
 
       <ul className="map-legend" aria-label="Map legend">
         {BAND_LABELS.map((label, i) => (
           <li key={label}>
             <svg width="14" height="14" aria-hidden="true">
-              <circle className={`zone-dot band-${i}`} cx="7" cy="7" r="6" />
+              <rect className={`zone-swatch band-${i}`} x="1" y="1" width="12" height="12" rx="2" />
             </svg>
             Zone {label}
           </li>
@@ -254,8 +445,14 @@ export function RouteMap({ route, selected, done, onSelect }: Props) {
           </svg>
           City or port
         </li>
-        <li>×N visits</li>
       </ul>
+      <p className="map-credit">
+        Map: World of Warcraft: Forever in-game world map, © Blizzard Entertainment, via{" "}
+        <a href="https://warcraft.wiki.gg/wiki/Forever_map_comparison" target="_blank" rel="noreferrer">
+          warcraft.wiki.gg
+        </a>
+        .
+      </p>
     </div>
   );
 }

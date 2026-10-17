@@ -103,7 +103,7 @@ The app has two views, switched from the header: the calculator (class picker, b
 | FR-22 | Guide | A starting-zone picker offers Durotar (Orc & Troll), Mulgore (Tauren), Tirisfal Glades (Undead) and Zephras Isle (Skyborne, Horde). The route starts there and never visits the other starting zones. | Must |
 | FR-23 | Guide | The URL is `#/leveling/<starting-zone>`; opening it restores the guide and starting zone, and an unknown zone falls back to Durotar. | Must |
 | FR-24 | Guide | A level timeline shows one row per zone or dungeon and one bar per visit along levels 1–60; zones and dungeons have different colours, unconfirmed level ranges are hatched, and hovering or focusing a bar shows the step, levels, quest hub and visit number. Clicking a bar selects that step. | Must |
-| FR-25 | Guide | A route map draws one continent at a time (Kalimdor or Eastern Kingdoms) with zones coloured by level band, dungeons, cities and ports, and the route's legs. It switches to the selected step's continent and highlights the leg into it; clicking a zone with several visits cycles through them. A caption says how to get to the selected step. | Must |
+| FR-25 | Guide | The route map is the in-game Forever map of one continent at a time (Kalimdor or Eastern Kingdoms). Each zone on the route is outlined on it and tinted by level band, with its name, level range and visit count; dungeons, cities and ports are marked and the route's legs drawn. Zones and dungeons are buttons: hovering or focusing one shows its levels, hubs and visits, and clicking selects it (a zone with several visits cycles through them). The map opens zoomed in on the selected step, follows it to its continent and keeps it in view; it pans by dragging and zooms with buttons, double-click or Ctrl/⌘ + scroll. A caption says how to get to the selected step. | Must |
 | FR-26 | Guide | The step list shows each step's number, name, zone or dungeon, visit number, quest hub and levels; the selected step expands to show how to get there, what to do and any unconfirmed details. Content new in Forever has a NEW badge. | Must |
 | FR-27 | Guide | "My level" selects the first unfinished step covering that level. | Should |
 | FR-28 | Guide | Each step has a "done" checkbox; the summary shows progress (done / total), which survives a reload; "Reset progress" clears it. | Should |
@@ -180,21 +180,24 @@ The guide plans a Horde completionist playthrough: every Horde quest hub and eve
 
 **Route rules (enforced by automated tests)**
 
-- The route is the chosen starting zone, then one shared route of 72 steps from level 10 to 60, ordered by the level each step starts at, with no level left uncovered.
+- The route is the chosen starting zone, then one shared route of 73 steps from level 10 to 60, ordered by the level each step starts at, with no level left uncovered.
 - Every non-starting Horde zone and every listed dungeon appears at least once; no step goes to a starting zone.
-- A step starts no more than 2 levels below its place's level range and ends within it. A completionist outlevels content, so arriving a little early is preferred to arriving late.
+- A step starts no more than 2 levels below its place's level range and ends within it.
+- Every zone with Horde quests has an outline on the map, and every dungeon entrance lies inside its zone or on an island just off its coast. A completionist outlevels content, so arriving a little early is preferred to arriving late.
 - Repeat visits to a place come at increasing levels and do not overlap.
-- Travel between steps is computed: crossing continents uses the zeppelin (Orgrimmar–Undercity, Orgrimmar–Grom'gol) arriving nearest the destination, the Ratchet–Booty Bay boat only when both places are near its docks, and the Undercity–Grom'gol zeppelin within the Eastern Kingdoms only when one end is in Tirisfal or Stranglethorn.
+- Travel between steps is computed: crossing continents uses the zeppelin (Orgrimmar–Undercity, Orgrimmar–Grom'gol) arriving nearest the destination; the boats (Ratchet–Booty Bay, Steamwheedle Port–Powderfuse Port) only when both places are near their docks; and the Undercity–Grom'gol zeppelin within the Eastern Kingdoms only when one end is in Tirisfal or Stranglethorn. Horde Skyborne leave Zephras Isle by airship to Skywatcher Plateau in Mulgore.
 
 **What is left out**
 
 - Other Horde starting zones, Alliance starting zones, and zones with no Horde quests (Westfall, Redridge, Duskwood, Loch Modan, Wetlands, Darkshore, Deadwind Pass, Moonglade).
-- Dungeons deep in Alliance territory: The Deadmines, The Stockade, Gnomeregan, and the new Hall of Thanes (beneath Ironforge) and Excavation Site (Wetlands).
+- Dungeons deep in Alliance territory: The Deadmines, The Stockade, Gnomeregan, and the new Hall of Thanes (inside Old Ironforge). The new Excavation Site in the Wetlands is on the route: it has Horde quests (from Hammerfall, Orgrimmar and Thunder Bluff) and the Horde reach it over the hills from Arathi Highlands.
 - Raids and battlegrounds.
 
-**Forever content.** The route includes the new zones Riverglades (mid-30s to mid-40s), Shen'dralas (range unannounced; placed at 42–46) and Mount Hyjal (60, endgame), the Skyborne starting zone Zephras Isle (1–12), and the new dungeons Ruins of Lordaeron, City of Dalaran, The Drowned City, Krol'dok Stronghold, Alcaz Island Prison, Blackmaw Hold and Shaper's Terrace. Their level ranges come from pre-launch coverage, not Blizzard data, and each is shown with a "Not confirmed" note. Classic zones and dungeons use their 2004 Horde quest levels and hubs.
+**Forever content.** The route includes the new zones Riverglades (35–45; Horde hub Rog'mar, with flights to Stonard, Kargath, Flame Crest and Hammerfall, and a ship from Powderfuse Port to Tanaris), Shen'dralas (range unannounced; entered from southern Desolace through the Valley of Bones; placed at 44–47) and Mount Hyjal (endgame, through Darkwhisper Gorge in Winterspring), the Skyborne starting zone Zephras Isle (1–12), and the new dungeons Ruins of Lordaeron, Excavation Site: Wetlands, City of Dalaran, The Drowned City, Krol'dok Stronghold, Alcaz Prison, Blackmaw Hold and Shaper's Terrace. Dungeon brackets are Blizzard's beta brackets where published; hubs, flight paths and ships come from beta client data. Anything not confirmed by Blizzard shows a "Not confirmed" note. Other zones use their Forever ranges where sources publish them (Travelcraft, Wowhead) and their 2004 Horde quest hubs.
 
-**Data.** Zones, dungeons, the route, map positions and exclusions live in `src/data/leveling.ts`; route building, travel directions and level lookups are pure functions in `src/lib/leveling.ts`. The guide loads as a separate chunk, so the calculator's first load does not grow.
+**Map.** The map images are the in-game Forever continent maps (1002×668 px), kept in `public/maps/`. Zone outlines in `src/data/mapShapes.ts` were traced from the zone borders on those images; where the map's own lettering hides a border (Stonetalon and Desolace, Searing Gorge, Burning Steppes, Badlands and Riverglades) the border is approximate.
+
+**Data.** Zones, dungeons, the route, map positions and exclusions live in `src/data/leveling.ts`, zone outlines in `src/data/mapShapes.ts`; route building, travel directions and level lookups are pure functions in `src/lib/leveling.ts`. The guide loads as a separate chunk, so the calculator's first load does not grow.
 
 ## Data model and content
 
@@ -257,7 +260,7 @@ The look follows the in-game talent frame: dark parchment panels, gold accents, 
 - **Theme:** dark only. Background near-black, panels dark brown, gold (#F8B700) for maxed talents and headings, green (#1EFF00) for learnable talents, red for unmet requirements.
 - **Type:** Cinzel for titles, tree and class names; Inter for body text.
 - **Icons:** game icons from the Wowhead CDN; when an icon fails to load, show the talent's initials on a dark tile.
-- **Leveling guide charts:** zone visits in blue and dungeons in orange on the timeline; map zones coloured by level band on a single blue ramp (1–19 darkest to 50–60 lightest), with labels and a legend so colour is never the only cue; the selected step is outlined in gold. The map is schematic (positions approximate the continents), not a game map.
+- **Leveling guide charts:** zone visits in blue and dungeons in orange on the timeline; on the map, route zones are tinted by level band on a single blue ramp (1–19 darkest to 50–60 lightest) over the in-game map, with labels, level ranges and a legend so colour is never the only cue; the selected zone is outlined in gold and other starting zones are shaded out.
 - **Tooltips:** game-style dark-blue panels; open to the right of talents in columns 1–2 and to the left in columns 3–4 so they stay inside the tree.
 - **Layout:** three trees side by side on desktop (each at least 290 px wide); they wrap to one column on narrow screens. No horizontal page scroll down to 375 px wide. Talent cells are 52 px (46 px under 400 px wide).
 
@@ -276,12 +279,12 @@ The app is a static single-page site with no backend, so it can be hosted on any
 | --- | --- |
 | Stack | React 18, TypeScript 5.6, Vite 5; Vitest for tests; ESLint |
 | Architecture | Calculator rules in one pure module (`src/lib/talents.ts`), separate from UI components and data files |
-| Performance | Initial load under 100 kB gzipped (about 90 kB JS + 5 kB CSS); the leveling guide loads on demand (about 12 kB); clicks update instantly |
+| Performance | Initial load under 100 kB gzipped (about 90 kB JS + 5 kB CSS); the leveling guide loads on demand (about 18 kB); clicks update instantly |
 | Browsers | Current Chrome, Edge, Firefox and Safari, desktop and mobile |
-| Offline / network | Works without a backend; icons and fonts need internet access (Wowhead CDN, Google Fonts) |
+| Offline / network | Works without a backend; icons and fonts need internet access (Wowhead CDN, Google Fonts); the two map images (about 190 kB each) are served with the app |
 | Privacy | No accounts, cookies, analytics or stored personal data; build state lives only in the URL. Leveling-guide progress (ticked step ids) is kept in the browser's local storage and never leaves the device |
 | Quality gates | Type-check, lint, unit tests and production build all pass before release |
-| Legal | Blizzard names and icons are used for fan purposes with a "Not affiliated with Blizzard Entertainment" notice |
+| Legal | Blizzard names, icons and map images are used for fan purposes with a "Not affiliated with Blizzard Entertainment" notice; the map credits Blizzard and warcraft.wiki.gg |
 
 ## Acceptance criteria
 
@@ -305,6 +308,7 @@ v1 is accepted when every item below passes; all were verified for the 17 Oct 20
 - [x] The guide's timeline shows three Barrens visits; clicking a bar or a map zone selects that step, and the map follows the step's continent.
 - [x] "My level" selects a step covering that level; ticked steps survive a reload and "Reset progress" clears them.
 - [x] Route rule tests pass (coverage of 10–60, every zone and dungeon visited, steps close to their level range); the guide has no horizontal scroll at 375 px.
+- [x] The route map shows the in-game continent map with clickable zone outlines; it zooms, pans and returns to the whole continent.
 
 ## Risks, open questions and roadmap
 
@@ -318,7 +322,8 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 | `isNew` flags assigned by hand from memory of Classic | Some talents mislabelled as new or not new | Review flags against an authoritative Classic list |
 | Third-party sources (wiki, Zockify, Wowhead CDN) change or block access | Data refresh or icons break | Keep data in the repo; initials fallback for icons; consider self-hosting icons |
 | Use of Blizzard names and art | Takedown request | Fan-site notice; no monetisation; remove assets on request |
-| Forever's new zones and dungeons are only known from pre-launch coverage | Leveling steps at the wrong level, or missing Horde hubs | Mark unconfirmed content in the guide; re-check levels and hubs at launch |
+| Forever's new zones and dungeons are only known from pre-launch coverage and beta data | Leveling steps at the wrong level, or missing Horde hubs | Mark unconfirmed content in the guide; re-check levels and hubs at launch |
+| Map images or zone borders change at launch | Outlines no longer match the map | Re-trace `mapShapes.ts` from the launch map; tests check every zone has an outline and every entrance sits in its zone |
 | Blizzard revamps classic zones ("expanded and overhauled") without saying which | Classic quest hubs or levels in the guide may be out of date | Review each zone against the live game at launch |
 
 **Open questions**
@@ -330,8 +335,9 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 - [ ] Should the data source change from beta data to an official source once one exists?
 - [ ] Are Paladin and Shaman still faction-locked in Forever? The quiz assumes the Classic rule.
 - [ ] Should quiz results be shareable as a link?
-- [ ] Where do Horde Skyborne go after Zephras Isle? The guide assumes Orgrimmar and the Barrens.
-- [ ] What level range and Horde hubs do Shen'dralas, Riverglades and the new dungeons have at launch?
+- [ ] Does the Steamwheedle Port–Powderfuse Port ship sail at launch, and does Powderfuse Port get a Horde flight path?
+- [ ] What level range and Horde hubs does Shen'dralas have, and which new dungeons have Horde quests?
+- [ ] Does the Horde still need the Dalaran Sewer Key for City of Dalaran after the Oct 15 change?
 - [ ] Should there be an Alliance leveling guide?
 
 **Roadmap**
@@ -350,3 +356,7 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 - [Warcraft Tavern — All new zones and areas in WoW: Forever](https://www.warcrafttavern.com/forever/news/all-new-zones-areas-in-wow-forever-revealed-at-blizzcon/)
 - [Gfinity — Skyborne race and Zephras Isle guide](https://www.gfinityesports.com/article/world-of-warcraft-forever-skyborne-race-zephras-isle-guide)
 - [AccountShark — WoW Forever preview: zones, dungeons and races](https://accountshark.net/blog/wow-forever-complete-preview-2026-zones-dungeons-races) (new dungeon level ranges, citing Wowhead)
+- [Travelcraft — WoW Forever guide: zones and levels](https://wow-travelcraft.com/guide.html) (zone ranges, flight paths, ships)
+- [WoW Forever Guides — leveling](https://wowforeverguides.com/leveling) (beta client data: Rog'mar, Excavation Site and Ruins of Lordaeron quests, Blizzard dungeon brackets)
+- [ConquestCapped — WoW Forever new zones](https://conquestcapped.com/guides/wow-forever/wow-forever-new-zones/) and [LFCarry — WoW Forever new zones](https://lfcarry.com/guides/wow-forever-new-zones) (Riverglades, Shen'dralas, Hyjal access, Dalaran change)
+- [warcraft.wiki.gg — Forever map comparison](https://warcraft.wiki.gg/wiki/Forever_map_comparison) (continent map images)
