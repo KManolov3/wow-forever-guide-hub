@@ -378,12 +378,12 @@ export const DUNGEONS: Dungeon[] = [
     name: "Ruins of Lordaeron",
     zone: "tirisfal",
     levels: [15, 20],
-    map: { x: 470, y: 145 },
+    map: { x: 469, y: 141 },
     isNew: true,
   },
   { id: "wailing-caverns", name: "Wailing Caverns", zone: "barrens", levels: [15, 24], map: { x: 518, y: 352 } },
   { id: "blackfathom-deeps", name: "Blackfathom Deeps", zone: "ashenvale", levels: [24, 32], map: { x: 463, y: 262 } },
-  { id: "shadowfang-keep", name: "Shadowfang Keep", zone: "silverpine", levels: [22, 30], map: { x: 416, y: 218 } },
+  { id: "shadowfang-keep", name: "Shadowfang Keep", zone: "silverpine", levels: [22, 30], map: { x: 416, y: 221 } },
   {
     id: "excavation-site",
     name: "Excavation Site: Wetlands",
@@ -400,7 +400,7 @@ export const DUNGEONS: Dungeon[] = [
     name: "City of Dalaran",
     zone: "alterac",
     levels: [28, 33],
-    map: { x: 452, y: 196 },
+    map: { x: 451, y: 199 },
     isNew: true,
     unconfirmed: "Since Oct 15 the Horde are attacked on sight in Dalaran; the dungeon stays open through the sewer gate. Horde quest givers are not confirmed.",
   },
@@ -439,8 +439,8 @@ export const DUNGEONS: Dungeon[] = [
     unconfirmed: "Blizzard's bracket is 48–53; Horde quests are not confirmed.",
   },
   { id: "sunken-temple", name: "Sunken Temple", zone: "swamp-of-sorrows", levels: [50, 60], map: { x: 546, y: 512 } },
-  { id: "blackrock-depths", name: "Blackrock Depths", zone: "burning-steppes", levels: [52, 60], map: { x: 503, y: 437 } },
-  { id: "lower-blackrock-spire", name: "Lower Blackrock Spire", zone: "burning-steppes", levels: [55, 60], map: { x: 511, y: 437 } },
+  { id: "blackrock-depths", name: "Blackrock Depths", zone: "burning-steppes", levels: [52, 60], map: { x: 501, y: 437 } },
+  { id: "lower-blackrock-spire", name: "Lower Blackrock Spire", zone: "burning-steppes", levels: [55, 60], map: { x: 513, y: 437 } },
   { id: "dire-maul", name: "Dire Maul", zone: "feralas", levels: [55, 60], map: { x: 440, y: 482 } },
   {
     id: "blackmaw-hold",
@@ -453,7 +453,7 @@ export const DUNGEONS: Dungeon[] = [
   },
   { id: "scholomance", name: "Scholomance", zone: "western-plaguelands", levels: [58, 60], map: { x: 524, y: 176 } },
   { id: "stratholme", name: "Stratholme", zone: "eastern-plaguelands", levels: [58, 60], map: { x: 560, y: 108 } },
-  { id: "upper-blackrock-spire", name: "Upper Blackrock Spire", zone: "burning-steppes", levels: [58, 60], map: { x: 511, y: 437 } },
+  { id: "upper-blackrock-spire", name: "Upper Blackrock Spire", zone: "burning-steppes", levels: [58, 60], map: { x: 513, y: 437 } },
   {
     id: "shapers-terrace",
     name: "Shaper's Terrace",
@@ -944,8 +944,8 @@ export const CONTEXT_ZONES: ContextZone[] = [
   { name: "Elwynn Forest", continent: "eastern-kingdoms", map: { x: 463, y: 476 } },
   { name: "Redridge", continent: "eastern-kingdoms", map: { x: 533, y: 478 } },
   { name: "Westfall", continent: "eastern-kingdoms", map: { x: 418, y: 520 } },
-  { name: "Duskwood", continent: "eastern-kingdoms", map: { x: 472, y: 520 } },
-  { name: "Deadwind Pass", continent: "eastern-kingdoms", map: { x: 509, y: 522 } },
+  { name: "Duskwood", continent: "eastern-kingdoms", map: { x: 462, y: 526 } },
+  { name: "Deadwind Pass", continent: "eastern-kingdoms", map: { x: 514, y: 528 } },
 ];
 
 /** Content the route skips on purpose, and why. */

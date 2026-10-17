@@ -823,6 +823,12 @@ Answers are matched by the start of their label. Tank answers used below, in que
 - **Expected:** After each click the map is centred on that zone and its whole outline is visible. The Barrens zooms in from the whole-continent view, Durotar (smaller) zooms in further, and Durotar becomes the selected step.
 
 
+### TC-80 Route map labels don't overlap at the whole-continent view
+- **PRD:** FR-25
+- **Preconditions:** `http://localhost:5173/#/leveling/durotar`, then again with `#/leveling/tirisfal`
+- **Steps:** On each continent tab, click "Show the whole continent".
+- **Expected:** No zone label, context label or city/port label overlaps another label, a city/port marker or a dungeon marker.
+
 ### TC-76 A step's zone map pins its quest hubs and highlights the step's hub
 - **PRD:** FR-30
 - **Preconditions:** `http://localhost:5173/#/leveling`
@@ -888,6 +894,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | Guide starts in the chosen zone, skips other starting zones and Alliance dungeons | TC-66 |
 | Guide timeline shows three Barrens visits; bars and map zones select steps; map follows the continent | TC-68, TC-69 |
 | Route map is the in-game map with clickable zone outlines, zoom and pan | TC-74 |
+| Route map labels don't overlap each other or markers at the whole-continent view | TC-80 |
 | Zone map opens from the step or route map, pins hubs with the step's highlighted, switches trips and steps in place, fits 375 px | TC-76, TC-77, TC-78, TC-79 |
 | "My level" lookup; progress survives reload and resets | TC-70, TC-71 |
 | Route rule tests pass; guide has no horizontal scroll at 375 px | Vitest `src/lib/leveling.test.ts`; TC-72 |
@@ -921,7 +928,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-22 | TC-66 |
 | FR-23 | TC-67 |
 | FR-24 | TC-68 |
-| FR-25 | TC-69, TC-74, TC-75 |
+| FR-25 | TC-69, TC-74, TC-75, TC-80 |
 | FR-26 | TC-68 |
 | FR-27 | TC-70 |
 | FR-28 | TC-71 |

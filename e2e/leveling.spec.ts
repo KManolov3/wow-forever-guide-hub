@@ -166,6 +166,48 @@ test.describe("M. Leveling guide", () => {
     await expect(currentStep(page).locator(".step-name")).toHaveText("Durotar");
   });
 
+  for (const start of ["durotar", "tirisfal"]) {
+    test(`TC-80 no route map label overlaps another label or marker at the whole-continent view (${start})`, async ({
+      page,
+    }) => {
+      await loadGuide(page, `#/leveling/${start}`);
+      for (const continent of ["Kalimdor", "Eastern Kingdoms"]) {
+        await continentTab(page, continent).click();
+        const whole = page.getByRole("button", { name: "Show the whole continent" });
+        if (await whole.isEnabled()) await whole.click();
+        const overlaps = await page.locator(".map-frame svg").evaluate((svg: SVGSVGElement) => {
+          const toMap = svg.getScreenCTM()!.inverse();
+          const items: { name: string; owner: Element; box: [number, number, number, number] }[] = [];
+          const add = (el: Element, name: string, owner: Element) => {
+            const r = el.getBoundingClientRect();
+            const a = new DOMPoint(r.left, r.top).matrixTransform(toMap);
+            const b = new DOMPoint(r.right, r.bottom).matrixTransform(toMap);
+            items.push({ name, owner, box: [a.x, a.y, b.x, b.y] });
+          };
+          svg.querySelectorAll(".zone-label, .map-context").forEach((el) => add(el, el.textContent!, el));
+          svg.querySelectorAll(".map-landmark").forEach((g) => {
+            add(g.querySelector("rect")!, `${g.textContent} dot`, g);
+            add(g.querySelector("text")!, g.textContent!, g);
+          });
+          svg.querySelectorAll(".map-marker.dungeon").forEach((g) => add(g.querySelector(".dungeon-dot")!, g.getAttribute("aria-label")!, g));
+          // Text boxes span the whole line height, so allow a sliver of overlap where glyphs don't actually touch.
+          const slack = 1;
+          const found: string[] = [];
+          items.forEach((p, i) =>
+            items.slice(i + 1).forEach((q) => {
+              if (p.owner === q.owner) return;
+              const w = Math.min(p.box[2], q.box[2]) - Math.max(p.box[0], q.box[0]);
+              const h = Math.min(p.box[3], q.box[3]) - Math.max(p.box[1], q.box[1]);
+              if (w > slack && h > slack) found.push(`${p.name} × ${q.name}`);
+            }),
+          );
+          return found;
+        });
+        expect(overlaps, continent).toEqual([]);
+      }
+    });
+  }
+
   test("TC-76 a step's zone map pins its quest hubs and highlights the step's hub", async ({ page }) => {
     await loadGuide(page);
     await steps(page).filter({ hasText: "Ruins of Lordaeron" }).locator(".step-main").click();

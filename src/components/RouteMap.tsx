@@ -100,6 +100,8 @@ const centredOn = (p: MapPoint, zoom: number, fit: View, aspect: number) => {
   return clampView({ x: p.x - width / 2, y: p.y - (width * aspect) / 2, width, height: width * aspect }, fit, aspect);
 };
 
+const labelAt = (zoneId: string) => ZONE_SHAPES[zoneId].label ?? ZONE_SHAPES[zoneId].anchor;
+
 const inView = (p: MapPoint, v: View) => p.x >= v.x && p.x <= v.x + v.width && p.y >= v.y && p.y <= v.y + v.height;
 
 /** The in-game continent map with the route's zones outlined, its legs drawn, and pan and zoom. */
@@ -286,7 +288,7 @@ export function RouteMap({ route, selected, done, onSelect, onOpenZone }: Props)
 
   const contextLabels = [
     ...CONTEXT_ZONES.filter((z) => z.continent === shown),
-    ...otherStarts.map((z) => ({ name: z.name, map: ZONE_SHAPES[z.id].anchor })),
+    ...otherStarts.map((z) => ({ name: z.name, map: labelAt(z.id) })),
   ];
 
   return (
@@ -384,17 +386,20 @@ export function RouteMap({ route, selected, done, onSelect, onOpenZone }: Props)
             </text>
           ))}
 
-          {zoneMarkers.map((m) => (
-            <g key={m.key} className={`zone-label ${stateClasses(m)}`} aria-hidden="true">
-              <text x={m.map.x} y={m.map.y} fontSize={9.5 * k}>
-                {m.places[0].name}
-              </text>
-              <text className="zone-label-levels" x={m.map.x} y={m.map.y + 9 * k} fontSize={7.5 * k}>
-                {levelText(m.places[0].levels)}
-                {m.steps.length > 1 && ` · ×${m.steps.length}`}
-              </text>
-            </g>
-          ))}
+          {zoneMarkers.map((m) => {
+            const at = labelAt(m.places[0].id);
+            return (
+              <g key={m.key} className={`zone-label ${stateClasses(m)}`} aria-hidden="true">
+                <text x={at.x} y={at.y} fontSize={9.5 * k}>
+                  {m.places[0].name}
+                </text>
+                <text className="zone-label-levels" x={at.x} y={at.y + 9 * k} fontSize={7.5 * k}>
+                  {levelText(m.places[0].levels)}
+                  {m.steps.length > 1 && ` · ×${m.steps.length}`}
+                </text>
+              </g>
+            );
+          })}
 
           {dungeonMarkers.map((m) => {
             const r = 4 * k;
