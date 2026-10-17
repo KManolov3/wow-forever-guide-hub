@@ -21,8 +21,10 @@ const BAND_LABELS = ["1–19", "20–29", "30–39", "40–49", "50–60"];
 const MAX_ZOOM = 5;
 /** Zoom the map opens at, centred on the selected step. */
 const START_ZOOM = 1.6;
-/** Space left around a clicked zone's outline, as a multiple of its size. */
-const ZONE_PADDING = 1.3;
+/** Space left around a clicked zone's outline, as a multiple of its size, so its neighbours stay in view. */
+const ZONE_PADDING = 2.5;
+/** Most a clicked zone is zoomed in to, so even small zones keep their surroundings on the map. */
+const ZONE_ZOOM = 2.5;
 /** Least zoom a clicked dungeon is shown at. */
 const DUNGEON_ZOOM = 2.5;
 /** Pointer movement, in screen pixels, after which a press counts as a drag rather than a click. */
@@ -84,13 +86,13 @@ function clampView(v: View, fit: View, aspect: number): View {
   };
 }
 
-/** The view that frames a zone's outline with some room around it, as close as MAX_ZOOM allows. */
+/** The view that frames a zone's outline with its neighbours around it, zoomed in at most ZONE_ZOOM. */
 function zoneView(id: string, fit: View, aspect: number): View {
   const pts = ZONE_SHAPES[id].points.split(" ").map((p) => p.split(",").map(Number));
   const xs = pts.map(([x]) => x);
   const ys = pts.map(([, y]) => y);
   const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
-  const width = Math.max((x1 - x0) * ZONE_PADDING, ((y1 - y0) * ZONE_PADDING) / aspect);
+  const width = Math.max((x1 - x0) * ZONE_PADDING, ((y1 - y0) * ZONE_PADDING) / aspect, fit.width / ZONE_ZOOM);
   const height = width * aspect;
   return clampView({ x: (x0 + x1 - width) / 2, y: (y0 + y1 - height) / 2, width, height }, fit, aspect);
 }
