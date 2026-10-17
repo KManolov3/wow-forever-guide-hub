@@ -133,6 +133,39 @@ test.describe("M. Leveling guide", () => {
     await expect(currentStep(page).locator(".step-name")).toHaveText("Durotar");
   });
 
+  test("TC-75 clicking a zone centres the map on it and zooms to fit it", async ({ page }) => {
+    await loadGuide(page);
+    const map = page.getByRole("group", { name: "Route map of Kalimdor" });
+    const view = async () => (await map.getAttribute("viewBox"))!.split(" ").map(Number);
+    /** Centre of a zone outline's bounding box, in map coordinates. */
+    const zoneCentre = (name: RegExp) =>
+      page.getByRole("button", { name }).evaluate((el) => {
+        const b = (el as SVGGraphicsElement).getBBox();
+        return [b.x + b.width / 2, b.y + b.height / 2, b.width, b.height];
+      });
+    const expectFramed = async (name: RegExp) => {
+      const [x, y, w, h] = await view();
+      const [cx, cy, zw, zh] = await zoneCentre(name);
+      expect(Math.abs(x + w / 2 - cx), "centred horizontally").toBeLessThan(w * 0.1);
+      expect(Math.abs(y + h / 2 - cy), "centred vertically").toBeLessThan(h * 0.1);
+      expect(zw).toBeLessThanOrEqual(w);
+      expect(zh).toBeLessThanOrEqual(h);
+      return w;
+    };
+
+    await page.getByRole("button", { name: "Show the whole continent" }).click();
+    const full = (await view())[2];
+
+    await page.getByRole("button", { name: /^The Barrens, levels/ }).click();
+    const barrens = await expectFramed(/^The Barrens, levels/);
+    expect(barrens).toBeLessThan(full);
+
+    await page.getByRole("button", { name: /^Durotar, levels/ }).click();
+    const durotar = await expectFramed(/^Durotar, levels/);
+    expect(durotar, "a smaller zone zooms in further").toBeLessThan(barrens);
+    await expect(currentStep(page).locator(".step-name")).toHaveText("Durotar");
+  });
+
   test("TC-70 'My level' jumps to a step covering that level", async ({ page }) => {
     await loadGuide(page);
     await page.getByLabel("My level").fill("27");

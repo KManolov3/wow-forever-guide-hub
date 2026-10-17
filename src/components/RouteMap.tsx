@@ -19,6 +19,10 @@ const BAND_LABELS = ["1–19", "20–29", "30–39", "40–49", "50–60"];
 const MAX_ZOOM = 5;
 /** Zoom the map opens at, centred on the selected step. */
 const START_ZOOM = 1.6;
+/** Space left around a clicked zone's outline, as a multiple of its size. */
+const ZONE_PADDING = 1.3;
+/** Least zoom a clicked dungeon is shown at. */
+const DUNGEON_ZOOM = 2.5;
 /** Pointer movement, in screen pixels, after which a press counts as a drag rather than a click. */
 const DRAG_THRESHOLD = 4;
 
@@ -76,6 +80,17 @@ function clampView(v: View, fit: View, aspect: number): View {
     width,
     height,
   };
+}
+
+/** The view that frames a zone's outline with some room around it, as close as MAX_ZOOM allows. */
+function zoneView(id: string, fit: View, aspect: number): View {
+  const pts = ZONE_SHAPES[id].points.split(" ").map((p) => p.split(",").map(Number));
+  const xs = pts.map(([x]) => x);
+  const ys = pts.map(([, y]) => y);
+  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const width = Math.max((x1 - x0) * ZONE_PADDING, ((y1 - y0) * ZONE_PADDING) / aspect);
+  const height = width * aspect;
+  return clampView({ x: (x0 + x1 - width) / 2, y: (y0 + y1 - height) / 2, width, height }, fit, aspect);
 }
 
 const centredOn = (p: MapPoint, zoom: number, fit: View, aspect: number) => {
@@ -206,8 +221,14 @@ export function RouteMap({ route, selected, done, onSelect }: Props) {
     setTimeout(() => (drag.current = null));
   };
 
+  /** Selects a zone or dungeon and brings it into focus: a zone fills the map, a dungeon is centred. */
   const activate = (m: Marker) => {
     if (drag.current?.moved) return;
+    setView(
+      m.kind === "zone"
+        ? zoneView(m.places[0].id, fit, aspect)
+        : centredOn(m.map, Math.max(zoom, DUNGEON_ZOOM), fit, aspect),
+    );
     onSelect(m.steps.includes(selected) ? nextVisit(m.steps, selected) : m.steps[0]);
   };
   const onKey = (e: KeyboardEvent, m: Marker) => {

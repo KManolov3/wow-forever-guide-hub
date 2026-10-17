@@ -816,6 +816,12 @@ Answers are matched by the start of their label. Tank answers used below, in que
 - **Steps:** Check the map image loads; click "Show the whole continent", "Zoom in", drag the map sideways, then "Show the whole continent" again; select Wailing Caverns and click the Durotar outline.
 - **Expected:** The map image is `maps/kalimdor.webp` and loads. The whole-continent button is disabled when nothing is zoomed; zooming in shrinks the view and enables it; dragging pans; the button restores the full view. Clicking Durotar selects step 1.
 
+### TC-75 Clicking a zone centres the map on it and zooms to fit it
+- **PRD:** FR-25
+- **Preconditions:** `http://localhost:5173/#/leveling`
+- **Steps:** Click "Show the whole continent", then click The Barrens outline, then the Durotar outline.
+- **Expected:** After each click the map is centred on that zone and its whole outline is visible. The Barrens zooms in from the whole-continent view, Durotar (smaller) zooms in further, and Durotar becomes the selected step.
+
 ### TC-70 "My level" jumps to a covering step
 - **PRD:** FR-27
 - **Steps:** Enter 27 in "My level" and click "Find step".
@@ -891,7 +897,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-22 | TC-66 |
 | FR-23 | TC-67 |
 | FR-24 | TC-68 |
-| FR-25 | TC-69, TC-74 |
+| FR-25 | TC-69, TC-74, TC-75 |
 | FR-26 | TC-68 |
 | FR-27 | TC-70 |
 | FR-28 | TC-71 |
