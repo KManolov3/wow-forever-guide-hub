@@ -6,6 +6,7 @@ The product specification is [docs/PRD.md](docs/PRD.md). Treat it as the source 
 
 - `npm run dev` – start the dev server
 - `npm test` – unit and data-validation tests (Vitest)
+- `npm run test:e2e` – browser tests for [docs/test-cases.md](docs/test-cases.md) (Playwright, `e2e/`); starts the dev server if one isn't running
 - `npm run lint` – ESLint
 - `npm run build` – type-check and production build
 

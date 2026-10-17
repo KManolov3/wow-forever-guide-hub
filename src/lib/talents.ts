@@ -20,7 +20,7 @@ export const totalPoints = (build: Build) =>
   build.reduce((sum, ranks) => sum + treePoints(ranks), 0);
 
 export const requiredLevel = (points: number) =>
-  points === 0 ? 0 : FIRST_TALENT_LEVEL + points;
+  points === 0 ? 0 : FIRST_TALENT_LEVEL - 1 + points;
 
 export const tierRequirement = (tier: number) => (tier - 1) * POINTS_PER_TIER;
 
@@ -102,7 +102,11 @@ export function encodeBuild(cls: WowClass, build: Build): string {
     .join("-");
 }
 
-/** Decodes a build string, replaying points in tier order so invalid input is dropped rather than trusted. */
+/**
+ * Decodes a build string, replaying points in tier order so invalid input is dropped rather than trusted.
+ * Each tier is replayed until it stops changing, so a prerequisite in the same tier is applied
+ * before its dependent regardless of which column comes first.
+ */
 export function decodeBuild(cls: WowClass, encoded: string): Build {
   const parts = encoded.split("-");
   let build = emptyBuild(cls);
@@ -111,9 +115,18 @@ export function decodeBuild(cls: WowClass, encoded: string): Build {
   );
   for (let tier = 1; tier <= 7; tier++) {
     wanted.forEach((entries, treeIndex) => {
-      for (const { talent, rank } of entries) {
-        if (talent.tier !== tier) continue;
-        for (let r = 0; r < rank; r++) build = addPoint(cls, build, treeIndex, talent);
+      const inTier = entries.filter(({ talent }) => talent.tier === tier);
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (const { talent, rank } of inTier) {
+          while (rankOf(build, treeIndex, talent.id) < rank) {
+            const next = addPoint(cls, build, treeIndex, talent);
+            if (next === build) break;
+            build = next;
+            changed = true;
+          }
+        }
       }
     });
   }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { CLASSES, findClass } from "./data/classes";
 import type { WowClass } from "./data/types";
+import { ClassQuiz } from "./components/ClassQuiz";
 import { Icon } from "./components/Icon";
 import { TalentTreeView } from "./components/TalentTreeView";
 import {
@@ -34,6 +35,8 @@ function readHash(): State {
 export default function App() {
   const [{ cls, build }, setState] = useState<State>(readHash);
   const [copied, setCopied] = useState(false);
+  const [quizOpen, setQuizOpen] = useState(false);
+  const [suggested, setSuggested] = useState<{ classId: string; treeIndex: number } | null>(null);
 
   const encoded = useMemo(() => encodeBuild(cls, build), [cls, build]);
 
@@ -52,7 +55,16 @@ export default function App() {
   const split = build.map(treePoints).join(" / ");
   const daysToLaunch = Math.ceil((LAUNCH.getTime() - Date.now()) / 86_400_000);
 
-  const selectClass = (next: WowClass) => setState({ cls: next, build: emptyBuild(next) });
+  const selectClass = (next: WowClass) => {
+    setSuggested(null);
+    setState({ cls: next, build: emptyBuild(next) });
+  };
+
+  const chooseFromQuiz = (next: WowClass, treeIndex: number) => {
+    setState({ cls: next, build: emptyBuild(next) });
+    setSuggested({ classId: next.id, treeIndex });
+    setQuizOpen(false);
+  };
 
   const copyLink = async () => {
     try {
@@ -76,7 +88,12 @@ export default function App() {
             {daysToLaunch > 0 ? `launches in ${daysToLaunch} day${daysToLaunch === 1 ? "" : "s"}` : "now live"}
           </p>
         </div>
+        <button className="quiz-launch" onClick={() => setQuizOpen(true)} aria-haspopup="dialog">
+          Find my class
+        </button>
       </header>
+
+      <ClassQuiz open={quizOpen} onClose={() => setQuizOpen(false)} onChoose={chooseFromQuiz} />
 
       <nav className="class-picker" aria-label="Choose a class">
         {CLASSES.map((c) => (
@@ -88,7 +105,7 @@ export default function App() {
             aria-pressed={c.id === cls.id}
           >
             <Icon name={c.icon ?? `classicon_${c.id}`} label={c.name} size={36} className="round" />
-            <span>{c.name}</span>
+            <span className="class-label">{c.name}</span>
           </button>
         ))}
       </nav>
@@ -130,6 +147,7 @@ export default function App() {
                 cls={cls}
                 build={build}
                 treeIndex={i}
+                suggested={suggested?.classId === cls.id && suggested.treeIndex === i}
                 onAdd={(t) => setState((s) => ({ ...s, build: addPoint(s.cls, s.build, i, t) }))}
                 onRemove={(t) => setState((s) => ({ ...s, build: removePoint(s.cls, s.build, i, t) }))}
                 onReset={() => setState((s) => ({ ...s, build: resetTree(s.build, i) }))}

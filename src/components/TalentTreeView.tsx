@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import type { Talent, WowClass } from "../data/types";
 import {
   type Build,
@@ -18,6 +18,8 @@ interface Props {
   cls: WowClass;
   build: Build;
   treeIndex: number;
+  /** Marks the tree as the spec the class quiz recommended. */
+  suggested?: boolean;
   onAdd: (talent: Talent) => void;
   onRemove: (talent: Talent) => void;
   onReset: () => void;
@@ -25,7 +27,7 @@ interface Props {
 
 const COLUMNS = 4;
 
-export function TalentTreeView({ cls, build, treeIndex, onAdd, onRemove, onReset }: Props) {
+export function TalentTreeView({ cls, build, treeIndex, suggested = false, onAdd, onRemove, onReset }: Props) {
   const tree = cls.trees[treeIndex];
   const ranks = build[treeIndex];
   const spent = treePoints(ranks);
@@ -33,10 +35,11 @@ export function TalentTreeView({ cls, build, treeIndex, onAdd, onRemove, onReset
   const [hovered, setHovered] = useState<Talent | null>(null);
 
   return (
-    <section className="tree">
+    <section className={`tree ${suggested ? "suggested" : ""}`}>
       <header className="tree-header">
         <Icon name={tree.icon} label={tree.name} size={28} className="round" />
         <h2>{tree.name}</h2>
+        {suggested && <span className="suggested-badge">Suggested</span>}
         <span className="tree-points">{spent}</span>
         <button className="link-button" onClick={onReset} disabled={spent === 0} title="Reset tree">
           Reset
@@ -61,7 +64,7 @@ export function TalentTreeView({ cls, build, treeIndex, onAdd, onRemove, onReset
               className={`talent-cell col-${talent.column}`}
               style={{ gridColumn: talent.column, gridRow: talent.tier }}
             >
-              {prereq && <Arrow from={prereq} to={talent} active={unlocked} />}
+              {prereq && <Arrow from={prereq} to={talent} active={!missingPrereq} />}
               <button
                 className={`talent ${state}`}
                 aria-label={`${talent.name}, rank ${rank} of ${talent.maxRank}`}
@@ -120,10 +123,49 @@ interface TooltipProps {
   canRemove: boolean;
 }
 
+/** Space kept between the tooltip and the talent, and between the tooltip and the tree's edge. */
+const TOOLTIP_GAP = 10;
+const TOOLTIP_EDGE = 8;
+/** Narrower than this, a side tooltip is unreadable, so it opens below the talent instead. */
+const TOOLTIP_MIN_WIDTH = 200;
+
+/**
+ * Keeps the tooltip inside its tree: it opens beside the talent (right for columns 1–2, left for 3–4),
+ * narrowing to the space available, and moves below the talent when the side is too narrow.
+ */
+function useTooltipPlacement(column: number) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [style, setStyle] = useState<React.CSSProperties>();
+
+  useLayoutEffect(() => {
+    const tip = ref.current;
+    const cell = tip?.parentElement?.getBoundingClientRect();
+    const bounds = tip?.closest(".tree")?.getBoundingClientRect();
+    if (!tip || !cell || !bounds) return;
+    const width = tip.offsetWidth;
+    const opensRight = column <= COLUMNS / 2;
+    const available = opensRight
+      ? bounds.right - TOOLTIP_EDGE - (cell.right + TOOLTIP_GAP)
+      : cell.left - TOOLTIP_GAP - (bounds.left + TOOLTIP_EDGE);
+    if (available >= width) return;
+    if (available >= TOOLTIP_MIN_WIDTH) {
+      setStyle({ width: available });
+      return;
+    }
+    const belowWidth = Math.min(width, bounds.width - 2 * TOOLTIP_EDGE);
+    const centred = cell.left + cell.width / 2 - belowWidth / 2;
+    const left = Math.min(Math.max(centred, bounds.left + TOOLTIP_EDGE), bounds.right - TOOLTIP_EDGE - belowWidth);
+    setStyle({ left: left - cell.left, right: "auto", top: cell.height + TOOLTIP_GAP, width: belowWidth });
+  }, [column]);
+
+  return { ref, style };
+}
+
 function Tooltip({ talent, rank, tierNeed, tierMet, prereq, treeName, canRemove }: TooltipProps) {
   const hasNext = rank < talent.maxRank && talent.ranks.length > 1;
+  const { ref, style } = useTooltipPlacement(talent.column);
   return (
-    <div className="tooltip" role="tooltip">
+    <div className="tooltip" role="tooltip" ref={ref} style={style}>
       <div className="tooltip-title">
         {talent.name}
         {talent.isNew && <span className="new-badge inline">NEW IN FOREVER</span>}

@@ -43,6 +43,7 @@ The primary user is a WoW: Forever player choosing or refining a spec. Secondary
 5. As a player, I can spot talents that are new in Forever, so I can learn what changed from Classic.
 6. As a guide writer, I copy a link that restores my exact build, so I can share it in guides and chat.
 7. As a player on a phone, I can use the calculator without horizontal scrolling.
+8. As a new player, I answer a short quiz about how I like to play and get a recommended class and spec, so I know where to start.
 
 ## Scope
 
@@ -56,6 +57,7 @@ v1 is a single-page, client-only calculator for class talents; anything account-
 - Build summary: points spent, tree split, required level
 - Shareable build links and reset (per tree and whole build)
 - Responsive layout for desktop, tablet and phone
+- A class-choice quiz that recommends a class and spec from playstyle answers
 
 **Out of scope (v1)**
 
@@ -65,11 +67,11 @@ v1 is a single-page, client-only calculator for class talents; anything account-
 - User accounts, saved builds or a backend
 - Races and racials
 - Localisation (English only)
-- A class-choice quiz (planned next, see Roadmap)
+- Suggested starter builds from the quiz (see Roadmap: build library)
 
 ## Functional requirements
 
-The calculator is one screen: header, class picker, build summary bar, three trees side by side, and a footer with help and data attribution.
+The calculator is one screen: header (with the class quiz button), class picker, build summary bar, three trees side by side, and a footer with help and data attribution. The class quiz opens as a modal dialog over it.
 
 | ID | Area | Requirement | Priority |
 | --- | --- | --- | --- |
@@ -89,6 +91,10 @@ The calculator is one screen: header, class picker, build summary bar, three tre
 | FR-14 | Sharing | The URL always reflects the current class and build; "Copy link" copies it and confirms with "Copied!". If the clipboard is unavailable, show the link in a prompt. | Must |
 | FR-15 | Sharing | Opening a link restores the class and build; editing the URL hash in place updates the view. | Must |
 | FR-16 | Footer | Show controls help, a link to the data source, a beta-data disclaimer and "Not affiliated with Blizzard Entertainment". | Must |
+| FR-17 | Quiz | A "Find my class" button in the header opens the class quiz in a modal dialog; Esc or the close button closes it without changing the build. | Must |
+| FR-18 | Quiz | Show one question at a time with "Question N of 8" progress; choosing an answer moves to the next question; "Back" returns to the previous one with the earlier answer marked. | Must |
+| FR-19 | Quiz | After the last question, show the best match (class, spec, match %, a class tagline and the reasons from the answers) and the next two classes; "Retake quiz" starts over. Reopening the dialog shows the last results until the quiz is retaken or the page reloads. | Must |
+| FR-20 | Quiz | "Open <Class> talents" closes the quiz, selects that class with an empty build, and marks the recommended tree "Suggested" until the class changes. | Must |
 
 ## Talent rules
 
@@ -136,6 +142,24 @@ The checks run in order on every click; the first failed check stops it, and the
 - Each tree is one digit per talent, in tier then column order; trailing zeros and empty trailing trees are trimmed.
 - When decoding, points are replayed tier by tier through the normal rules, so an invalid or tampered link drops illegal points instead of producing an impossible build.
 - An unknown class id falls back to the first class.
+
+## Class quiz
+
+The quiz scores every spec against the answers and recommends the class whose best spec scores highest. It runs entirely in the browser and stores nothing.
+
+**Tone.** The quiz is written for experienced WoW players. Each question is a joke scenario built on WoW and gamer stereotypes (pulling before the healer has mana, Tarren Mill on fire, "Can it tank?"), so the answer that leads to each trait is not obvious. Reasons on the result use the same voice, and the best match ends with a one-line class send-off.
+
+**Questions (in order), by what they measure:** group role, class fantasy, main activity (solo, dungeons and raids, PvP), pet companion, rotation complexity, fight style (burst, damage over time, crowd control, support), survival style, and faction (where you hearth to).
+
+**Scoring**
+
+- Each spec has a profile of playstyle traits (e.g. `tank`, `holy`, `pet`, `burst`). Each answer gives weights to traits; a spec's score is the sum of the weights of its traits over all answers. Some weights are negative (e.g. "I'd rather fight alone" counts against pet specs).
+- A class's score is its best spec's score; classes are ranked by that, ties in class-picker order.
+- Match % = the spec's score ÷ the highest score the chosen answers could give, rounded and never below 0.
+- Reasons are the answers that added points to the recommended spec.
+- Faction: Alliance excludes Shaman and Horde excludes Paladin, as in Classic; "Not decided yet" excludes nothing.
+
+Questions, spec profiles and class taglines live in `src/data/quiz.ts`; the scoring is a pure function in `src/lib/quiz.ts`. Automated tests check that every spec of every class has exactly one profile and that every class can be the top recommendation for some set of answers.
 
 ## Data model and content
 
@@ -216,7 +240,7 @@ The app is a static single-page site with no backend, so it can be hosted on any
 | --- | --- |
 | Stack | React 18, TypeScript 5.6, Vite 5; Vitest for tests; ESLint |
 | Architecture | Calculator rules in one pure module (`src/lib/talents.ts`), separate from UI components and data files |
-| Performance | Production bundle under 100 kB gzipped (v1: about 84 kB JS + 2 kB CSS); clicks update instantly |
+| Performance | Production bundle under 100 kB gzipped (with the quiz: about 87 kB JS + 3 kB CSS); clicks update instantly |
 | Browsers | Current Chrome, Edge, Firefox and Safari, desktop and mobile |
 | Offline / network | Works without a backend; icons and fonts need internet access (Wowhead CDN, Google Fonts) |
 | Privacy | No accounts, cookies, analytics or stored personal data; build state lives only in the URL |
@@ -239,6 +263,8 @@ v1 is accepted when every item below passes; all were verified for the 17 Oct 20
 - [x] A link with illegal points loads with those points dropped.
 - [x] No horizontal scroll at 375 px wide; no console errors.
 - [x] Data quality tests pass for all 9 class files.
+- [x] The class quiz recommends a class and spec after 8 questions, lists two runners-up, and "Open … talents" loads that class with the suggested tree marked.
+- [x] The quiz respects the faction answer (no Paladin for Horde, no Shaman for Alliance) and has no horizontal scroll at 375 px.
 
 ## Risks, open questions and roadmap
 
@@ -260,12 +286,14 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 - [ ] How should keyboard users remove points (e.g. Backspace or Delete on a focused talent)?
 - [ ] Where will the app be hosted, and under what domain?
 - [ ] Should the data source change from beta data to an official source once one exists?
+- [ ] Are Paladin and Shaman still faction-locked in Forever? The quiz assumes the Classic rule.
+- [ ] Should quiz results be shareable as a link?
 
 **Roadmap**
 
 1. **v1.1 — Launch data refresh:** re-import all 9 classes from the launch build; fix keyboard removal; show the data build number.
-2. **v2 — Class quiz:** a short questionnaire (role, play style, solo vs group, faction) that recommends a class and opens the calculator with a suggested build.
-3. **v2.x — Build library:** curated starter builds per spec (levelling, raiding, PvP) loadable in one click.
+2. **v2 — Class quiz (shipped):** an 8-question questionnaire that recommends a class and spec and opens the calculator on it with the suggested tree marked.
+3. **v2.x — Build library:** curated starter builds per spec (levelling, raiding, PvP) loadable in one click; the quiz will then open its recommendation with a starter build.
 4. **Later:** races and racials with valid race and class combinations (including the new Skyborne race), Legacy System talents, dual-spec comparison, and localisation.
 
 **Sources**
