@@ -12,6 +12,7 @@ import {
   type Zone,
   ZONES,
 } from "../data/leveling";
+import { type Hub, ZONE_HUBS } from "../data/hubs";
 import { ZONE_SHAPES } from "../data/mapShapes";
 
 /** A zone or dungeon, resolved to what the guide needs to show and draw it. */
@@ -194,3 +195,32 @@ export function timelineRows(route: GuideStep[]): TimelineRow[] {
 
 /** Level band 0-4 used to colour zones on the map: 1-19, 20-29, 30-39, 40-49, 50-60. */
 export const levelBand = (level: number) => Math.min(4, Math.max(0, Math.floor(level / 10) - 1));
+
+/** A hub's name without a trailing note, e.g. "Powderfuse Port (neutral)" → "Powderfuse Port". */
+const hubKey = (name: string) => name.replace(/\s*\(.*\)$/, "").trim().toLowerCase();
+
+/** Splits a step's or zone's hub text ("The Crossroads, Ratchet") into hub names. */
+export const hubNames = (text: string | undefined) => (text ? text.split(",").map((n) => n.trim()).filter(Boolean) : []);
+
+export interface StepHubs {
+  /** The zone whose map shows the step: the zone itself, or a dungeon's entrance zone. */
+  zone: Zone;
+  /** Every hub on that zone's map, with the ones the step names marked. */
+  hubs: (Hub & { active: boolean })[];
+  /** Hubs the step names that are not on that zone's map, such as a city that hands out dungeon quests. */
+  elsewhere: string[];
+}
+
+/** The hubs to show on a step's zone map, with the step's own hubs marked. */
+export function hubsForStep(step: GuideStep): StepHubs {
+  const zone = step.place.zone;
+  const named = hubNames(step.hub);
+  const keys = new Set(named.map(hubKey));
+  const hubs = (ZONE_HUBS[zone.id] ?? []).map((h) => ({ ...h, active: keys.has(hubKey(h.name)) }));
+  const known = new Set(hubs.map((h) => hubKey(h.name)));
+  return { zone, hubs, elsewhere: named.filter((n) => !known.has(hubKey(n))) };
+}
+
+/** Whether a hub name appears in a zone's hub list. */
+export const zoneHasHub = (zoneId: string, name: string) =>
+  (ZONE_HUBS[zoneId] ?? []).some((h) => hubKey(h.name) === hubKey(name));

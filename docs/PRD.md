@@ -108,6 +108,7 @@ The app has two views, switched from the header: the calculator (class picker, b
 | FR-27 | Guide | "My level" selects the first unfinished step covering that level. | Should |
 | FR-28 | Guide | Each step has a "done" checkbox; the summary shows progress (done / total), which survives a reload; "Reset progress" clears it. | Should |
 | FR-29 | Guide | A "Left out on purpose" panel lists the zones and dungeons the route skips and why. | Must |
+| FR-30 | Guide | "Open <Zone> map" (in the selected step's detail and in the route map's toolbar) opens that zone's in-game Forever map in a modal dialog; a dungeon step opens its entrance zone. The map pins each quest hub with its name, and the selected step's hubs are highlighted and tagged "This step". The dialog lists the zone's hubs with their coordinates, hubs the step uses in other zones, a note for zones Blizzard changed in Forever, and the route's visits to the zone; clicking a visit selects that step and closes the dialog. Esc, the close button or a backdrop click closes it, and focus returns to the button that opened it. | Must |
 
 ## Talent rules
 
@@ -195,6 +196,8 @@ The guide plans a Horde completionist playthrough: every Horde quest hub and eve
 
 **Forever content.** The route includes the new zones Riverglades (35–45; Horde hub Rog'mar, with flights to Stonard, Kargath, Flame Crest and Hammerfall, and a ship from Powderfuse Port to Tanaris), Shen'dralas (range unannounced; entered from southern Desolace through the Valley of Bones; placed at 44–47) and Mount Hyjal (endgame, through Darkwhisper Gorge in Winterspring), the Skyborne starting zone Zephras Isle (1–12), and the new dungeons Ruins of Lordaeron, Excavation Site: Wetlands, City of Dalaran, The Drowned City, Krol'dok Stronghold, Alcaz Prison, Blackmaw Hold and Shaper's Terrace. Dungeon brackets are Blizzard's beta brackets where published; hubs, flight paths and ships come from beta client data. Anything not confirmed by Blizzard shows a "Not confirmed" note. Other zones use their Forever ranges where sources publish them (Travelcraft, Wowhead) and their 2004 Horde quest hubs.
 
+**Zone maps and hubs.** Each zone's in-game Forever map is in `public/maps/zones/<zone-id>.webp` (from warcraft.wiki.gg). Hub positions in `src/data/hubs.ts` are in-game coordinates (0–100), taken from each hub's flight master, innkeeper or main questgiver in the vanilla 1.12 database at classicdb.ch, and checked against the Forever map images. Hubs in new zones (Rog'mar, Powderfuse Port and Hyjal's flight points) are placed at their labels on the Forever zone maps. Tests check that every zone has a map and a hub list, that every hub a zone or zone step names exists, and that every pin is on its map.
+
 **Map.** The map images are the in-game Forever continent maps (1002×668 px), kept in `public/maps/`. Zone outlines in `src/data/mapShapes.ts` were traced from the zone borders on those images; where the map's own lettering hides a border (Stonetalon and Desolace, Searing Gorge, Burning Steppes, Badlands and Riverglades) the border is approximate.
 
 **Data.** Zones, dungeons, the route, map positions and exclusions live in `src/data/leveling.ts`, zone outlines in `src/data/mapShapes.ts`; route building, travel directions and level lookups are pure functions in `src/lib/leveling.ts`. The guide loads as a separate chunk, so the calculator's first load does not grow.
@@ -279,9 +282,9 @@ The app is a static single-page site with no backend, so it can be hosted on any
 | --- | --- |
 | Stack | React 18, TypeScript 5.6, Vite 5; Vitest for tests; ESLint |
 | Architecture | Calculator rules in one pure module (`src/lib/talents.ts`), separate from UI components and data files |
-| Performance | Initial load under 100 kB gzipped (about 90 kB JS + 5 kB CSS); the leveling guide loads on demand (about 18 kB); clicks update instantly |
+| Performance | Initial load under 100 kB gzipped (about 90 kB JS + 5 kB CSS); the leveling guide loads on demand (about 20 kB); clicks update instantly |
 | Browsers | Current Chrome, Edge, Firefox and Safari, desktop and mobile |
-| Offline / network | Works without a backend; icons and fonts need internet access (Wowhead CDN, Google Fonts); the two map images (about 190 kB each) are served with the app |
+| Offline / network | Works without a backend; icons and fonts need internet access (Wowhead CDN, Google Fonts); the map images (two continent maps of about 190 kB each, and 34 zone maps of 130–190 kB each, loaded only when opened) are served with the app |
 | Privacy | No accounts, cookies, analytics or stored personal data; build state lives only in the URL. Leveling-guide progress (ticked step ids) is kept in the browser's local storage and never leaves the device |
 | Quality gates | Type-check, lint, unit tests and production build all pass before release |
 | Legal | Blizzard names, icons and map images are used for fan purposes with a "Not affiliated with Blizzard Entertainment" notice; the map credits Blizzard and warcraft.wiki.gg |
@@ -309,6 +312,7 @@ v1 is accepted when every item below passes; all were verified for the 17 Oct 20
 - [x] "My level" selects a step covering that level; ticked steps survive a reload and "Reset progress" clears them.
 - [x] Route rule tests pass (coverage of 10–60, every zone and dungeon visited, steps close to their level range); the guide has no horizontal scroll at 375 px.
 - [x] The route map shows the in-game continent map with clickable zone outlines; it zooms, pans and returns to the whole continent.
+- [x] A step's zone map opens from the step or the route map, pins the zone's quest hubs with the step's hub highlighted, and fits a 375 px screen.
 
 ## Risks, open questions and roadmap
 
@@ -359,4 +363,5 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 - [Travelcraft — WoW Forever guide: zones and levels](https://wow-travelcraft.com/guide.html) (zone ranges, flight paths, ships)
 - [WoW Forever Guides — leveling](https://wowforeverguides.com/leveling) (beta client data: Rog'mar, Excavation Site and Ruins of Lordaeron quests, Blizzard dungeon brackets)
 - [ConquestCapped — WoW Forever new zones](https://conquestcapped.com/guides/wow-forever/wow-forever-new-zones/) and [LFCarry — WoW Forever new zones](https://lfcarry.com/guides/wow-forever-new-zones) (Riverglades, Shen'dralas, Hyjal access, Dalaran change)
-- [warcraft.wiki.gg — Forever map comparison](https://warcraft.wiki.gg/wiki/Forever_map_comparison) (continent map images)
+- [warcraft.wiki.gg — Forever map comparison](https://warcraft.wiki.gg/wiki/Forever_map_comparison) (continent and zone map images)
+- [classicdb.ch](https://classicdb.ch/) (vanilla 1.12 NPC coordinates for quest hub positions)

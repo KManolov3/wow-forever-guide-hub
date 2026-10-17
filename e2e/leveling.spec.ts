@@ -166,6 +166,61 @@ test.describe("M. Leveling guide", () => {
     await expect(currentStep(page).locator(".step-name")).toHaveText("Durotar");
   });
 
+  test("TC-76 a step's zone map pins its quest hubs and highlights the step's hub", async ({ page }) => {
+    await loadGuide(page);
+    await steps(page).filter({ hasText: "Ruins of Lordaeron" }).locator(".step-main").click();
+    const open = currentStep(page).getByRole("button", { name: "Open Tirisfal Glades map" });
+    await open.click();
+
+    const dialog = page.getByRole("dialog", { name: /Tirisfal Glades/ });
+    await expect(dialog).toBeVisible();
+    const image = dialog.getByRole("img", { name: "Map of Tirisfal Glades" });
+    await expect(image).toHaveAttribute("src", /maps\/zones\/tirisfal\.webp$/);
+    expect(await image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+
+    await expect(dialog.locator(".hub-pin")).toHaveText(["Deathknell", "Brill", "Undercity"]);
+    await expect(dialog.locator(".hub-pin.active")).toHaveText("Undercity");
+    await expect(dialog.locator(".zone-hubs li.active")).toContainText("This step");
+
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(open).toBeFocused();
+  });
+
+  test("TC-77 the route map opens the selected zone's map; a visit there selects that step", async ({ page }) => {
+    await loadGuide(page);
+    await steps(page)
+      .filter({ has: page.locator(".step-name", { hasText: /^The Barrens$/ }) })
+      .first()
+      .locator(".step-main")
+      .click();
+    await page.locator(".route-map").getByRole("button", { name: "Open The Barrens map" }).click();
+
+    const dialog = page.getByRole("dialog", { name: /The Barrens/ });
+    await expect(dialog.locator(".hub-pin")).toHaveText(["The Crossroads", "Ratchet", "Camp Taurajo"]);
+    await expect(dialog.locator(".hub-pin.active")).toHaveText(["The Crossroads"]);
+
+    const visits = dialog.locator(".zone-visits button");
+    expect(await visits.count()).toBeGreaterThanOrEqual(3);
+    await visits.filter({ hasText: "Camp Taurajo" }).first().click();
+    await expect(dialog).toBeHidden();
+    await expect(currentStep(page).locator(".step-meta")).toContainText("visit 3 of 3");
+  });
+
+  test("TC-78 the zone map fits a 375 px phone", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await loadGuide(page);
+    await currentStep(page).getByRole("button", { name: "Open Durotar map" }).click();
+    const dialog = page.getByRole("dialog", { name: /Durotar/ });
+    await expect(dialog).toBeVisible();
+    const box = (await dialog.boundingBox())!;
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(375);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+    await dialog.getByRole("button", { name: "Close zone map" }).click();
+    await expect(dialog).toBeHidden();
+  });
+
   test("TC-70 'My level' jumps to a step covering that level", async ({ page }) => {
     await loadGuide(page);
     await page.getByLabel("My level").fill("27");

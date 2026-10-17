@@ -15,5 +15,5 @@ The product specification is [docs/PRD.md](docs/PRD.md). Treat it as the source 
 - `src/lib/talents.ts` – pure calculator rules (allocation, validation, URL encoding)
 - `src/data/types.ts` – data model; `src/data/classes/*.json` – one talent data file per class
 - `src/lib/leveling.ts` – pure leveling-guide logic (route building, travel directions, level lookup)
-- `src/data/leveling.ts` – Horde zones, dungeons, map positions and the leveling route; `src/data/mapShapes.ts` – zone outlines on the map images in `public/maps/`
+- `src/data/leveling.ts` – Horde zones, dungeons, map positions and the leveling route; `src/data/mapShapes.ts` – zone outlines on the map images in `public/maps/`; `src/data/hubs.ts` – quest hub positions on the zone maps in `public/maps/zones/`
 - `src/components/` – UI components

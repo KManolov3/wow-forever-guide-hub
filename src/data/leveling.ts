@@ -342,7 +342,7 @@ export const ZONES: Zone[] = [
     name: "Blasted Lands",
     continent: "eastern-kingdoms",
     levels: [45, 55],
-    hubs: ["Neutral questgivers by the Dark Portal"],
+    hubs: ["Bloodmages' camp (neutral)"],
     port: "gromgol",
   },
   {
@@ -808,8 +808,11 @@ export const ROUTE: RouteStep[] = [
   {
     place: "blasted-lands",
     levels: [48, 51],
-    hub: "Stonard (no Horde town in the zone)",
-    focus: ["The bloodmages' collection quests for stat elixirs"],
+    hub: "Bloodmages' camp",
+    focus: [
+      "No Horde town here: fly to Stonard and ride south",
+      "The bloodmages' collection quests for stat elixirs",
+    ],
   },
   {
     place: "hinterlands",

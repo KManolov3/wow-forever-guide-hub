@@ -1,7 +1,21 @@
 import { describe, expect, it } from "vitest";
 import { CONTEXT_ZONES, DUNGEONS, LANDMARKS, type MapPoint, ROUTE, STARTING_ZONES, ZONES } from "../data/leveling";
 import { MAP_HEIGHT, MAP_WIDTH, ZONE_SHAPES } from "../data/mapShapes";
-import { MAX_LEVEL, buildRoute, findPlace, isStartingZone, levelBand, stepForLevel, timelineRows, travelBetween } from "./leveling";
+import { ZONE_HUBS } from "../data/hubs";
+import { existsSync } from "node:fs";
+import {
+  MAX_LEVEL,
+  buildRoute,
+  findPlace,
+  hubNames,
+  hubsForStep,
+  isStartingZone,
+  levelBand,
+  stepForLevel,
+  timelineRows,
+  travelBetween,
+  zoneHasHub,
+} from "./leveling";
 
 const place = (id: string) => findPlace(id)!;
 const polygon = (id: string) => ZONE_SHAPES[id].points.split(" ").map((p) => p.split(",").map(Number) as [number, number]);
@@ -251,5 +265,55 @@ describe("levelBand", () => {
     [60, 4],
   ])("level %i is band %i", (level, band) => {
     expect(levelBand(level)).toBe(band);
+  });
+});
+
+describe("zone maps and hubs", () => {
+  it("has a zone map image and a hub list for every zone", () => {
+    for (const z of ZONES) {
+      expect(existsSync(`public/maps/zones/${z.id}.webp`), z.id).toBe(true);
+      expect(ZONE_HUBS[z.id], z.id).toBeDefined();
+    }
+  });
+
+  it("puts every pinned hub on the map", () => {
+    for (const [zone, hubs] of Object.entries(ZONE_HUBS)) {
+      for (const h of hubs) {
+        if (h.elsewhere) continue;
+        expect(h.x, `${zone}: ${h.name}`).toBeGreaterThanOrEqual(0);
+        expect(h.x, `${zone}: ${h.name}`).toBeLessThanOrEqual(100);
+        expect(h.y, `${zone}: ${h.name}`).toBeGreaterThanOrEqual(0);
+        expect(h.y, `${zone}: ${h.name}`).toBeLessThanOrEqual(100);
+      }
+    }
+  });
+
+  it("knows every hub a zone lists", () => {
+    for (const z of ZONES) for (const name of z.hubs) expect(zoneHasHub(z.id, name), `${z.id}: ${name}`).toBe(true);
+  });
+
+  it.each(STARTING_ZONES)("knows every hub a zone step names, starting in %s", (start) => {
+    for (const s of buildRoute(start).filter((s) => s.place.kind === "zone")) {
+      for (const name of hubNames(s.hub)) expect(zoneHasHub(s.place.id, name), `${s.id}: ${name}`).toBe(true);
+    }
+  });
+
+  it("marks the hubs a step names", () => {
+    const route = buildRoute("durotar");
+    const barrens2 = route.find((s) => s.id === "barrens-2")!;
+    const { hubs, elsewhere } = hubsForStep(barrens2);
+    expect(hubs.filter((h) => h.active).map((h) => h.name)).toEqual(["The Crossroads", "Ratchet"]);
+    expect(elsewhere).toEqual([]);
+  });
+
+  it("shows a dungeon on its entrance zone's map and lists hubs from other zones", () => {
+    const route = buildRoute("durotar");
+    const rfc = hubsForStep(route.find((s) => s.place.id === "ragefire-chasm")!);
+    expect(rfc.zone.id).toBe("durotar");
+    expect(rfc.hubs.filter((h) => h.active).map((h) => h.name)).toEqual(["Orgrimmar"]);
+
+    const excavation = hubsForStep(route.find((s) => s.place.id === "excavation-site")!);
+    expect(excavation.zone.id).toBe("wetlands");
+    expect(excavation.elsewhere).toEqual(["Hammerfall", "Orgrimmar", "Thunder Bluff"]);
   });
 });

@@ -8,6 +8,8 @@ interface Props {
   selected: number;
   done: ReadonlySet<string>;
   onSelect: (index: number) => void;
+  /** Opens the zone map of the given zone. */
+  onOpenZone: (zoneId: string) => void;
 }
 
 const CONTINENTS: { id: Continent; name: string }[] = [
@@ -101,7 +103,7 @@ const centredOn = (p: MapPoint, zoom: number, fit: View, aspect: number) => {
 const inView = (p: MapPoint, v: View) => p.x >= v.x && p.x <= v.x + v.width && p.y >= v.y && p.y <= v.y + v.height;
 
 /** The in-game continent map with the route's zones outlined, its legs drawn, and pan and zoom. */
-export function RouteMap({ route, selected, done, onSelect }: Props) {
+export function RouteMap({ route, selected, done, onSelect, onOpenZone }: Props) {
   const current = route[selected];
   const [shown, setShown] = useState<Continent>(current.place.continent);
   const [followed, setFollowed] = useState(current.id);
@@ -297,6 +299,9 @@ export function RouteMap({ route, selected, done, onSelect }: Props) {
             </button>
           ))}
         </div>
+        <button className="open-zone" onClick={() => onOpenZone(current.place.zone.id)}>
+          Open {current.place.zone.name} map
+        </button>
         <div className="map-zoom" role="group" aria-label="Zoom">
           <button onClick={() => zoomBy(1 / 1.5)} disabled={zoom >= MAX_ZOOM - 0.01} aria-label="Zoom in">
             +

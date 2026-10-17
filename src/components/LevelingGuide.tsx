@@ -3,6 +3,7 @@ import { EXCLUSIONS, STARTING_ZONES, type StartingZoneId, ZONES } from "../data/
 import { MAX_LEVEL, MIN_LEVEL, buildRoute, stepForLevel } from "../lib/leveling";
 import { LevelTimeline } from "./LevelTimeline";
 import { RouteMap } from "./RouteMap";
+import { ZoneMapDialog } from "./ZoneMapDialog";
 
 interface Props {
   start: StartingZoneId;
@@ -34,6 +35,7 @@ export function LevelingGuide({ start, onStartChange }: Props) {
   const [selected, setSelected] = useState(0);
   const [done, setDone] = useState(readDone);
   const [level, setLevel] = useState("");
+  const [openZone, setOpenZone] = useState<string | null>(null);
   const list = useRef<HTMLOListElement>(null);
   const scrollOnSelect = useRef(false);
 
@@ -185,6 +187,9 @@ export function LevelingGuide({ start, onStartChange }: Props) {
                         ))}
                       </ul>
                       {step.place.unconfirmed && <p className="step-unconfirmed">Not confirmed: {step.place.unconfirmed}</p>}
+                      <button className="open-zone" onClick={() => setOpenZone(step.place.zone.id)}>
+                        Open {step.place.zone.name} map
+                      </button>
                     </div>
                   )}
                 </li>
@@ -197,7 +202,7 @@ export function LevelingGuide({ start, onStartChange }: Props) {
           <h3 id="map-title" className="panel-title">
             Route map
           </h3>
-          <RouteMap route={route} selected={selected} done={done} onSelect={select} />
+          <RouteMap route={route} selected={selected} done={done} onSelect={select} onOpenZone={setOpenZone} />
         </section>
       </div>
 
@@ -213,6 +218,14 @@ export function LevelingGuide({ start, onStartChange }: Props) {
           ))}
         </ul>
       </section>
+
+      <ZoneMapDialog
+        zoneId={openZone}
+        route={route}
+        selected={selected}
+        onSelect={select}
+        onClose={() => setOpenZone(null)}
+      />
     </main>
   );
 }
