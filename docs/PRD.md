@@ -4,7 +4,7 @@ Oct 17, 2026 · Kaloyan Manolov · [Live doc](https://claude.ai/code/artifact/98
 
 ## Overview
 
-A web talent calculator that lets World of Warcraft: Forever players plan and share a level-60 build for any of the 9 classes before and after the November 4, 2026 launch. It doubles as a showcase of AI-assisted development: v1 was researched, designed, built and verified by Claude in one session.
+A web talent calculator that lets World of Warcraft: Forever players plan and share a level-60 build for any of the 9 classes before and after the November 4, 2026 launch, with a Horde leveling guide that plans the road from level 1 to 60. It doubles as a showcase of AI-assisted development: v1 was researched, designed, built and verified by Claude in one session.
 
 **Background.** WoW: Forever is Blizzard's third permanent game version, alongside Retail and Classic. It recreates the 2004 era with a level cap of 60, but every class has rebalanced talent trees, many new talents and a new 16-point milestone talent. Classic-era calculators therefore give wrong answers for Forever.
 
@@ -44,6 +44,8 @@ The primary user is a WoW: Forever player choosing or refining a spec. Secondary
 6. As a guide writer, I copy a link that restores my exact build, so I can share it in guides and chat.
 7. As a player on a phone, I can use the calculator without horizontal scrolling.
 8. As a new player, I answer a short quiz about how I like to play and get a recommended class and spec, so I know where to start.
+9. As a Horde player who wants to see everything, I follow a leveling route that takes me through every Horde zone and dungeon close to its level, starting from my own race's starting zone, and tick off steps as I go.
+10. As a player mid-way through leveling, I enter my level and jump to the step I should be doing now.
 
 ## Scope
 
@@ -58,6 +60,7 @@ v1 is a single-page, client-only calculator for class talents; anything account-
 - Shareable build links and reset (per tree and whole build)
 - Responsive layout for desktop, tablet and phone
 - A class-choice quiz that recommends a class and spec from playstyle answers
+- A Horde completionist leveling guide (1–60) with a level timeline, a route map and a step checklist
 
 **Out of scope (v1)**
 
@@ -68,10 +71,11 @@ v1 is a single-page, client-only calculator for class talents; anything account-
 - Races and racials
 - Localisation (English only)
 - Suggested starter builds from the quiz (see Roadmap: build library)
+- An Alliance leveling guide, quest-by-quest directions, coordinates and real game maps
 
 ## Functional requirements
 
-The calculator is one screen: header (with the class quiz button), class picker, build summary bar, three trees side by side, and a footer with help and data attribution. The class quiz opens as a modal dialog over it.
+The app has two views, switched from the header: the calculator (class picker, build summary bar, three trees side by side, and a footer with help and data attribution) and the leveling guide. The class quiz opens as a modal dialog over either view.
 
 | ID | Area | Requirement | Priority |
 | --- | --- | --- | --- |
@@ -95,6 +99,15 @@ The calculator is one screen: header (with the class quiz button), class picker,
 | FR-18 | Quiz | Show one question at a time with "Question N of 8" progress; choosing an answer moves to the next question; "Back" returns to the previous one with the earlier answer marked. | Must |
 | FR-19 | Quiz | After the last question, show the best match (class, spec, match %, a class tagline and the reasons from the answers) and the next two classes; "Retake quiz" starts over. Reopening the dialog shows the last results until the quiz is retaken or the page reloads. | Must |
 | FR-20 | Quiz | "Open <Class> talents" closes the quiz, selects that class with an empty build, and marks the recommended tree "Suggested" until the class changes. | Must |
+| FR-21 | Views | The header has "Talents" and "Leveling guide" links; the current one is marked. Switching views keeps the class, build and starting zone. The subtitle names the current view. | Must |
+| FR-22 | Guide | A starting-zone picker offers Durotar (Orc & Troll), Mulgore (Tauren), Tirisfal Glades (Undead) and Zephras Isle (Skyborne, Horde). The route starts there and never visits the other starting zones. | Must |
+| FR-23 | Guide | The URL is `#/leveling/<starting-zone>`; opening it restores the guide and starting zone, and an unknown zone falls back to Durotar. | Must |
+| FR-24 | Guide | A level timeline shows one row per zone or dungeon and one bar per visit along levels 1–60; zones and dungeons have different colours, unconfirmed level ranges are hatched, and hovering or focusing a bar shows the step, levels, quest hub and visit number. Clicking a bar selects that step. | Must |
+| FR-25 | Guide | A route map draws one continent at a time (Kalimdor or Eastern Kingdoms) with zones coloured by level band, dungeons, cities and ports, and the route's legs. It switches to the selected step's continent and highlights the leg into it; clicking a zone with several visits cycles through them. A caption says how to get to the selected step. | Must |
+| FR-26 | Guide | The step list shows each step's number, name, zone or dungeon, visit number, quest hub and levels; the selected step expands to show how to get there, what to do and any unconfirmed details. Content new in Forever has a NEW badge. | Must |
+| FR-27 | Guide | "My level" selects the first unfinished step covering that level. | Should |
+| FR-28 | Guide | Each step has a "done" checkbox; the summary shows progress (done / total), which survives a reload; "Reset progress" clears it. | Should |
+| FR-29 | Guide | A "Left out on purpose" panel lists the zones and dungeons the route skips and why. | Must |
 
 ## Talent rules
 
@@ -161,6 +174,28 @@ The quiz scores every spec against the answers and recommends the class whose be
 
 Questions, spec profiles and class taglines live in `src/data/quiz.ts`; the scoring is a pure function in `src/lib/quiz.ts`. Automated tests check that every spec of every class has exactly one profile and that every class can be the top recommendation for some set of answers.
 
+## Leveling guide
+
+The guide plans a Horde completionist playthrough: every Horde quest hub and every dungeon the Horde can reasonably reach, each done as close to its level as the route allows. Wide-ranging zones are visited several times (the Barrens and Stranglethorn Vale three times each).
+
+**Route rules (enforced by automated tests)**
+
+- The route is the chosen starting zone, then one shared route of 72 steps from level 10 to 60, ordered by the level each step starts at, with no level left uncovered.
+- Every non-starting Horde zone and every listed dungeon appears at least once; no step goes to a starting zone.
+- A step starts no more than 2 levels below its place's level range and ends within it. A completionist outlevels content, so arriving a little early is preferred to arriving late.
+- Repeat visits to a place come at increasing levels and do not overlap.
+- Travel between steps is computed: crossing continents uses the zeppelin (Orgrimmar–Undercity, Orgrimmar–Grom'gol) arriving nearest the destination, the Ratchet–Booty Bay boat only when both places are near its docks, and the Undercity–Grom'gol zeppelin within the Eastern Kingdoms only when one end is in Tirisfal or Stranglethorn.
+
+**What is left out**
+
+- Other Horde starting zones, Alliance starting zones, and zones with no Horde quests (Westfall, Redridge, Duskwood, Loch Modan, Wetlands, Darkshore, Deadwind Pass, Moonglade).
+- Dungeons deep in Alliance territory: The Deadmines, The Stockade, Gnomeregan, and the new Hall of Thanes (beneath Ironforge) and Excavation Site (Wetlands).
+- Raids and battlegrounds.
+
+**Forever content.** The route includes the new zones Riverglades (mid-30s to mid-40s), Shen'dralas (range unannounced; placed at 42–46) and Mount Hyjal (60, endgame), the Skyborne starting zone Zephras Isle (1–12), and the new dungeons Ruins of Lordaeron, City of Dalaran, The Drowned City, Krol'dok Stronghold, Alcaz Island Prison, Blackmaw Hold and Shaper's Terrace. Their level ranges come from pre-launch coverage, not Blizzard data, and each is shown with a "Not confirmed" note. Classic zones and dungeons use their 2004 Horde quest levels and hubs.
+
+**Data.** Zones, dungeons, the route, map positions and exclusions live in `src/data/leveling.ts`; route building, travel directions and level lookups are pure functions in `src/lib/leveling.ts`. The guide loads as a separate chunk, so the calculator's first load does not grow.
+
 ## Data model and content
 
 Talent data lives in one JSON file per class, loaded at build time; adding or updating a class needs no code change.
@@ -222,6 +257,7 @@ The look follows the in-game talent frame: dark parchment panels, gold accents, 
 - **Theme:** dark only. Background near-black, panels dark brown, gold (#F8B700) for maxed talents and headings, green (#1EFF00) for learnable talents, red for unmet requirements.
 - **Type:** Cinzel for titles, tree and class names; Inter for body text.
 - **Icons:** game icons from the Wowhead CDN; when an icon fails to load, show the talent's initials on a dark tile.
+- **Leveling guide charts:** zone visits in blue and dungeons in orange on the timeline; map zones coloured by level band on a single blue ramp (1–19 darkest to 50–60 lightest), with labels and a legend so colour is never the only cue; the selected step is outlined in gold. The map is schematic (positions approximate the continents), not a game map.
 - **Tooltips:** game-style dark-blue panels; open to the right of talents in columns 1–2 and to the left in columns 3–4 so they stay inside the tree.
 - **Layout:** three trees side by side on desktop (each at least 290 px wide); they wrap to one column on narrow screens. No horizontal page scroll down to 375 px wide. Talent cells are 52 px (46 px under 400 px wide).
 
@@ -240,10 +276,10 @@ The app is a static single-page site with no backend, so it can be hosted on any
 | --- | --- |
 | Stack | React 18, TypeScript 5.6, Vite 5; Vitest for tests; ESLint |
 | Architecture | Calculator rules in one pure module (`src/lib/talents.ts`), separate from UI components and data files |
-| Performance | Production bundle under 100 kB gzipped (with the quiz: about 87 kB JS + 3 kB CSS); clicks update instantly |
+| Performance | Initial load under 100 kB gzipped (about 90 kB JS + 5 kB CSS); the leveling guide loads on demand (about 12 kB); clicks update instantly |
 | Browsers | Current Chrome, Edge, Firefox and Safari, desktop and mobile |
 | Offline / network | Works without a backend; icons and fonts need internet access (Wowhead CDN, Google Fonts) |
-| Privacy | No accounts, cookies, analytics or stored personal data; build state lives only in the URL |
+| Privacy | No accounts, cookies, analytics or stored personal data; build state lives only in the URL. Leveling-guide progress (ticked step ids) is kept in the browser's local storage and never leaves the device |
 | Quality gates | Type-check, lint, unit tests and production build all pass before release |
 | Legal | Blizzard names and icons are used for fan purposes with a "Not affiliated with Blizzard Entertainment" notice |
 
@@ -265,6 +301,10 @@ v1 is accepted when every item below passes; all were verified for the 17 Oct 20
 - [x] Data quality tests pass for all 9 class files.
 - [x] The class quiz recommends a class and spec after 8 questions, lists two runners-up, and "Open … talents" loads that class with the suggested tree marked.
 - [x] The quiz respects the faction answer (no Paladin for Horde, no Shaman for Alliance) and has no horizontal scroll at 375 px.
+- [x] The leveling guide starts in the chosen starting zone, never visits the other starting zones, and skips The Deadmines, The Stockade and Gnomeregan.
+- [x] The guide's timeline shows three Barrens visits; clicking a bar or a map zone selects that step, and the map follows the step's continent.
+- [x] "My level" selects a step covering that level; ticked steps survive a reload and "Reset progress" clears them.
+- [x] Route rule tests pass (coverage of 10–60, every zone and dungeon visited, steps close to their level range); the guide has no horizontal scroll at 375 px.
 
 ## Risks, open questions and roadmap
 
@@ -278,6 +318,8 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 | `isNew` flags assigned by hand from memory of Classic | Some talents mislabelled as new or not new | Review flags against an authoritative Classic list |
 | Third-party sources (wiki, Zockify, Wowhead CDN) change or block access | Data refresh or icons break | Keep data in the repo; initials fallback for icons; consider self-hosting icons |
 | Use of Blizzard names and art | Takedown request | Fan-site notice; no monetisation; remove assets on request |
+| Forever's new zones and dungeons are only known from pre-launch coverage | Leveling steps at the wrong level, or missing Horde hubs | Mark unconfirmed content in the guide; re-check levels and hubs at launch |
+| Blizzard revamps classic zones ("expanded and overhauled") without saying which | Classic quest hubs or levels in the guide may be out of date | Review each zone against the live game at launch |
 
 **Open questions**
 
@@ -288,16 +330,23 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 - [ ] Should the data source change from beta data to an official source once one exists?
 - [ ] Are Paladin and Shaman still faction-locked in Forever? The quiz assumes the Classic rule.
 - [ ] Should quiz results be shareable as a link?
+- [ ] Where do Horde Skyborne go after Zephras Isle? The guide assumes Orgrimmar and the Barrens.
+- [ ] What level range and Horde hubs do Shen'dralas, Riverglades and the new dungeons have at launch?
+- [ ] Should there be an Alliance leveling guide?
 
 **Roadmap**
 
 1. **v1.1 — Launch data refresh:** re-import all 9 classes from the launch build; fix keyboard removal; show the data build number.
 2. **v2 — Class quiz (shipped):** an 8-question questionnaire that recommends a class and spec and opens the calculator on it with the suggested tree marked.
 3. **v2.x — Build library:** curated starter builds per spec (levelling, raiding, PvP) loadable in one click; the quiz will then open its recommendation with a starter build.
-4. **Later:** races and racials with valid race and class combinations (including the new Skyborne race), Legacy System talents, dual-spec comparison, and localisation.
+4. **v3 — Horde leveling guide (shipped):** a completionist 1–60 route with a level timeline, route map, step checklist and level lookup.
+5. **Later:** races and racials with valid race and class combinations (including the new Skyborne race), Legacy System talents, dual-spec comparison, and localisation.
 
 **Sources**
 
 - [warcraft.wiki.gg — World of Warcraft: Forever](https://warcraft.wiki.gg/wiki/World_of_Warcraft:_Forever)
 - [Zockify — WoW Forever talents](https://www.zockify.com/forever/talents/)
 - [TechSpot — World of Warcraft: Forever launches November 4](https://www.techspot.com/news/113832-world-warcraft-forever-launches-november-4-new-race.html)
+- [Warcraft Tavern — All new zones and areas in WoW: Forever](https://www.warcrafttavern.com/forever/news/all-new-zones-areas-in-wow-forever-revealed-at-blizzcon/)
+- [Gfinity — Skyborne race and Zephras Isle guide](https://www.gfinityesports.com/article/world-of-warcraft-forever-skyborne-race-zephras-isle-guide)
+- [AccountShark — WoW Forever preview: zones, dungeons and races](https://accountshark.net/blog/wow-forever-complete-preview-2026-zones-dungeons-races) (new dungeon level ranges, citing Wowhead)
