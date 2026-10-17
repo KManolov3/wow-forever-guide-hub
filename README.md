@@ -2,6 +2,8 @@
 
 A talent calculator for **World of Warcraft: Forever** (launching November 4, 2026), built as a demo of AI-assisted development.
 
+The product specification is in [docs/PRD.md](docs/PRD.md).
+
 ## Features
 
 - All nine classes, three trees each, with Forever's rebalanced talents (new talents are tagged **NEW**)
