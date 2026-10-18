@@ -4,7 +4,7 @@ Oct 17, 2026 · Kaloyan Manolov · [Live doc](https://claude.ai/code/artifact/98
 
 ## Overview
 
-A web talent calculator that lets World of Warcraft: Forever players plan and share a level-60 build for any of the 9 classes before and after the November 4, 2026 launch, with a Horde leveling guide that plans the road from level 1 to 60. It doubles as a showcase of AI-assisted development: v1 was researched, designed, built and verified by Claude in one session.
+A web talent calculator that lets World of Warcraft: Forever players plan and share a level-60 build for any of the 9 classes before and after the November 4, 2026 launch, with a Horde leveling guide that plans the road from level 1 to 60 and a class guide (rotation, spells and talent leveling order), so far for the Warlock. It doubles as a showcase of AI-assisted development: v1 was researched, designed, built and verified by Claude in one session.
 
 **Background.** WoW: Forever is Blizzard's third permanent game version, alongside Retail and Classic. It recreates the 2004 era with a level cap of 60, but every class has rebalanced talent trees, many new talents and a new 16-point milestone talent. Classic-era calculators therefore give wrong answers for Forever.
 
@@ -46,6 +46,8 @@ The primary user is a WoW: Forever player choosing or refining a spec. Secondary
 8. As a new player, I answer a short quiz about how I like to play and get a recommended class and spec, so I know where to start.
 9. As a Horde player who wants to see everything, I follow a leveling route that takes me through every Horde zone and dungeon close to its level, starting from my own race's starting zone, and tick off steps as I go.
 10. As a player mid-way through leveling, I enter my level and jump to the step I should be doing now.
+11. As a Warlock who wants to level fast, I follow one recommended leveling spec: the rotation for my current level, which talent to take at each level (and the build for my level in the calculator), and which spell ranks are worth my gold at each trainer visit.
+12. As a level 60 Warlock, I read each spec's dungeon and raid rotation.
 
 ## Scope
 
@@ -61,6 +63,7 @@ v1 is a single-page, client-only calculator for class talents; anything account-
 - Responsive layout for desktop, tablet and phone
 - A class-choice quiz that recommends a class and spec from playstyle answers
 - A Horde completionist leveling guide (1–60) with a level timeline, a route map and a step checklist
+- A class guide with a leveling plan for one recommended spec (rotation by level range, talent order, trainer plan with training priorities), each spec's level 60 rotation and the trainer spells, for the Warlock only
 
 **Out of scope (v1)**
 
@@ -72,10 +75,11 @@ v1 is a single-page, client-only calculator for class talents; anything account-
 - Localisation (English only)
 - Suggested starter builds from the quiz (see Roadmap: build library)
 - An Alliance leveling guide, quest-by-quest directions, coordinates and real game maps
+- Class guides for the other 8 classes (they show a "coming soon" note)
 
 ## Functional requirements
 
-The app has two views, switched from the header: the calculator (class picker, build summary bar, three trees side by side, and a footer with help and data attribution) and the leveling guide. The class quiz opens as a modal dialog over either view.
+The app has three views, switched from the header: the calculator (class picker, build summary bar, three trees side by side, and a footer with help and data attribution), the class guide and the leveling guide. The class quiz opens as a modal dialog over either view.
 
 | ID | Area | Requirement | Priority |
 | --- | --- | --- | --- |
@@ -99,7 +103,7 @@ The app has two views, switched from the header: the calculator (class picker, b
 | FR-18 | Quiz | Show one question at a time with "Question N of 8" progress; choosing an answer moves to the next question; "Back" returns to the previous one with the earlier answer marked. | Must |
 | FR-19 | Quiz | After the last question, show the best match (class, spec, match %, a class tagline and the reasons from the answers) and the next two classes; "Retake quiz" starts over. Reopening the dialog shows the last results until the quiz is retaken or the page reloads. | Must |
 | FR-20 | Quiz | "Open <Class> talents" closes the quiz, selects that class with an empty build, and marks the recommended tree "Suggested" until the class changes. | Must |
-| FR-21 | Views | The header has "Talents" and "Leveling guide" links; the current one is marked. Switching views keeps the class, build and starting zone. The subtitle names the current view. | Must |
+| FR-21 | Views | The header has "Talents", "Class guide" and "Leveling guide" links; the current one is marked. Switching views keeps the class, build and starting zone. The subtitle names the current view. | Must |
 | FR-22 | Guide | A starting-zone picker offers Durotar (Orc & Troll), Mulgore (Tauren), Tirisfal Glades (Undead) and Zephras Isle (Skyborne, Horde). The route starts there and never visits the other starting zones. | Must |
 | FR-23 | Guide | The URL is `#/leveling/<starting-zone>`; opening it restores the guide and starting zone, and an unknown zone falls back to Durotar. | Must |
 | FR-24 | Guide | A level timeline shows one row per zone or dungeon and one bar per visit along levels 1–60; zones and dungeons have different colours, unconfirmed level ranges are hatched, and hovering or focusing a bar shows the step, levels, quest hub and visit number. Clicking a bar selects that step. | Must |
@@ -109,6 +113,14 @@ The app has two views, switched from the header: the calculator (class picker, b
 | FR-28 | Guide | Each step has a "done" checkbox; the summary shows progress (done / total), which survives a reload; "Reset progress" clears it. | Should |
 | FR-29 | Guide | A "Left out on purpose" panel lists the zones and dungeons the route skips and why. | Must |
 | FR-30 | Guide | "Open <Zone> map" (in the selected step's detail and in the route map's toolbar) opens that zone's in-game Forever map in a modal dialog; a dungeon step opens its entrance zone. The map pins each quest hub with its name and the numbers of the route steps that use it; the shown trip's hubs are highlighted, and clicking a pin shows the next trip that uses that hub. Beside the map (below it on phones, where the map stays in view while the list scrolls) the dialog lists the route's trips to the zone: its visits and the dungeons entered from it, each with its step number, levels and hubs. The shown trip, at first the selected step or else the zone's first trip, is expanded with its directions, hubs (hubs in other zones marked apart), objectives and a "done" checkbox. Choosing a trip selects that step and keeps the dialog open. "Previous step" and "Next step" buttons walk the route and switch to the next step's zone map when it is elsewhere. The dialog also lists the zone's hubs with their coordinates and steps, and a note for zones Blizzard changed in Forever. Esc, the close button or a backdrop click closes it, and focus returns to the button that opened it. | Must |
+
+| FR-31 | Class guide | The class guide shows the class picker and the selected class's guide. Its URL is `#/guide/<class-id>/<spec>`, where spec is a talent tree id; opening it restores the class and spec, a missing or unknown spec shows the recommended leveling spec, and an unknown class falls back to the current one. A class without a guide shows "<Class> guide coming soon" with links to the classes that have one. | Must |
+| FR-32 | Class guide | "Leveling plan: <Spec>" names the class's one recommended leveling spec (the fastest to level) with a "Recommended" badge and why. A "My level" field (1–60) personalises the leveling plan and the spell list. | Must |
+| FR-33 | Class guide | "Rotation by level" in the leveling plan has level-range buttons covering 1–60; the range for the entered level is shown (the first range when empty) until another is chosen. Each range shows its pet, a numbered priority list (icon, name, "talent" tag for talent abilities, "new in this range" for abilities not in the previous range, a note) and tips. With a level entered, abilities not available yet are dimmed and tagged with their level. | Must |
+| FR-34 | Class guide | The leveling plan's "Talent order" lists the recommended spec's 51 points from level 10 to 60, grouped into runs of the same talent with levels, rank reached, tree and a note. With a level entered, finished runs are marked and the run in progress highlighted; the tree split for that level (60 when empty) is shown, and "Open level N build in the calculator" opens that build. | Must |
+| FR-35 | Class guide | The leveling plan's "Trainer plan" lists each level at which new ranks unlock, with every rank marked "Must train" (worth buying even when gold is short), "Recommended" (when affordable) or "Skip" (no help while leveling), most important first; skipped ranks are hidden until "Show ranks to skip" is ticked. With a level entered, earlier visits fade, the next one is marked and a line names its must-train and recommended ranks. | Must |
+| FR-36 | Class guide | "Specs at level 60" has a spec picker (the leveling spec marked "Leveling") showing the selected spec's summary, pet, strengths, weaknesses and its dungeon and raid priority list. Other specs also show their own talent order, noting that leveling them is slower. | Must |
+| FR-37 | Class guide | "Spells" lists every trainer spell sorted by first level, with icon, school, description, rank levels coloured by training priority (with a breakdown when ranks differ and a reason), how it is learned when not from the trainer, a NEW badge for spells new or reworked in Forever and a "Not confirmed" note where Forever data is missing. School buttons filter the list. With a level entered, known ranks are underlined and unlearned spells dimmed. A few notes above the list explain class mechanics. | Must |
 
 ## Talent rules
 
@@ -202,6 +214,21 @@ The guide plans a Horde completionist playthrough: every Horde quest hub and eve
 
 **Data.** Zones, dungeons, the route, map positions and exclusions live in `src/data/leveling.ts`, zone outlines in `src/data/mapShapes.ts`; route building, travel directions and level lookups are pure functions in `src/lib/leveling.ts`. The guide loads as a separate chunk, so the calculator's first load does not grow.
 
+## Class guide
+
+The class guide covers the Warlock; other classes show a "coming soon" note until their guides are written.
+
+**Rules (enforced by automated tests)**
+
+- The leveling spec is one of the class's specs. Its rotations cover levels 1 to 60 in consecutive ranges, use only spells learned and talents taken by the end of their range, never a spell rank marked "Skip", and every spell a range relies on from its start is "Must train".
+- Every spec of a class with a guide has exactly one spec guide, whose talent order spends exactly 51 points, one per level from 10 to 60, each legal under the calculator's talent rules, with at least 31 points (and the most) in the spec's own tree.
+- Rotations name only spells from the guide or talents the spec's order takes.
+- Spell ids are unique, each spell's rank levels rise between 1 and 60, and per-rank training priorities name real rank levels.
+
+**Warlock content.** Forever renames Curse of Agony and Curse of Doom to Bane of Agony and Bane of Doom (one Bane plus one curse per warlock on a target), removes Curse of Shadow, makes Curse of the Elements cover every magic school from level 20, renames Enslave Demon to Subjugate Demon, turns Firestone and Spellstone into weapon imbues and makes Life Tap scale with Spirit. First levels up to 42 come from the beta trainer (the beta stopped at level 30 to 40); later ranks and the level 48+ spells (Soul Fire, Inferno, Bane of Doom, Ritual of Doom, the mounts) follow Classic 1.12 and are marked "Not confirmed" where they matter. Affliction is the recommended leveling spec, as in every published Forever leveling guide: instant DoTs and drains with a Voidwalker tank mean almost no downtime. No source publishes a full 1–60 talent order, rotation by level or training priorities, so these are the guide's own, built from the published leveling advice (Warcraft Tavern, Method) and checked against the talent rules. Training priorities assume Affliction leveling: for example, Drain Soul rank 1 collects shards as well as any rank, so later ranks are "Skip".
+
+**Data.** Guides live in `src/data/classGuides/<class>.ts` (types in `src/data/classGuides/types.ts`); talent-order expansion, the build at a level and trainer lookups are pure functions in `src/lib/classGuide.ts`. The guide loads as a separate chunk.
+
 ## Data model and content
 
 Talent data lives in one JSON file per class, loaded at build time; adding or updating a class needs no code change.
@@ -282,7 +309,7 @@ The app is a static single-page site with no backend, so it can be hosted on any
 | --- | --- |
 | Stack | React 18, TypeScript 5.6, Vite 5; Vitest for tests; ESLint |
 | Architecture | Calculator rules in one pure module (`src/lib/talents.ts`), separate from UI components and data files |
-| Performance | Initial load under 100 kB gzipped (about 90 kB JS + 5 kB CSS); the leveling guide loads on demand (about 20 kB); clicks update instantly |
+| Performance | Initial load under 100 kB gzipped (about 90 kB JS + 6 kB CSS); the leveling guide (about 22 kB) and class guide (about 13 kB) load on demand; clicks update instantly |
 | Browsers | Current Chrome, Edge, Firefox and Safari, desktop and mobile |
 | Offline / network | Works without a backend; icons and fonts need internet access (Wowhead CDN, Google Fonts); the map images (two continent maps of about 190 kB each, and 34 zone maps of 130–190 kB each, loaded only when opened) are served with the app |
 | Privacy | No accounts, cookies, analytics or stored personal data; build state lives only in the URL. Leveling-guide progress (ticked step ids) is kept in the browser's local storage and never leaves the device |
@@ -313,6 +340,7 @@ v1 is accepted when every item below passes; all were verified for the 17 Oct 20
 - [x] Route rule tests pass (coverage of 10–60, every zone and dungeon visited, steps close to their level range); the guide has no horizontal scroll at 375 px.
 - [x] The route map shows the in-game continent map with clickable zone outlines; it zooms, pans and returns to the whole continent.
 - [x] A step's zone map opens from the step or the route map, pins the zone's quest hubs with the step's hub highlighted, and fits a 375 px screen.
+- [x] The Warlock class guide recommends one leveling spec (Affliction) with a rotation for every level range, a legal 51-point talent order and a trainer plan marking each rank "Must train", "Recommended" or "Skip"; "My level" picks the rotation, marks the next trainer visit, dims what is not learned yet and opens the build for that level in the calculator; each spec shows its level 60 rotation; other classes show "coming soon"; no horizontal scroll at 375 px.
 
 ## Risks, open questions and roadmap
 
@@ -343,6 +371,7 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 - [ ] What level range and Horde hubs does Shen'dralas have, and which new dungeons have Horde quests?
 - [ ] Does the Horde still need the Dalaran Sewer Key for City of Dalaran after the Oct 15 change?
 - [ ] Should there be an Alliance leveling guide?
+- [ ] What are the Forever trainer levels above 42 (Soul Fire, Inferno, Bane of Doom, Ritual of Doom) and the later spell ranks?
 
 **Roadmap**
 
@@ -350,7 +379,8 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 2. **v2 — Class quiz (shipped):** an 8-question questionnaire that recommends a class and spec and opens the calculator on it with the suggested tree marked.
 3. **v2.x — Build library:** curated starter builds per spec (levelling, raiding, PvP) loadable in one click; the quiz will then open its recommendation with a starter build.
 4. **v3 — Horde leveling guide (shipped):** a completionist 1–60 route with a level timeline, route map, step checklist and level lookup.
-5. **Later:** races and racials with valid race and class combinations (including the new Skyborne race), Legacy System talents, dual-spec comparison, and localisation.
+5. **v3.1 — Class guide (Warlock shipped):** a leveling plan for the recommended spec (rotation by level, talent order, trainer plan), level 60 rotations per spec and the spell list; the other 8 classes to follow. Training gold costs once Forever trainer prices are known.
+6. **Later:** races and racials with valid race and class combinations (including the new Skyborne race), Legacy System talents, dual-spec comparison, and localisation.
 
 **Sources**
 
@@ -365,3 +395,4 @@ The biggest risk is stale data: v1 uses beta data, and Blizzard may change talen
 - [ConquestCapped — WoW Forever new zones](https://conquestcapped.com/guides/wow-forever/wow-forever-new-zones/) and [LFCarry — WoW Forever new zones](https://lfcarry.com/guides/wow-forever-new-zones) (Riverglades, Shen'dralas, Hyjal access, Dalaran change)
 - [warcraft.wiki.gg — Forever map comparison](https://warcraft.wiki.gg/wiki/Forever_map_comparison) (continent and zone map images)
 - [classicdb.ch](https://classicdb.ch/) (vanilla 1.12 NPC coordinates for quest hub positions)
+- [Zockify — WoW Forever warlock](https://www.zockify.com/forever/warlock/), [Warcraft Tavern — warlock leveling guide](https://www.warcrafttavern.com/forever/guides/warlock-leveling/) and [class guide](https://www.warcrafttavern.com/forever/guides/warlock/), [Method — warlock leveling guide](https://www.method.gg/wow-forever/wow-forever-warlock-leveling-guide-and-talents) (warlock spells, Banes, pets and leveling advice)

@@ -872,6 +872,51 @@ Answers are matched by the start of their label. Tank answers used below, in que
 - **Steps:** On `#/leveling`, open "Find my class", press Esc, click "Talents" and pick Warrior.
 - **Expected:** The quiz opens and closes over the guide; the calculator then works as usual.
 
+## N. Class guide
+
+Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
+
+### TC-81 Header opens the class guide for the current class
+- **PRD:** FR-21, FR-31
+- **Steps:** Load `#/warlock`, click "Class guide", then "Talents".
+- **Expected:** The hash is `#/guide/warlock`, the subtitle says "Class Guide", the link is marked current and Affliction is selected; "Talents" returns to the Warlock calculator.
+
+### TC-82 Spec picker and spec URLs
+- **PRD:** FR-31, FR-36
+- **Steps:** On `#/guide/warlock` click "Destruction"; load `#/guide/warlock/demonology`; load `#/guide/warlock/frost`.
+- **Expected:** The hash becomes `#/guide/warlock/destruction` with "Playing Destruction" shown; Demonology is selected from its link; an unknown spec shows Affliction.
+
+### TC-83 Classes without a guide
+- **PRD:** FR-31
+- **Steps:** Load `#/guide/mage` and click the "Warlock" link.
+- **Expected:** "Mage guide coming soon" is shown; the link opens the Warlock guide.
+
+### TC-84 Leveling plan recommends one spec and shows the rotation for my level
+- **PRD:** FR-32, FR-33, FR-36
+- **Steps:** Load `#/guide/warlock/destruction`; enter 20 in "My level"; click "41–60"; enter 5.
+- **Expected:** "Leveling plan: Affliction" carries a "Recommended" badge and only Affliction is marked "Leveling" in the spec picker. "1–3" is selected at first; level 20 selects "20–29", which has Drain Life and no Wrack; in "41–60" Wrack is dimmed, tagged "level 41" and "new in this range"; level 5 selects "4–7".
+
+### TC-85 Talent order build at my level opens in the calculator
+- **PRD:** FR-34
+- **Steps:** Load `#/guide/warlock`, enter 25 in "My level" and click "Open level 25 build in the calculator".
+- **Expected:** The leveling plan reads "Level 60 build: 37 / 14 / 0", then "Build at level 25: 16 / 0 / 0"; the calculator shows 16 / 51 points, build 16 / 0 / 0, required level 25.
+
+### TC-86 Spell list filter and training priorities
+- **PRD:** FR-37
+- **Steps:** Load `#/guide/warlock`, click the "Pet" filter, enter 25 in "My level".
+- **Expected:** Bane of Agony has a NEW badge and "Must train"; Drain Soul reads "Must train: 10 · Skip: 24, 38, 52"; Curse of Shadow is absent; the Pet filter shows 6 spells; Summon Felhunter is dimmed.
+
+### TC-88 Trainer plan
+- **PRD:** FR-35
+- **Steps:** Load `#/guide/warlock`; tick "Show ranks to skip"; enter 34 in "My level".
+- **Expected:** Level 10 lists Drain Soul as "Must train"; Drain Soul rank 2 (level 24) and Searing Pain (level 26) are hidden until skipped ranks are shown, then marked "Skip". At 34 the status reads "Next trainer visit at level 36: must train: Life Tap (rank 4); recommended: …", level 36 is marked next and level 34 done.
+
+### TC-87 Class guide fits a 375 px phone
+- **PRD:** UX "Layout", User story 7
+- **Preconditions:** viewport 375×812
+- **Steps:** Load each Warlock spec's guide and enter 30 in "My level".
+- **Expected:** No horizontal scroll.
+
 ---
 
 ## Acceptance criteria coverage
@@ -897,6 +942,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | Route map labels don't overlap each other or markers at the whole-continent view | TC-80 |
 | Zone map opens from the step or route map, pins hubs with the step's highlighted, switches trips and steps in place, fits 375 px | TC-76, TC-77, TC-78, TC-79 |
 | "My level" lookup; progress survives reload and resets | TC-70, TC-71 |
+| Warlock class guide: recommended leveling spec, rotation by level, talent order, trainer plan, specs at 60, spells, "My level", "coming soon", 375 px | TC-81–TC-88; Vitest `src/lib/classGuide.test.ts` checks the talent orders and data |
 | Route rule tests pass; guide has no horizontal scroll at 375 px | Vitest `src/lib/leveling.test.ts`; TC-72 |
 | Data quality tests pass for all 9 class files | Not a browser test (Vitest `src/data/classes/classes.test.ts`); TC-10 checks the visible counts |
 
@@ -924,7 +970,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-18 | TC-60 |
 | FR-19 | TC-61 |
 | FR-20 | TC-62 |
-| FR-21 | TC-65, TC-73 |
+| FR-21 | TC-65, TC-73, TC-81 |
 | FR-22 | TC-66 |
 | FR-23 | TC-67 |
 | FR-24 | TC-68 |
@@ -933,6 +979,13 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-27 | TC-70 |
 | FR-28 | TC-71 |
 | FR-30 | TC-76, TC-77, TC-78, TC-79 |
+| FR-31 | TC-81, TC-82, TC-83 |
+| FR-32 | TC-84 |
+| FR-33 | TC-84 |
+| FR-34 | TC-85 |
+| FR-35 | TC-88 |
+| FR-36 | TC-82, TC-84 |
+| FR-37 | TC-86 |
 | FR-29 | Not automated: check the "Left out on purpose" panel lists the skipped zones and dungeons with reasons |
 
 ## Suspected discrepancies between code and PRD (to confirm during execution)

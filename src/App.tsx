@@ -23,37 +23,50 @@ import "./App.css";
 const LAUNCH = new Date("2026-11-04T15:00:00-08:00");
 
 const LevelingGuide = lazy(() => import("./components/LevelingGuide").then((m) => ({ default: m.LevelingGuide })));
+const ClassGuideView = lazy(() => import("./components/ClassGuideView").then((m) => ({ default: m.ClassGuideView })));
 
 const GUIDE_PATH = "leveling";
+const CLASS_GUIDE_PATH = "guide";
 
 interface State {
-  view: "talents" | "leveling";
+  view: "talents" | "leveling" | "guide";
   cls: WowClass;
   build: Build;
   start: StartingZoneId;
+  /** Talent tree id of the spec shown in the class guide; empty for the guide's first spec. */
+  spec: string;
 }
 
 /**
- * Reads the view from the URL hash: `#/leveling/<starting-zone>` for the leveling guide, otherwise
- * `#/<class>/<build>`. Whatever the hash does not mention keeps its previous value.
+ * Reads the view from the URL hash: `#/leveling/<starting-zone>` for the leveling guide,
+ * `#/guide/<class>/<spec>` for the class guide, otherwise `#/<class>/<build>`. Whatever the hash does not
+ * mention keeps its previous value.
  */
 function readHash(prev?: State): State {
-  const [, first = "", second = ""] = window.location.hash.split("/");
+  const [, first = "", second = "", third = ""] = window.location.hash.split("/");
+  const start = prev?.start ?? STARTING_ZONES[0];
   if (first === GUIDE_PATH) {
     const cls = prev?.cls ?? CLASSES[0];
     return {
       view: "leveling",
       cls,
       build: prev?.build ?? emptyBuild(cls),
-      start: isStartingZone(second) ? second : (prev?.start ?? STARTING_ZONES[0]),
+      start: isStartingZone(second) ? second : start,
+      spec: prev?.spec ?? "",
     };
   }
+  if (first === CLASS_GUIDE_PATH) {
+    const cls = findClass(second) ?? prev?.cls ?? CLASSES[0];
+    const keepBuild = prev && prev.cls.id === cls.id;
+    const spec = cls.trees.some((t) => t.id === third) ? third : "";
+    return { view: "guide", cls, build: keepBuild ? prev.build : emptyBuild(cls), start, spec };
+  }
   const cls = findClass(first) ?? CLASSES[0];
-  return { view: "talents", cls, build: decodeBuild(cls, second), start: prev?.start ?? STARTING_ZONES[0] };
+  return { view: "talents", cls, build: decodeBuild(cls, second), start, spec: prev?.cls.id === cls.id ? prev.spec : "" };
 }
 
 export default function App() {
-  const [{ view, cls, build, start }, setState] = useState<State>(() => readHash());
+  const [{ view, cls, build, start, spec }, setState] = useState<State>(() => readHash());
   const [copied, setCopied] = useState(false);
   const [quizOpen, setQuizOpen] = useState(false);
   const [suggested, setSuggested] = useState<{ classId: string; treeIndex: number } | null>(null);
@@ -62,11 +75,12 @@ export default function App() {
 
   const talentsHash = `#/${cls.id}/${encoded.replace(/-+$/, "")}`;
   const guideHash = `#/${GUIDE_PATH}/${start}`;
+  const classGuideHash = `#/${CLASS_GUIDE_PATH}/${cls.id}${spec ? `/${spec}` : ""}`;
 
   useEffect(() => {
-    const hash = view === "leveling" ? guideHash : talentsHash;
+    const hash = view === "leveling" ? guideHash : view === "guide" ? classGuideHash : talentsHash;
     if (window.location.hash !== hash) window.history.replaceState(null, "", hash);
-  }, [view, talentsHash, guideHash]);
+  }, [view, talentsHash, guideHash, classGuideHash]);
 
   useEffect(() => {
     const onHash = () => setState((s) => readHash(s));
@@ -80,11 +94,11 @@ export default function App() {
 
   const selectClass = (next: WowClass) => {
     setSuggested(null);
-    setState((s) => ({ ...s, cls: next, build: emptyBuild(next) }));
+    setState((s) => ({ ...s, cls: next, build: emptyBuild(next), spec: "" }));
   };
 
   const chooseFromQuiz = (next: WowClass, treeIndex: number) => {
-    setState((s) => ({ ...s, view: "talents", cls: next, build: emptyBuild(next) }));
+    setState((s) => ({ ...s, view: "talents", cls: next, build: emptyBuild(next), spec: "" }));
     setSuggested({ classId: next.id, treeIndex });
     setQuizOpen(false);
   };
@@ -107,13 +121,16 @@ export default function App() {
             World of Warcraft<span className="forever">: Forever</span>
           </h1>
           <p className="subtitle">
-            {view === "leveling" ? "Horde Leveling Guide" : "Talent Calculator"} ·{" "}
+            {view === "leveling" ? "Horde Leveling Guide" : view === "guide" ? "Class Guide" : "Talent Calculator"} ·{" "}
             {daysToLaunch > 0 ? `launches in ${daysToLaunch} day${daysToLaunch === 1 ? "" : "s"}` : "now live"}
           </p>
         </div>
         <div className="view-switch">
           <a href={talentsHash} aria-current={view === "talents" ? "page" : undefined}>
             Talents
+          </a>
+          <a href={classGuideHash} aria-current={view === "guide" ? "page" : undefined}>
+            Class guide
           </a>
           <a href={guideHash} aria-current={view === "leveling" ? "page" : undefined}>
             Leveling guide
@@ -154,7 +171,11 @@ export default function App() {
             ))}
           </nav>
 
-          {CLASSES.length === 0 ? (
+          {view === "guide" ? (
+            <Suspense fallback={<p className="empty">Loading the class guide…</p>}>
+              <ClassGuideView cls={cls} spec={spec} onSpecChange={(next) => setState((s) => ({ ...s, spec: next }))} />
+            </Suspense>
+          ) : CLASSES.length === 0 ? (
             <p className="empty">No class data loaded.</p>
           ) : (
             <>
