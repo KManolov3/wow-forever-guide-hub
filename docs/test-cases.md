@@ -926,6 +926,11 @@ Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 - **Steps:** Load `#/guide/warlock`; click "Gear", "Spells", then "Talents" in the "Guide sections" bar.
 - **Expected:** "Rotation" is current at first and the bar holds "My level". Each click marks that button current, focuses its section and brings it into view, with the bar still visible.
 
+### TC-92 Rotation modes
+- **PRD:** FR-33
+- **Steps:** Load `#/guide/warlock`; click "Dungeons"; click "10–13"; click "World PvP"; enter 45 in "My level".
+- **Expected:** "Leveling" is selected at first. Dungeons at 1–3 reads "No dungeon yet: Ragefire Chasm, the first one, is level 13."; at 10–13 the heading is "Dungeons, levels 10–13", Immolate's note says "Bosses only" and nothing is tagged "new in this range". World PvP at 10–13 reads "Nobody to fight yet…". Level 45 shows "World PvP, levels 41–60" opening with Corruption and including Fear and Death Coil.
+
 ### TC-87 Class guide fits a 375 px phone
 - **PRD:** UX "Layout", User story 7
 - **Preconditions:** viewport 375×812
@@ -957,7 +962,7 @@ Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 | Route map labels don't overlap each other or markers at the whole-continent view | TC-80 |
 | Zone map opens from the step or route map, pins hubs with the step's highlighted, switches trips and steps in place, fits 375 px | TC-76, TC-77, TC-78, TC-79 |
 | "My level" lookup; progress survives reload and resets | TC-70, TC-71 |
-| Class guide opens on the Warlock with section navigation; Warlock class guide: recommended leveling spec, rotation by level, talent order, trainer plan, gear upgrades, specs at 60, spells, "My level", "coming soon", 375 px | TC-81–TC-91; Vitest `src/lib/classGuide.test.ts` checks the talent orders and data |
+| Class guide opens on the Warlock with section navigation; Warlock class guide: recommended leveling spec, rotation by level and mode, talent order, trainer plan, gear upgrades, specs at 60, spells, "My level", "coming soon", 375 px | TC-81–TC-92; Vitest `src/lib/classGuide.test.ts` checks the talent orders and data |
 | Route rule tests pass; guide has no horizontal scroll at 375 px | Vitest `src/lib/leveling.test.ts`; TC-72 |
 | Data quality tests pass for all 9 class files | Not a browser test (Vitest `src/data/classes/classes.test.ts`); TC-10 checks the visible counts |
 
@@ -996,7 +1001,7 @@ Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 | FR-30 | TC-76, TC-77, TC-78, TC-79 |
 | FR-31 | TC-81, TC-82, TC-83, TC-90 |
 | FR-32 | TC-84 |
-| FR-33 | TC-84 |
+| FR-33 | TC-84, TC-92 |
 | FR-34 | TC-85 |
 | FR-35 | TC-88 |
 | FR-36 | TC-82, TC-84 |

@@ -2143,6 +2143,14 @@
   margin-top: 10px;
 }
 
+.rotation-modes {
+  margin-bottom: 8px;
+}
+
+.rotation-modes button {
+  padding: 5px 14px;
+}
+
 .level-brackets {
   margin-bottom: 4px;
 }

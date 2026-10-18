@@ -6,6 +6,7 @@ import type {
   GearSource,
   GearUpgrade,
   GuideSpell,
+  RotationMode,
   RotationStep,
   SpecGuide,
   TrainPriority,
@@ -318,6 +319,12 @@ function GuideContent({ cls, guide, spec, onSpecChange }: ContentProps) {
   );
 }
 
+const MODES: { id: RotationMode; label: string }[] = [
+  { id: "leveling", label: "Leveling" },
+  { id: "dungeons", label: "Dungeons" },
+  { id: "pvp", label: "World PvP" },
+];
+
 const levelRange = (from: number, to: number) => (from === to ? `${from}` : `${from}–${to}`);
 
 function LevelRotations({
@@ -330,6 +337,7 @@ function LevelRotations({
   ability: (id: string) => Ability;
 }) {
   const rotations = guide.leveling.rotations;
+  const [mode, setMode] = useState<RotationMode>("leveling");
   const [picked, setPicked] = useState<number | null>(null);
   const [pickedFor, setPickedFor] = useState(level);
   // A new level shows its own bracket again until the player picks another one.
@@ -339,16 +347,26 @@ function LevelRotations({
   }
   const fromLevel = level === null ? undefined : rotationFor(rotations, level);
   const shown = picked ?? (fromLevel ? rotations.indexOf(fromLevel) : 0);
-  const rotation = rotations[shown];
-  const previous = new Set(rotations[shown - 1]?.steps.map((s) => s.ability) ?? []);
+  const range = rotations[shown];
+  const rotation = range.modes[mode];
+  const before = rotations[shown - 1]?.modes[mode];
+  const previous = new Set(before?.steps.map((s) => s.ability) ?? []);
 
   return (
     <div id="guide-rotation" tabIndex={-1} className="guide-sub guide-section">
       <h4 className="sub-title">Rotation by level</h4>
       <p className="panel-intro">
         Priority lists: cast the first ability whose note applies, then start again from the top. Your rotation changes
-        as you learn spells and talents{level === null ? "; enter your level above to jump to yours" : ""}.
+        as you learn spells and talents{level === null ? "; enter your level above to jump to yours" : ""}, and with
+        what you are doing: questing alone, in a dungeon group, or fighting Alliance players in the open world.
       </p>
+      <div className="start-picker rotation-modes" role="group" aria-label="Rotation mode">
+        {MODES.map((m) => (
+          <button key={m.id} aria-pressed={m.id === mode} onClick={() => setMode(m.id)}>
+            {m.label}
+          </button>
+        ))}
+      </div>
       <div className="start-picker level-brackets" role="group" aria-label="Level range">
         {rotations.map((r, i) => (
           <button key={r.from} aria-pressed={i === shown} onClick={() => setPicked(i)}>
@@ -357,15 +375,23 @@ function LevelRotations({
         ))}
       </div>
       <div className="rotation">
-        <h4>Levels {levelRange(rotation.from, rotation.to)}</h4>
-        <p className="rotation-context">Pet: {rotation.pet}</p>
-        <RotationSteps
-          steps={rotation.steps}
-          level={level}
-          ability={ability}
-          isNew={(id) => shown > 0 && !previous.has(id)}
-        />
-        {rotation.tips && <Tips tips={rotation.tips} />}
+        <h4>
+          {MODES.find((m) => m.id === mode)!.label}, levels {levelRange(range.from, range.to)}
+        </h4>
+        {rotation ? (
+          <>
+            <p className="rotation-context">Pet: {rotation.pet}</p>
+            <RotationSteps
+              steps={rotation.steps}
+              level={level}
+              ability={ability}
+              isNew={(id) => before !== undefined && !previous.has(id)}
+            />
+            {rotation.tips && <Tips tips={rotation.tips} />}
+          </>
+        ) : (
+          <p className="rotation-context">{guide.leveling.unavailable[mode]}</p>
+        )}
       </div>
     </div>
   );

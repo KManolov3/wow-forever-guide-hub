@@ -37,14 +37,23 @@ export interface RotationStep {
   note: string;
 }
 
-/** The leveling rotation for a range of levels; ranges run from level 1 to 60 without gaps. */
-export interface LevelRotation {
-  from: number;
-  to: number;
+/** What the player is doing: solo questing, a dungeon group, or fighting other players in the open world. */
+export type RotationMode = "leveling" | "dungeons" | "pvp";
+
+/** How to play one mode in one level range. */
+export interface ModeRotation {
   pet: string;
   /** In priority order. */
   steps: RotationStep[];
   tips?: string[];
+}
+
+/** The rotations for a range of levels; ranges run from level 1 to 60 without gaps. */
+export interface LevelRotation {
+  from: number;
+  to: number;
+  /** Every range has a leveling rotation; dungeons and world PvP start later. */
+  modes: { leveling: ModeRotation } & Partial<Record<RotationMode, ModeRotation>>;
 }
 
 export interface Rotation {
@@ -117,6 +126,8 @@ export interface ClassGuide {
     treeId: string;
     reason: string;
     rotations: LevelRotation[];
+    /** Shown for a mode in a level range that has no rotation for it. */
+    unavailable: Partial<Record<RotationMode, string>>;
   };
   specs: SpecGuide[];
   /** Key item upgrades while leveling the recommended spec, in level order. */

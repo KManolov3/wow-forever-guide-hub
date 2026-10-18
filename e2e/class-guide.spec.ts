@@ -192,6 +192,33 @@ test.describe("N. Class guide", () => {
     }
   });
 
+  test("TC-92 rotation modes for leveling, dungeons and world PvP", async ({ page }) => {
+    await loadClassGuide(page);
+    const plan = panel(page, /^Leveling plan/);
+    const modes = plan.getByRole("group", { name: "Rotation mode" });
+    const brackets = plan.getByRole("group", { name: "Level range" });
+    const rotation = plan.locator("#guide-rotation .rotation");
+    await expect(modes.getByRole("button", { name: "Leveling" })).toHaveAttribute("aria-pressed", "true");
+
+    await modes.getByRole("button", { name: "Dungeons" }).click();
+    await expect(rotation).toContainText("No dungeon yet: Ragefire Chasm, the first one, is level 13.");
+
+    await brackets.getByRole("button", { name: "10–13" }).click();
+    await expect(rotation.locator("h4")).toHaveText("Dungeons, levels 10–13");
+    await expect(rotation.locator(".rotation-steps li").filter({ hasText: "Immolate" })).toContainText("Bosses only");
+    await expect(rotation.locator(".added-tag")).toHaveCount(0);
+
+    await modes.getByRole("button", { name: "World PvP" }).click();
+    await expect(rotation).toContainText("Nobody to fight yet");
+
+    await setLevel(page, 45);
+    await expect(rotation.locator("h4")).toHaveText("World PvP, levels 41–60");
+    await expect(rotation.locator(".rotation-steps li").first()).toContainText("Corruption");
+    const names = rotation.locator(".rotation-steps li strong");
+    await expect(names.filter({ hasText: /^Death Coil$/ })).toHaveCount(1);
+    await expect(names.filter({ hasText: /^Fear$/ })).toHaveCount(1);
+  });
+
   test("TC-87 class guide fits a 375 px phone without horizontal scroll", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     for (const spec of ["affliction", "demonology", "destruction"]) {

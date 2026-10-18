@@ -114,8 +114,8 @@ describe("spell helpers", () => {
 
   it("finds the leveling rotation for a level", () => {
     const rotations = [
-      { from: 1, to: 9, pet: "", steps: [] },
-      { from: 10, to: 60, pet: "", steps: [] },
+      { from: 1, to: 9, modes: { leveling: { pet: "", steps: [] } } },
+      { from: 10, to: 60, modes: { leveling: { pet: "", steps: [] } } },
     ];
     expect(rotationFor(rotations, 9)).toBe(rotations[0]);
     expect(rotationFor(rotations, 10)).toBe(rotations[1]);
@@ -193,11 +193,31 @@ describe.each(Object.values(CLASS_GUIDES))("$classId guide data", (guide) => {
       }
     });
 
-    it("only uses abilities learned by the end of each level range, and none the trainer plan says to skip", () => {
+    const modeRotations = rotations.flatMap((r) =>
+      Object.entries(r.modes).map(([mode, m]) => ({ ...m!, mode, from: r.from, to: r.to })),
+    );
+
+    it("explains every mode a level range has no rotation for", () => {
       for (const r of rotations) {
+        for (const mode of ["dungeons", "pvp"] as const) {
+          if (!r.modes[mode]) expect(guide.leveling.unavailable[mode], `${r.from}–${r.to}: ${mode}`).toBeTruthy();
+        }
+      }
+    });
+
+    it("starts dungeons and world PvP once and keeps them to 60", () => {
+      for (const mode of ["dungeons", "pvp"] as const) {
+        const first = rotations.findIndex((r) => r.modes[mode]);
+        expect(first, mode).toBeGreaterThan(-1);
+        for (const r of rotations.slice(first)) expect(r.modes[mode], `${r.from}–${r.to}: ${mode}`).toBeDefined();
+      }
+    });
+
+    it("only uses abilities learned by the end of each level range, and none the trainer plan says to skip", () => {
+      for (const r of modeRotations) {
         expect(r.steps.length).toBeGreaterThan(0);
         for (const step of r.steps) {
-          const where = `${r.from}–${r.to}: ${step.ability}`;
+          const where = `${r.from}–${r.to} ${r.mode}: ${step.ability}`;
           const s = guide.spells.find((x) => x.id === step.ability);
           if (s) {
             expect(s.ranks[0], where).toBeLessThanOrEqual(r.to);
@@ -211,9 +231,9 @@ describe.each(Object.values(CLASS_GUIDES))("$classId guide data", (guide) => {
       }
     });
 
-    it("marks every spell the leveling rotations rely on from the start of a range as must train", () => {
+    it("marks every spell the solo leveling rotations rely on from the start of a range as must train", () => {
       for (const r of rotations) {
-        for (const step of r.steps) {
+        for (const step of r.modes.leveling.steps) {
           const s = guide.spells.find((x) => x.id === step.ability);
           if (s && s.ranks[0] <= r.from) expect(trainPriority(s, s.ranks[0]), step.ability).toBe("must");
         }
