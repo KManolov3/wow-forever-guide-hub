@@ -1,12 +1,24 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CLASS_GUIDES } from "../data/classGuides";
 import { findClass } from "../data/classes";
-import type { ClassGuide, GuideSpell, RotationStep, SpecGuide, TrainPriority } from "../data/classGuides/types";
+import type {
+  ClassGuide,
+  GearSource,
+  GearUpgrade,
+  GuideSpell,
+  RotationStep,
+  SpecGuide,
+  TrainPriority,
+} from "../data/classGuides/types";
+import { DUNGEONS, ZONES } from "../data/leveling";
 import type { WowClass } from "../data/types";
 import {
   type TalentPick,
   buildAtLevel,
+  GEAR_LOOKAHEAD,
+  type GearStatus,
   expandTalentOrder,
+  gearStatus,
   locateTalent,
   rankAt,
   rotationFor,
@@ -63,6 +75,105 @@ interface ContentProps {
   onSpecChange: (spec: string) => void;
 }
 
+/** Sections the guide's navigation bar jumps to, in page order. */
+const SECTIONS = [
+  { id: "guide-rotation", label: "Rotation" },
+  { id: "guide-talents", label: "Talents" },
+  { id: "guide-trainer", label: "Trainer" },
+  { id: "guide-gear", label: "Gear" },
+  { id: "guide-specs", label: "Specs at 60" },
+  { id: "guide-spells", label: "Spells" },
+] as const;
+
+/** Id of the last section whose top has scrolled up to the navigation bar, or the last one at the page bottom. */
+function sectionInView(navBottom: number): string {
+  const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+  if (atBottom) return SECTIONS[SECTIONS.length - 1].id;
+  let current: string = SECTIONS[0].id;
+  for (const { id } of SECTIONS) {
+    const top = document.getElementById(id)?.getBoundingClientRect().top;
+    if (top !== undefined && top <= navBottom + 40) current = id;
+  }
+  return current;
+}
+
+function GuideNav({ levelInput, onLevelInput }: { levelInput: string; onLevelInput: (value: string) => void }) {
+  const nav = useRef<HTMLElement>(null);
+  const links = useRef<HTMLUListElement>(null);
+  const [active, setActive] = useState<string>(SECTIONS[0].id);
+
+  // On narrow screens the links scroll sideways; keep the current one visible.
+  useEffect(() => {
+    const list = links.current;
+    const button = list?.querySelector<HTMLElement>('[aria-current="true"]');
+    if (!list || !button) return;
+    const left = button.offsetLeft - list.offsetLeft;
+    if (left < list.scrollLeft || left + button.offsetWidth > list.scrollLeft + list.clientWidth) {
+      list.scrollTo({ left: left - 16, behavior: "smooth" });
+    }
+  }, [active]);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setActive(sectionInView(nav.current?.getBoundingClientRect().bottom ?? 0)));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  const jump = (id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    target.focus({ preventScroll: true });
+    setActive(id);
+    // Content above can still change height (fonts, images) while the smooth scroll runs; line up again at the end.
+    window.addEventListener(
+      "scrollend",
+      () => {
+        const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        if (Math.abs(target.getBoundingClientRect().top - margin) > 4) target.scrollIntoView({ block: "start" });
+      },
+      { once: true },
+    );
+  };
+
+  return (
+    <nav ref={nav} className="guide-nav" aria-label="Guide sections">
+      <form className="level-jump" onSubmit={(e) => e.preventDefault()}>
+        <label htmlFor="guide-level">My level</label>
+        <input
+          id="guide-level"
+          type="number"
+          inputMode="numeric"
+          min={1}
+          max={MAX_LEVEL}
+          value={levelInput}
+          onChange={(e) => onLevelInput(e.target.value)}
+          placeholder="1–60"
+        />
+      </form>
+      <ul ref={links} className="guide-nav-links">
+        {SECTIONS.map((s) => (
+          <li key={s.id}>
+            <button aria-current={active === s.id ? "true" : undefined} onClick={() => jump(s.id)}>
+              {s.label}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
 interface Ability {
   name: string;
   icon?: string;
@@ -103,20 +214,9 @@ function GuideContent({ cls, guide, spec, onSpecChange }: ContentProps) {
           <span className="label">Leveling spec</span>
           <span className="value">{levelingTree.name}</span>
         </div>
-        <form className="level-jump" onSubmit={(e) => e.preventDefault()}>
-          <label htmlFor="guide-level">My level</label>
-          <input
-            id="guide-level"
-            type="number"
-            inputMode="numeric"
-            min={1}
-            max={MAX_LEVEL}
-            value={levelInput}
-            onChange={(e) => setLevelInput(e.target.value)}
-            placeholder="1–60"
-          />
-        </form>
       </div>
+
+      <GuideNav levelInput={levelInput} onLevelInput={setLevelInput} />
 
       <section className="guide-panel" aria-labelledby="leveling-title">
         <h3 id="leveling-title" className="panel-title">
@@ -126,6 +226,7 @@ function GuideContent({ cls, guide, spec, onSpecChange }: ContentProps) {
         <p className="spec-summary">{guide.leveling.reason}</p>
         <LevelRotations guide={guide} level={level} ability={(id) => ability(id, levelingPicks)} />
         <TalentOrder
+          id="guide-talents"
           cls={cls}
           picks={levelingPicks}
           level={level}
@@ -134,9 +235,10 @@ function GuideContent({ cls, guide, spec, onSpecChange }: ContentProps) {
           intro={`One point per level from ${FIRST_TALENT_LEVEL}, ordered for leveling speed.`}
         />
         <TrainerPlan spells={guide.spells} level={level} />
+        <GearUpgrades gear={guide.gear} level={level} />
       </section>
 
-      <section className="guide-panel" aria-labelledby="spec-title">
+      <section id="guide-specs" tabIndex={-1} className="guide-panel guide-section" aria-labelledby="spec-title">
         <h3 id="spec-title" className="panel-title">
           Specs at level 60
         </h3>
@@ -241,11 +343,11 @@ function LevelRotations({
   const previous = new Set(rotations[shown - 1]?.steps.map((s) => s.ability) ?? []);
 
   return (
-    <div className="guide-sub">
+    <div id="guide-rotation" tabIndex={-1} className="guide-sub guide-section">
       <h4 className="sub-title">Rotation by level</h4>
       <p className="panel-intro">
         Priority lists: cast the first ability whose note applies, then start again from the top. Your rotation changes
-        as you learn spells and talents{level === null ? "; enter your level to jump to yours" : ""}.
+        as you learn spells and talents{level === null ? "; enter your level above to jump to yours" : ""}.
       </p>
       <div className="start-picker level-brackets" role="group" aria-label="Level range">
         {rotations.map((r, i) => (
@@ -320,14 +422,14 @@ function TrainerPlan({ spells, level }: { spells: GuideSpell[]; level: number | 
     spell.ranks.length > 1 ? `${spell.name} (rank ${rank})` : spell.name;
 
   return (
-    <div className="guide-sub">
+    <div id="guide-trainer" tabIndex={-1} className="guide-sub guide-section">
       <h4 className="sub-title">Trainer plan</h4>
       <p className="panel-intro">
         What to buy each time new ranks unlock. Short on gold? Buy every “Must train” rank first; “Recommended” ones
         when you can afford them; “Skip” ranks don't help you level.
       </p>
       {level !== null && (
-        <p className="training-next" role="status">
+        <p className="training-next" role="status" aria-label="Next trainer visit">
           {next === undefined ? (
             <>You have every spell rank by level {level}.</>
           ) : (
@@ -377,6 +479,113 @@ function TrainerPlan({ spells, level }: { spells: GuideSpell[]; level: number | 
   );
 }
 
+const SOURCE_LABEL: Record<GearSource, string> = {
+  quest: "Quest",
+  dungeon: "Dungeon",
+  auction: "Auction house",
+  crafted: "Tailoring",
+  class: "Class quest",
+};
+
+const STATUS_LABEL: Record<GearStatus, string | undefined> = {
+  outgrown: "Outgrown",
+  now: "Use now",
+  soon: "Coming up",
+  later: undefined,
+};
+
+function placeLabel(id: string) {
+  const dungeon = DUNGEONS.find((d) => d.id === id);
+  if (dungeon) return `${dungeon.name} (dungeon, levels ${levelRange(...dungeon.levels)})`;
+  return ZONES.find((z) => z.id === id)?.name ?? id;
+}
+
+function GearUpgrades({ gear, level }: { gear: GearUpgrade[]; level: number | null }) {
+  const [source, setSource] = useState<GearSource | null>(null);
+  const [hideOutgrown, setHideOutgrown] = useState(true);
+  const sources = (Object.keys(SOURCE_LABEL) as GearSource[]).filter((s) => gear.some((g) => g.source === s));
+  const status = (g: GearUpgrade) => (level === null ? undefined : gearStatus(gear, g, level));
+  const shown = [...gear]
+    .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
+    .filter((g) => !source || g.source === source)
+    .filter((g) => !hideOutgrown || status(g) !== "outgrown");
+  const soon = level === null ? [] : gear
+          .filter((g) => status(g) === "soon")
+          .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+
+  return (
+    <div id="guide-gear" tabIndex={-1} className="guide-sub guide-section">
+      <h4 className="sub-title">Gear upgrades</h4>
+      <p className="panel-intro">
+        Items that make a big difference while leveling, at the level you can use them. Each one replaces the last item
+        listed for its slot.
+      </p>
+      {level !== null && (
+        <p className="training-next gear-next" role="status" aria-label="Upcoming gear">
+          {soon.length === 0
+            ? `Nothing new to chase in the next ${GEAR_LOOKAHEAD} levels.`
+            : `Coming up by level ${level + GEAR_LOOKAHEAD}: ${soon.map((g) => `${g.name} (${g.level})`).join(", ")}.`}
+        </p>
+      )}
+      <div className="gear-controls">
+        <div className="start-picker school-filter" role="group" aria-label="Filter gear by source">
+          <button aria-pressed={source === null} onClick={() => setSource(null)}>
+            All
+          </button>
+          {sources.map((s) => (
+            <button key={s} aria-pressed={source === s} onClick={() => setSource(s)}>
+              {SOURCE_LABEL[s]}
+            </button>
+          ))}
+        </div>
+        {level !== null && (
+          <label className="skip-toggle">
+            <input type="checkbox" checked={hideOutgrown} onChange={(e) => setHideOutgrown(e.target.checked)} /> Hide
+            outgrown items
+          </label>
+        )}
+      </div>
+      <ul className="gear-list">
+        {shown.map((g) => {
+          const st = status(g);
+          return (
+            <li key={g.id} className={`gear ${st ?? ""}`}>
+              <span className="step-levels">{g.level}</span>
+              <Icon name={g.icon} label={g.name} size={36} />
+              <div className="spell-body">
+                <div className="spell-head">
+                  {g.url ? (
+                    <a
+                      className={`gear-name q-${g.quality}`}
+                      href={g.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {g.name}
+                    </a>
+                  ) : (
+                    <strong className={`gear-name q-${g.quality}`}>{g.name}</strong>
+                  )}
+                  <span className="spell-school">{g.slot}</span>
+                  <span className={`gear-source ${g.source}`}>{SOURCE_LABEL[g.source]}</span>
+                  {st && STATUS_LABEL[st] && <span className={`gear-status ${st}`}>{STATUS_LABEL[st]}</span>}
+                </div>
+                <p className="spell-desc">{g.stats}</p>
+                <p className="spell-ranks">
+                  {g.place ? `${placeLabel(g.place)} · ` : ""}
+                  {g.where}
+                </p>
+                <p className="spell-ranks train-note">{g.why}</p>
+                {g.unconfirmed && <p className="step-unconfirmed">Not confirmed: {g.unconfirmed}</p>}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 function Spells({ guide, level }: { guide: ClassGuide; level: number | null }) {
   const [school, setSchool] = useState<string | null>(null);
   const schools = [...new Set(guide.spells.map((s) => s.school))];
@@ -385,7 +594,7 @@ function Spells({ guide, level }: { guide: ClassGuide; level: number | null }) {
     .sort((a, b) => a.ranks[0] - b.ranks[0] || a.name.localeCompare(b.name));
 
   return (
-    <section className="guide-panel" aria-labelledby="spells-title">
+    <section id="guide-spells" tabIndex={-1} className="guide-panel guide-section" aria-labelledby="spells-title">
       <h3 id="spells-title" className="panel-title">
         Spells
       </h3>
@@ -472,6 +681,7 @@ interface Segment {
 }
 
 function TalentOrder({
+  id,
   cls,
   picks,
   level,
@@ -479,6 +689,8 @@ function TalentOrder({
   title,
   intro,
 }: {
+  /** Set when the navigation bar jumps here. */
+  id?: string;
   cls: WowClass;
   picks: TalentPick[];
   level: number | null;
@@ -499,7 +711,11 @@ function TalentOrder({
   }
 
   return (
-    <div className="guide-sub talent-order-block">
+    <div
+      id={id}
+      tabIndex={id ? -1 : undefined}
+      className={`guide-sub talent-order-block ${id ? "guide-section" : ""}`}
+    >
       <h4 className="sub-title">{title}</h4>
       <p className="panel-intro">{intro}</p>
       <div className="talent-order-summary">

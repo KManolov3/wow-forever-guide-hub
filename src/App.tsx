@@ -27,13 +27,17 @@ const ClassGuideView = lazy(() => import("./components/ClassGuideView").then((m)
 
 const GUIDE_PATH = "leveling";
 const CLASS_GUIDE_PATH = "guide";
+/** Class the class guide opens on until another one is picked there. */
+const DEFAULT_GUIDE_CLASS = findClass("warlock") ?? CLASSES[0];
 
 interface State {
   view: "talents" | "leveling" | "guide";
   cls: WowClass;
   build: Build;
   start: StartingZoneId;
-  /** Talent tree id of the spec shown in the class guide; empty for the guide's first spec. */
+  /** Class shown in the class guide, kept apart from the calculator's class so browsing guides keeps the build. */
+  guideClass: WowClass;
+  /** Talent tree id of the spec shown in the class guide; empty for the guide's default spec. */
   spec: string;
 }
 
@@ -45,28 +49,21 @@ interface State {
 function readHash(prev?: State): State {
   const [, first = "", second = "", third = ""] = window.location.hash.split("/");
   const start = prev?.start ?? STARTING_ZONES[0];
-  if (first === GUIDE_PATH) {
+  const guide = { guideClass: prev?.guideClass ?? DEFAULT_GUIDE_CLASS, spec: prev?.spec ?? "" };
+  if (first === GUIDE_PATH || first === CLASS_GUIDE_PATH) {
     const cls = prev?.cls ?? CLASSES[0];
-    return {
-      view: "leveling",
-      cls,
-      build: prev?.build ?? emptyBuild(cls),
-      start: isStartingZone(second) ? second : start,
-      spec: prev?.spec ?? "",
-    };
-  }
-  if (first === CLASS_GUIDE_PATH) {
-    const cls = findClass(second) ?? prev?.cls ?? CLASSES[0];
-    const keepBuild = prev && prev.cls.id === cls.id;
-    const spec = cls.trees.some((t) => t.id === third) ? third : "";
-    return { view: "guide", cls, build: keepBuild ? prev.build : emptyBuild(cls), start, spec };
+    const kept = { cls, build: prev?.build ?? emptyBuild(cls) };
+    if (first === GUIDE_PATH) return { view: "leveling", ...kept, ...guide, start: isStartingZone(second) ? second : start };
+    const guideClass = findClass(second) ?? guide.guideClass;
+    const spec = guideClass.trees.some((t) => t.id === third) ? third : "";
+    return { view: "guide", ...kept, start, guideClass, spec };
   }
   const cls = findClass(first) ?? CLASSES[0];
-  return { view: "talents", cls, build: decodeBuild(cls, second), start, spec: prev?.cls.id === cls.id ? prev.spec : "" };
+  return { view: "talents", cls, build: decodeBuild(cls, second), start, ...guide };
 }
 
 export default function App() {
-  const [{ view, cls, build, start, spec }, setState] = useState<State>(() => readHash());
+  const [{ view, cls, build, start, guideClass, spec }, setState] = useState<State>(() => readHash());
   const [copied, setCopied] = useState(false);
   const [quizOpen, setQuizOpen] = useState(false);
   const [suggested, setSuggested] = useState<{ classId: string; treeIndex: number } | null>(null);
@@ -75,7 +72,7 @@ export default function App() {
 
   const talentsHash = `#/${cls.id}/${encoded.replace(/-+$/, "")}`;
   const guideHash = `#/${GUIDE_PATH}/${start}`;
-  const classGuideHash = `#/${CLASS_GUIDE_PATH}/${cls.id}${spec ? `/${spec}` : ""}`;
+  const classGuideHash = `#/${CLASS_GUIDE_PATH}/${guideClass.id}${spec ? `/${spec}` : ""}`;
 
   useEffect(() => {
     const hash = view === "leveling" ? guideHash : view === "guide" ? classGuideHash : talentsHash;
@@ -93,12 +90,17 @@ export default function App() {
   const daysToLaunch = Math.ceil((LAUNCH.getTime() - Date.now()) / 86_400_000);
 
   const selectClass = (next: WowClass) => {
+    if (view === "guide") {
+      setState((s) => ({ ...s, guideClass: next, spec: "" }));
+      return;
+    }
     setSuggested(null);
-    setState((s) => ({ ...s, cls: next, build: emptyBuild(next), spec: "" }));
+    setState((s) => ({ ...s, cls: next, build: emptyBuild(next) }));
   };
+  const pickedClass = view === "guide" ? guideClass : cls;
 
   const chooseFromQuiz = (next: WowClass, treeIndex: number) => {
-    setState((s) => ({ ...s, view: "talents", cls: next, build: emptyBuild(next), spec: "" }));
+    setState((s) => ({ ...s, view: "talents", cls: next, build: emptyBuild(next) }));
     setSuggested({ classId: next.id, treeIndex });
     setQuizOpen(false);
   };
@@ -114,7 +116,7 @@ export default function App() {
   };
 
   return (
-    <div className="app" style={{ "--class-color": cls.color } as React.CSSProperties}>
+    <div className="app" style={{ "--class-color": pickedClass.color } as React.CSSProperties}>
       <header className="masthead">
         <div>
           <h1>
@@ -160,10 +162,10 @@ export default function App() {
             {CLASSES.map((c) => (
               <button
                 key={c.id}
-                className={`class-button ${c.id === cls.id ? "selected" : ""}`}
+                className={`class-button ${c.id === pickedClass.id ? "selected" : ""}`}
                 style={{ "--class-color": c.color } as React.CSSProperties}
                 onClick={() => selectClass(c)}
-                aria-pressed={c.id === cls.id}
+                aria-pressed={c.id === pickedClass.id}
               >
                 <Icon name={c.icon ?? `classicon_${c.id}`} label={c.name} size={36} className="round" />
                 <span className="class-label">{c.name}</span>
@@ -173,7 +175,7 @@ export default function App() {
 
           {view === "guide" ? (
             <Suspense fallback={<p className="empty">Loading the class guide…</p>}>
-              <ClassGuideView cls={cls} spec={spec} onSpecChange={(next) => setState((s) => ({ ...s, spec: next }))} />
+              <ClassGuideView cls={guideClass} spec={spec} onSpecChange={(next) => setState((s) => ({ ...s, spec: next }))} />
             </Suspense>
           ) : CLASSES.length === 0 ? (
             <p className="empty">No class data loaded.</p>

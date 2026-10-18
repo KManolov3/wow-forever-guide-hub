@@ -77,6 +77,35 @@ export interface SpecGuide {
   talentOrder: TalentSegment[];
 }
 
+export type GearSource = "quest" | "dungeon" | "auction" | "crafted" | "class";
+
+/** An item that powers the class up noticeably while leveling. */
+export interface GearUpgrade {
+  /** Kebab-case id, unique within the guide. */
+  id: string;
+  name: string;
+  /** Wowhead/zamimg icon name. */
+  icon?: string;
+  quality: "common" | "uncommon" | "rare" | "epic";
+  /** Equipment slot, e.g. "Wand" or "Chest"; a later item in the same slot replaces an earlier one. */
+  slot: string;
+  /** Level required to use the item. */
+  level: number;
+  source: GearSource;
+  /** Id of the zone or dungeon from the leveling guide where it is found, when it is found in one place. */
+  place?: string;
+  /** Where exactly: the quest and its giver, the boss that drops it, or who makes it. */
+  where: string;
+  /** Short stat summary. */
+  stats: string;
+  /** Why it is worth getting. */
+  why: string;
+  /** Page with the item's full tooltip: Wowhead's Forever database when the item is there, else Classic. */
+  url?: string;
+  /** What is not confirmed for Forever yet. */
+  unconfirmed?: string;
+}
+
 export interface ClassGuide {
   classId: string;
   intro: string;
@@ -90,5 +119,7 @@ export interface ClassGuide {
     rotations: LevelRotation[];
   };
   specs: SpecGuide[];
+  /** Key item upgrades while leveling the recommended spec, in level order. */
+  gear: GearUpgrade[];
   sources: { label: string; url: string }[];
 }

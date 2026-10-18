@@ -118,11 +118,78 @@ test.describe("N. Class guide", () => {
     await expect(visit(26)).toContainText("Searing Pain (rank 2)");
 
     await setLevel(page, 34);
-    await expect(plan.getByRole("status")).toHaveText(
+    await expect(plan.getByRole("status", { name: "Next trainer visit" })).toHaveText(
       /^Next trainer visit at level 36: must train: Life Tap \(rank 4\); recommended: /,
     );
     await expect(visit(36)).toHaveClass(/next/);
     await expect(visit(34)).toHaveClass(/done/);
+  });
+
+  test("TC-89 gear upgrades filter by source and follow my level", async ({ page }) => {
+    await loadClassGuide(page);
+    const plan = panel(page, /^Leveling plan/);
+    const gear = plan.locator(".gear");
+    const item = (name: string) => gear.filter({ has: page.getByText(name, { exact: true }) });
+
+    await expect(item("Gravestone Scepter")).toContainText("Blackfathom Deeps (dungeon, levels 24–32)");
+    await expect(item("Gravestone Scepter").getByRole("link", { name: "Gravestone Scepter" })).toHaveAttribute(
+      "href",
+      "https://www.wowhead.com/forever/item=7001",
+    );
+    await expect(plan.getByLabel("Hide outgrown items")).toHaveCount(0);
+
+    await plan.getByRole("group", { name: "Filter gear by source" }).getByRole("button", { name: "Auction house" }).click();
+    await expect(gear.locator(".gear-source")).toHaveText(Array(await gear.count()).fill("Auction house"));
+    await plan.getByRole("group", { name: "Filter gear by source" }).getByRole("button", { name: "All" }).click();
+
+    await setLevel(page, 17);
+    await expect(plan.getByRole("status", { name: "Upcoming gear" })).toHaveText(
+      "Coming up by level 22: Gravestone Scepter (18), Small Soul Pouch (20), Staff of Soran'ruk (20).",
+    );
+    await expect(item("Greater Magic Wand").locator(".gear-status")).toHaveText("Use now");
+    await expect(item("Lesser Magic Wand")).toHaveCount(0);
+
+    await plan.getByLabel("Hide outgrown items").uncheck();
+    await expect(item("Lesser Magic Wand")).toHaveClass(/outgrown/);
+  });
+
+  test("TC-90 the class guide opens on the Warlock and keeps the calculator's class and build", async ({ page }) => {
+    await load(page, "#/mage/25");
+    await page.getByRole("link", { name: "Class guide", exact: true }).click();
+    expect(await currentHash(page)).toBe("#/guide/warlock");
+    await expect(classButton(page, "Warlock")).toHaveAttribute("aria-pressed", "true");
+
+    await classButton(page, "Druid").click();
+    await expect(page.getByRole("heading", { name: "Druid guide coming soon" })).toBeVisible();
+    expect(await currentHash(page)).toBe("#/guide/druid");
+
+    await page.getByRole("link", { name: "Talents", exact: true }).click();
+    await expect(page.locator(".summary .class-name")).toHaveText("Mage");
+    await expectSummary(page, { points: 7 });
+
+    await loadClassGuide(page, "#/guide");
+    await expect(classButton(page, "Warlock")).toHaveAttribute("aria-pressed", "true");
+    expect(await currentHash(page)).toBe("#/guide/warlock");
+  });
+
+  test("TC-91 section navigation jumps to each section and marks the one in view", async ({ page }) => {
+    await loadClassGuide(page);
+    const nav = page.getByRole("navigation", { name: "Guide sections" });
+    const link = (name: string) => nav.getByRole("button", { name, exact: true });
+    await expect(link("Rotation")).toHaveAttribute("aria-current", "true");
+    await expect(nav.getByLabel("My level")).toBeVisible();
+
+    for (const [name, id] of [
+      ["Gear", "guide-gear"],
+      ["Spells", "guide-spells"],
+      ["Talents", "guide-talents"],
+    ]) {
+      await link(name).click();
+      await expect(link(name)).toHaveAttribute("aria-current", "true");
+      await expect(page.locator(`#${id}`)).toBeFocused();
+      await expect(page.locator(`#${id}`)).toBeInViewport();
+      await expect(nav).toBeInViewport();
+    }
   });
 
   test("TC-87 class guide fits a 375 px phone without horizontal scroll", async ({ page }) => {

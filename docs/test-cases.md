@@ -876,7 +876,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 
 Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 
-### TC-81 Header opens the class guide for the current class
+### TC-81 Header opens the class guide
 - **PRD:** FR-21, FR-31
 - **Steps:** Load `#/warlock`, click "Class guide", then "Talents".
 - **Expected:** The hash is `#/guide/warlock`, the subtitle says "Class Guide", the link is marked current and Affliction is selected; "Talents" returns to the Warlock calculator.
@@ -911,6 +911,21 @@ Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 - **Steps:** Load `#/guide/warlock`; tick "Show ranks to skip"; enter 34 in "My level".
 - **Expected:** Level 10 lists Drain Soul as "Must train"; Drain Soul rank 2 (level 24) and Searing Pain (level 26) are hidden until skipped ranks are shown, then marked "Skip". At 34 the status reads "Next trainer visit at level 36: must train: Life Tap (rank 4); recommended: …", level 36 is marked next and level 34 done.
 
+### TC-89 Gear upgrades
+- **PRD:** FR-38
+- **Steps:** Load `#/guide/warlock`; click the "Auction house" filter, then "All"; enter 17 in "My level"; clear "Hide outgrown items".
+- **Expected:** Gravestone Scepter shows "Blackfathom Deeps (dungeon, levels 24–32)" and links to `https://www.wowhead.com/forever/item=7001`; there is no outgrown toggle until a level is entered. The filter shows only auction house items. At 17 the status reads "Coming up by level 22: Gravestone Scepter (18), Small Soul Pouch (20), Staff of Soran'ruk (20).", Greater Magic Wand is "Use now" and Lesser Magic Wand is hidden; with the toggle cleared it shows as outgrown.
+
+### TC-90 The class guide opens on the Warlock and keeps the calculator's build
+- **PRD:** FR-21, FR-31
+- **Steps:** Load `#/mage/25` (7 points), click "Class guide", pick Druid, click "Talents"; then load `#/guide`.
+- **Expected:** The guide opens at `#/guide/warlock` with Warlock selected; Druid shows "Druid guide coming soon" at `#/guide/druid`; "Talents" shows the Mage calculator with its 7 points. `#/guide` opens `#/guide/warlock`.
+
+### TC-91 Section navigation
+- **PRD:** FR-39
+- **Steps:** Load `#/guide/warlock`; click "Gear", "Spells", then "Talents" in the "Guide sections" bar.
+- **Expected:** "Rotation" is current at first and the bar holds "My level". Each click marks that button current, focuses its section and brings it into view, with the bar still visible.
+
 ### TC-87 Class guide fits a 375 px phone
 - **PRD:** UX "Layout", User story 7
 - **Preconditions:** viewport 375×812
@@ -942,7 +957,7 @@ Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 | Route map labels don't overlap each other or markers at the whole-continent view | TC-80 |
 | Zone map opens from the step or route map, pins hubs with the step's highlighted, switches trips and steps in place, fits 375 px | TC-76, TC-77, TC-78, TC-79 |
 | "My level" lookup; progress survives reload and resets | TC-70, TC-71 |
-| Warlock class guide: recommended leveling spec, rotation by level, talent order, trainer plan, specs at 60, spells, "My level", "coming soon", 375 px | TC-81–TC-88; Vitest `src/lib/classGuide.test.ts` checks the talent orders and data |
+| Class guide opens on the Warlock with section navigation; Warlock class guide: recommended leveling spec, rotation by level, talent order, trainer plan, gear upgrades, specs at 60, spells, "My level", "coming soon", 375 px | TC-81–TC-91; Vitest `src/lib/classGuide.test.ts` checks the talent orders and data |
 | Route rule tests pass; guide has no horizontal scroll at 375 px | Vitest `src/lib/leveling.test.ts`; TC-72 |
 | Data quality tests pass for all 9 class files | Not a browser test (Vitest `src/data/classes/classes.test.ts`); TC-10 checks the visible counts |
 
@@ -970,7 +985,7 @@ Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 | FR-18 | TC-60 |
 | FR-19 | TC-61 |
 | FR-20 | TC-62 |
-| FR-21 | TC-65, TC-73, TC-81 |
+| FR-21 | TC-65, TC-73, TC-81, TC-90 |
 | FR-22 | TC-66 |
 | FR-23 | TC-67 |
 | FR-24 | TC-68 |
@@ -979,13 +994,15 @@ Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 | FR-27 | TC-70 |
 | FR-28 | TC-71 |
 | FR-30 | TC-76, TC-77, TC-78, TC-79 |
-| FR-31 | TC-81, TC-82, TC-83 |
+| FR-31 | TC-81, TC-82, TC-83, TC-90 |
 | FR-32 | TC-84 |
 | FR-33 | TC-84 |
 | FR-34 | TC-85 |
 | FR-35 | TC-88 |
 | FR-36 | TC-82, TC-84 |
 | FR-37 | TC-86 |
+| FR-38 | TC-89 |
+| FR-39 | TC-91 |
 | FR-29 | Not automated: check the "Left out on purpose" panel lists the skipped zones and dungeons with reasons |
 
 ## Suspected discrepancies between code and PRD (to confirm during execution)

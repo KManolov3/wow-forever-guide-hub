@@ -1,4 +1,4 @@
-import type { GuideSpell, LevelRotation, TalentSegment, TrainPriority } from "../data/classGuides/types";
+import type { GearUpgrade, GuideSpell, LevelRotation, TalentSegment, TrainPriority } from "../data/classGuides/types";
 import type { Talent, WowClass } from "../data/types";
 import { type Build, FIRST_TALENT_LEVEL, addPoint, emptyBuild } from "./talents";
 
@@ -110,3 +110,18 @@ export function trainingPlan(spells: GuideSpell[]): TrainingVisit[] {
 /** The leveling rotation covering the given level. */
 export const rotationFor = (rotations: LevelRotation[], level: number) =>
   rotations.find((r) => r.from <= level && level <= r.to);
+
+/** How far ahead of the player's level an item counts as coming up next. */
+export const GEAR_LOOKAHEAD = 5;
+
+export type GearStatus = "outgrown" | "now" | "soon" | "later";
+
+/**
+ * Where an item stands for a player of the given level: "outgrown" once a later item for the same slot is
+ * usable, "now" when usable, "soon" within the next few levels, otherwise "later".
+ */
+export function gearStatus(gear: GearUpgrade[], item: GearUpgrade, level: number): GearStatus {
+  if (item.level > level) return item.level <= level + GEAR_LOOKAHEAD ? "soon" : "later";
+  const replaced = gear.some((g) => g !== item && g.slot === item.slot && g.level > item.level && g.level <= level);
+  return replaced ? "outgrown" : "now";
+}

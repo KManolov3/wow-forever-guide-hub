@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { CLASS_GUIDES } from "../data/classGuides";
-import type { GuideSpell } from "../data/classGuides/types";
+import type { GearUpgrade, GuideSpell } from "../data/classGuides/types";
+import { DUNGEONS, ZONES } from "../data/leveling";
 import { findClass } from "../data/classes";
 import {
   buildAtLevel,
   expandTalentOrder,
+  gearStatus,
   illegalPickLevels,
   locateTalent,
   nextTrainingLevel,
@@ -120,6 +122,36 @@ describe("spell helpers", () => {
   });
 });
 
+describe("gear helpers", () => {
+  const item = (id: string, slot: string, level: number): GearUpgrade => ({
+    id,
+    name: id,
+    quality: "uncommon",
+    slot,
+    level,
+    source: "quest",
+    where: "",
+    stats: "",
+    why: "",
+  });
+  const wand1 = item("wand1", "Wand", 5);
+  const wand2 = item("wand2", "Wand", 13);
+  const robe = item("robe", "Chest", 20);
+  const gear = [wand1, wand2, robe];
+
+  it("marks items usable now, coming up within 5 levels, or later", () => {
+    expect(gearStatus(gear, wand2, 13)).toBe("now");
+    expect(gearStatus(gear, robe, 15)).toBe("soon");
+    expect(gearStatus(gear, robe, 14)).toBe("later");
+  });
+
+  it("marks an item outgrown once a later item for its slot is usable", () => {
+    expect(gearStatus(gear, wand1, 12)).toBe("now");
+    expect(gearStatus(gear, wand1, 13)).toBe("outgrown");
+    expect(gearStatus(gear, robe, 60)).toBe("now");
+  });
+});
+
 describe.each(Object.values(CLASS_GUIDES))("$classId guide data", (guide) => {
   const cls = findClass(guide.classId)!;
 
@@ -185,6 +217,34 @@ describe.each(Object.values(CLASS_GUIDES))("$classId guide data", (guide) => {
           const s = guide.spells.find((x) => x.id === step.ability);
           if (s && s.ranks[0] <= r.from) expect(trainPriority(s, s.ranks[0]), step.ability).toBe("must");
         }
+      }
+    });
+  });
+
+  describe("gear upgrades", () => {
+    const places = new Map<string, [number, number]>([
+      ...ZONES.map((z) => [z.id, z.levels] as [string, [number, number]]),
+      ...DUNGEONS.map((d) => [d.id, d.levels] as [string, [number, number]]),
+    ]);
+
+    it("has unique ids and levels between 1 and 60", () => {
+      expect(guide.gear.length).toBeGreaterThan(0);
+      expect(new Set(guide.gear.map((g) => g.id)).size).toBe(guide.gear.length);
+      for (const g of guide.gear) {
+        expect(g.level, g.id).toBeGreaterThanOrEqual(1);
+        expect(g.level, g.id).toBeLessThanOrEqual(60);
+      }
+    });
+
+    it("places items in zones and dungeons the leveling guide knows", () => {
+      for (const g of guide.gear) if (g.place) expect(places.has(g.place), `${g.id}: ${g.place}`).toBe(true);
+      for (const g of guide.gear.filter((x) => x.source === "dungeon")) expect(g.place, g.id).toBeDefined();
+    });
+
+    it("only lists dungeon drops a player can use by the end of the dungeon's level range", () => {
+      for (const g of guide.gear.filter((x) => x.source === "dungeon")) {
+        const [, to] = places.get(g.place!)!;
+        expect(g.level, g.id).toBeLessThanOrEqual(to + 2);
       }
     });
   });
