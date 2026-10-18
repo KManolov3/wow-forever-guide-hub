@@ -59,22 +59,24 @@ test.describe("C. Trees, grid and content", () => {
 
   test("TC-11 talents placed on a 4-column, 7-tier grid at their positions", async ({ page }) => {
     await load(page, "#/mage");
-    const box = async (name: string) => (await talent(page, "Arcane", name).boundingBox())!;
-
-    const columns = await Promise.all(
-      ["Wand Specialization", "Arcane Focus", "Improved Channeling", "Missile Barrage"].map(box),
+    // Web fonts swap in after load and shift the trees down, so every rect is read in one
+    // evaluate: positions taken at different moments would not line up with each other.
+    const boxes = await talentButtons(tree(page, "Arcane")).evaluateAll((els) =>
+      els.map((e) => ({ name: e.getAttribute("aria-label")!.replace(/, rank \d+ of \d+$/, ""), ...e.getBoundingClientRect().toJSON() })),
     );
-    const tiers = await Promise.all(
-      ["Wand Specialization", "Arcane Subtlety", "Arcane Blast", "Arcane Shielding", "Presence of Mind", "Arcane Instability", "Arcane Power"].map(
-        box,
-      ),
+    expect(boxes).toHaveLength(19);
+    const box = (name: string) => boxes.find((b) => b.name === name)!;
+
+    const columns = ["Wand Specialization", "Arcane Focus", "Improved Channeling", "Missile Barrage"].map(box);
+    const tiers = ["Wand Specialization", "Arcane Subtlety", "Arcane Blast", "Arcane Shielding", "Presence of Mind", "Arcane Instability", "Arcane Power"].map(
+      box,
     );
     const xs = columns.map((b) => b.x);
     const ys = tiers.map((b) => b.y);
 
-    expect(Math.abs((await box("Arcane Blast")).x - xs[3])).toBeLessThanOrEqual(2);
-    expect(Math.abs((await box("Arcane Power")).x - (await box("Presence of Mind")).x)).toBeLessThanOrEqual(2);
-    expect(Math.abs((await box("Arcane Subtlety")).x - xs[0])).toBeLessThanOrEqual(2);
+    expect(Math.abs(box("Arcane Blast").x - xs[3])).toBeLessThanOrEqual(2);
+    expect(Math.abs(box("Arcane Power").x - box("Presence of Mind").x)).toBeLessThanOrEqual(2);
+    expect(Math.abs(box("Arcane Subtlety").x - xs[0])).toBeLessThanOrEqual(2);
     for (let i = 1; i < ys.length; i++) expect(ys[i]).toBeGreaterThan(ys[i - 1]);
 
     // Every talent sits exactly at its tier/column; empty slots stay empty.
@@ -86,7 +88,6 @@ test.describe("C. Trees, grid and content", () => {
       const i = values.findIndex((x) => Math.abs(x - v) <= 2);
       return i === -1 ? "?" : String(i + 1);
     };
-    const boxes = await talentButtons(tree(page, "Arcane")).evaluateAll((els) => els.map((e) => e.getBoundingClientRect().toJSON()));
     const positions = boxes.map((b) => `${nearest(ys, b.y)},${nearest(xs, b.x)}`);
     expect(positions.sort()).toEqual([...expected].sort());
   });
