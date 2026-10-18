@@ -779,6 +779,99 @@ Answers are matched by the start of their label. Tank answers used below, in que
 - **Steps:** Open the quiz, check horizontal scroll, answer with the tank answers and check again.
 - **Expected:** No horizontal scroll on the questions or the results, and the dialog lies within the 375 px viewport.
 
+## M. Leveling guide
+
+### TC-65 Header switches between the calculator and the guide, keeping the build
+- **PRD:** FR-21
+- **Preconditions:** `http://localhost:5173/#/mage`
+- **Steps:** Click Arcane Focus ×3, click "Leveling guide", then click "Talents".
+- **Expected:** The guide opens at `#/leveling/durotar`, its link is marked current and the subtitle reads "Horde Leveling Guide". Back on "Talents", Mage is selected with 3 points.
+
+### TC-66 Starting zone picker sets the first step and leaves out the other starting zones
+- **PRD:** FR-22, Acceptance "starts in the chosen starting zone"
+- **Preconditions:** `http://localhost:5173/#/leveling`
+- **Steps:** Check the picker, then choose Tirisfal Glades.
+- **Expected:** Four starting zones, Durotar pressed by default. After choosing Tirisfal Glades the hash is `#/leveling/tirisfal` and step 1 is Tirisfal Glades. No step is Durotar, Mulgore, Zephras Isle, The Deadmines, The Stockade or Gnomeregan; The Barrens appears three times.
+
+### TC-67 Guide links restore the starting zone
+- **PRD:** FR-23
+- **Steps:** Load `#/leveling/mulgore`, then `#/leveling/elwynn`.
+- **Expected:** Mulgore is selected and is step 1. The unknown zone falls back to Durotar and the hash becomes `#/leveling/durotar`.
+
+### TC-68 Timeline shows one bar per visit and selects that step
+- **PRD:** FR-24
+- **Preconditions:** `http://localhost:5173/#/leveling`
+- **Steps:** Find the bars labelled "…: The Barrens, levels …" and click the second.
+- **Expected:** Three Barrens bars. The clicked bar is pressed, and the selected step in the list is The Barrens, "visit 2 of 3", expanded with "Getting there:".
+
+### TC-69 Map follows the selected step and cycles through a zone's visits
+- **PRD:** FR-25
+- **Preconditions:** `http://localhost:5173/#/leveling`
+- **Steps:** Select the Silverpine Forest step; switch the map to Kalimdor; click The Barrens marker twice.
+- **Expected:** Kalimdor is shown first; selecting Silverpine switches to "Route map of Eastern Kingdoms". The Barrens zone outline selects visit 1 of 3, then visit 2 of 3, and the caption names the selected step.
+
+### TC-74 Route map is the in-game map with clickable zones, zoom and pan
+- **PRD:** FR-25
+- **Preconditions:** `http://localhost:5173/#/leveling`
+- **Steps:** Check the map image loads; click "Show the whole continent", "Zoom in", drag the map sideways, then "Show the whole continent" again; select Wailing Caverns and click the Durotar outline.
+- **Expected:** The map image is `maps/kalimdor.webp` and loads. The whole-continent button is disabled when nothing is zoomed; zooming in shrinks the view and enables it; dragging pans; the button restores the full view. Clicking Durotar selects step 1.
+
+### TC-75 Clicking a zone centres the map on it and zooms to fit it
+- **PRD:** FR-25
+- **Preconditions:** `http://localhost:5173/#/leveling`
+- **Steps:** Click "Show the whole continent", then click The Barrens outline, then the Durotar outline.
+- **Expected:** After each click the map is centred on that zone and its whole outline is visible. The Barrens zooms in from the whole-continent view, Durotar (smaller) zooms in further, and Durotar becomes the selected step.
+
+
+### TC-80 Route map labels don't overlap at the whole-continent view
+- **PRD:** FR-25
+- **Preconditions:** `http://localhost:5173/#/leveling/durotar`, then again with `#/leveling/tirisfal`
+- **Steps:** On each continent tab, click "Show the whole continent".
+- **Expected:** No zone label, context label or city/port label overlaps another label, a city/port marker or a dungeon marker.
+
+### TC-76 A step's zone map pins its quest hubs and highlights the step's hub
+- **PRD:** FR-30
+- **Preconditions:** `http://localhost:5173/#/leveling`
+- **Steps:** Select the Ruins of Lordaeron step, click "Open Tirisfal Glades map", then press Esc.
+- **Expected:** A dialog titled Tirisfal Glades shows `maps/zones/tirisfal.webp` with pins for Deathknell, Brill and Undercity. Undercity is highlighted, and the hub list tags it "This step". Esc closes the dialog and focus returns to the button.
+
+### TC-77 The route map opens the selected zone's map; choosing another trip stays in the dialog
+- **PRD:** FR-30
+- **Steps:** Select the first Barrens step and click "Open The Barrens map" in the route map's toolbar. Click the "Visit 3 of 3" trip, then the Ratchet pin, then press Esc.
+- **Expected:** Pins for The Crossroads, Ratchet and Camp Taurajo, with The Crossroads highlighted. The trip list includes Wailing Caverns tagged "Dungeon", and only the shown trip is expanded, with "Getting there". After clicking Visit 3 of 3 the dialog stays open, that trip is expanded and The Crossroads and Camp Taurajo are highlighted. The Ratchet pin expands Visit 2 of 3. After closing, the guide's selected step is The Barrens, visit 2 of 3.
+
+### TC-78 The zone map fits a 375 px phone
+- **PRD:** FR-30, UX "Layout"
+- **Preconditions:** viewport 375×812
+- **Steps:** Open the Durotar map from step 1, then close it with the close button.
+- **Expected:** The dialog lies within the 375 px viewport, with no horizontal scroll; the close button closes it.
+
+### TC-79 The zone map's route buttons walk the route across zones
+- **PRD:** FR-30
+- **Steps:** Open the Durotar map from step 1. Click "Next step", then "Previous step", tick the expanded trip's "done" checkbox and press Esc.
+- **Expected:** "Previous step" is disabled on step 1. "Next step" switches the dialog to The Barrens with Visit 1 of 3 shown; "Previous step" returns to Durotar. Ticking the checkbox marks the trip done in the list, and after closing, step 1 is ticked in the guide.
+
+### TC-70 "My level" jumps to a covering step
+- **PRD:** FR-27
+- **Steps:** Enter 27 in "My level" and click "Find step".
+- **Expected:** The selected step's level range contains 27.
+
+### TC-71 Progress is counted, survives a reload and resets
+- **PRD:** FR-28
+- **Steps:** Tick steps 1 and 2, reload, then click "Reset progress".
+- **Expected:** Progress reads `0 / N`, then `2 / N`, still `2 / N` after the reload with step 2 ticked, then `0 / N`. "Reset progress" is disabled at 0.
+
+### TC-72 Guide fits a 375 px phone without horizontal scroll
+- **PRD:** UX "Layout", User story 7
+- **Preconditions:** viewport 375×812
+- **Steps:** Load `#/leveling`, hover the first timeline bar, then load `#/leveling/zephras-isle`.
+- **Expected:** No horizontal scroll at any point.
+
+### TC-73 The quiz still works from the guide
+- **PRD:** FR-17, FR-21
+- **Steps:** On `#/leveling`, open "Find my class", press Esc, click "Talents" and pick Warrior.
+- **Expected:** The quiz opens and closes over the guide; the calculator then works as usual.
+
 ---
 
 ## Acceptance criteria coverage
@@ -798,6 +891,13 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | No horizontal scroll at 375 px; no console errors | TC-56, TC-01, TC-57 |
 | Class quiz recommends a class and spec, lists two runners-up, and opens the class with the suggested tree | TC-61, TC-62 |
 | Quiz respects the faction answer; no horizontal scroll at 375 px | TC-63, TC-64 |
+| Guide starts in the chosen zone, skips other starting zones and Alliance dungeons | TC-66 |
+| Guide timeline shows three Barrens visits; bars and map zones select steps; map follows the continent | TC-68, TC-69 |
+| Route map is the in-game map with clickable zone outlines, zoom and pan | TC-74 |
+| Route map labels don't overlap each other or markers at the whole-continent view | TC-80 |
+| Zone map opens from the step or route map, pins hubs with the step's highlighted, switches trips and steps in place, fits 375 px | TC-76, TC-77, TC-78, TC-79 |
+| "My level" lookup; progress survives reload and resets | TC-70, TC-71 |
+| Route rule tests pass; guide has no horizontal scroll at 375 px | Vitest `src/lib/leveling.test.ts`; TC-72 |
 | Data quality tests pass for all 9 class files | Not a browser test (Vitest `src/data/classes/classes.test.ts`); TC-10 checks the visible counts |
 
 ## FR coverage
@@ -824,6 +924,16 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-18 | TC-60 |
 | FR-19 | TC-61 |
 | FR-20 | TC-62 |
+| FR-21 | TC-65, TC-73 |
+| FR-22 | TC-66 |
+| FR-23 | TC-67 |
+| FR-24 | TC-68 |
+| FR-25 | TC-69, TC-74, TC-75, TC-80 |
+| FR-26 | TC-68 |
+| FR-27 | TC-70 |
+| FR-28 | TC-71 |
+| FR-30 | TC-76, TC-77, TC-78, TC-79 |
+| FR-29 | Not automated: check the "Left out on purpose" panel lists the skipped zones and dungeons with reasons |
 
 ## Suspected discrepancies between code and PRD (to confirm during execution)
 
