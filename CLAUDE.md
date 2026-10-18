@@ -16,4 +16,6 @@ The product specification is [docs/PRD.md](docs/PRD.md). Treat it as the source 
 - `src/data/types.ts` – data model; `src/data/classes/*.json` – one talent data file per class
 - `src/lib/leveling.ts` – pure leveling-guide logic (route building, travel directions, level lookup)
 - `src/data/leveling.ts` – Horde zones, dungeons, map positions and the leveling route; `src/data/mapShapes.ts` – zone outlines on the map images in `public/maps/`; `src/data/hubs.ts` – quest hub positions on the zone maps in `public/maps/zones/`
+- `src/lib/professions.ts` – pure profession-guide logic (recipe colours, step at a skill, material totals); `src/data/professions/*.ts` – one Horde guide per profession (Tailoring, Enchanting)
+- `docs/research/professions/` – the Wowhead and guide data behind the profession guides (recipes, thresholds, prices, disenchanting, pattern sources), with `scripts/professions/` to refresh item data and recompute the cheapest route
 - `src/components/` – UI components

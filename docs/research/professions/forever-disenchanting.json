@@ -1,0 +1,573 @@
+{
+ "_source": "Wowhead Forever item pages, 'Disenchanting' tab (https://www.wowhead.com/forever/item=<id>), captured 2026-10-18. Each entry: itemLevel, observed (number of disenchants Wowhead recorded) and yield = expected count per disenchant (share of disenchants that gave the material x average stack). Item levels from the tooltip API. Covers green items made by Tailoring trainer recipes; the rest of the page fetches were rate-limited (HTTP 403).",
+ "classicTable": {
+  "_note": "Classic 1.12 disenchant table for green (uncommon) armor, expected count per disenchant, used for items without observed data; the observed Forever results above match it.",
+  "5-15": {
+   "Strange Dust": 1.2,
+   "Lesser Magic Essence": 0.3
+  },
+  "16-20": {
+   "Strange Dust": 1.875,
+   "Greater Magic Essence": 0.3,
+   "Small Glimmering Shard": 0.05
+  },
+  "21-25": {
+   "Strange Dust": 3.75,
+   "Lesser Astral Essence": 0.225,
+   "Small Glimmering Shard": 0.1
+  },
+  "26-30": {
+   "Soul Dust": 1.125,
+   "Greater Astral Essence": 0.3,
+   "Large Glimmering Shard": 0.05
+  },
+  "31-35": {
+   "Soul Dust": 2.625,
+   "Lesser Mystic Essence": 0.3,
+   "Small Glowing Shard": 0.05
+  },
+  "36-40": {
+   "Vision Dust": 1.125,
+   "Greater Mystic Essence": 0.3,
+   "Large Glowing Shard": 0.05
+  },
+  "41-45": {
+   "Vision Dust": 2.625,
+   "Lesser Nether Essence": 0.3,
+   "Small Radiant Shard": 0.05
+  },
+  "46-50": {
+   "Dream Dust": 1.125,
+   "Greater Nether Essence": 0.3,
+   "Large Radiant Shard": 0.05
+  },
+  "51-55": {
+   "Dream Dust": 2.625,
+   "Lesser Eternal Essence": 0.3,
+   "Small Brilliant Shard": 0.05
+  },
+  "56-60": {
+   "Illusion Dust": 1.125,
+   "Greater Eternal Essence": 0.3,
+   "Large Brilliant Shard": 0.05
+  }
+ },
+ "items": {
+  "2569": {
+   "itemLevel": 13,
+   "observed": 55,
+   "yield": {
+    "Lesser Magic Essence": 0.2,
+    "Strange Dust": 1.382
+   }
+  },
+  "2578": {
+   "itemLevel": 14,
+   "observed": 862,
+   "yield": {
+    "Lesser Magic Essence": 0.333,
+    "Strange Dust": 1.179
+   }
+  },
+  "2580": {
+   "itemLevel": 12,
+   "observed": 376,
+   "yield": {
+    "Lesser Magic Essence": 0.351,
+    "Strange Dust": 1.149
+   }
+  },
+  "2582": {
+   "itemLevel": 17,
+   "observed": 52,
+   "yield": {
+    "Greater Magic Essence": 0.308,
+    "Strange Dust": 1.827,
+    "Small Glimmering Shard": 0.038
+   }
+  },
+  "2583": {
+   "itemLevel": 19,
+   "observed": 529,
+   "yield": {
+    "Greater Magic Essence": 0.312,
+    "Strange Dust": 1.885,
+    "Small Glimmering Shard": 0.055
+   }
+  },
+  "2584": {
+   "itemLevel": 16,
+   "observed": 177,
+   "yield": {
+    "Greater Magic Essence": 0.395,
+    "Strange Dust": 1.655,
+    "Small Glimmering Shard": 0.068
+   }
+  },
+  "4307": {
+   "itemLevel": 10,
+   "observed": 326,
+   "yield": {
+    "Lesser Magic Essence": 0.325,
+    "Strange Dust": 1.212
+   }
+  },
+  "4308": {
+   "itemLevel": 12,
+   "observed": 85,
+   "yield": {
+    "Lesser Magic Essence": 0.259,
+    "Strange Dust": 1.141
+   }
+  },
+  "4309": {
+   "itemLevel": 14,
+   "observed": 3641,
+   "yield": {
+    "Lesser Magic Essence": 0.307,
+    "Strange Dust": 1.21
+   }
+  },
+  "4310": {
+   "itemLevel": 17,
+   "observed": 2301,
+   "yield": {
+    "Greater Magic Essence": 0.319,
+    "Strange Dust": 1.876,
+    "Small Glimmering Shard": 0.049
+   }
+  },
+  "4312": {
+   "itemLevel": 16,
+   "observed": 1407,
+   "yield": {
+    "Greater Magic Essence": 0.289,
+    "Strange Dust": 1.876,
+    "Small Glimmering Shard": 0.06
+   }
+  },
+  "4314": {
+   "itemLevel": 22,
+   "observed": 399,
+   "yield": {
+    "Strange Dust": 3.729,
+    "Small Glimmering Shard": 0.113,
+    "Lesser Astral Essence": 0.206
+   }
+  },
+  "4316": {
+   "itemLevel": 22,
+   "observed": 1229,
+   "yield": {
+    "Strange Dust": 3.819,
+    "Small Glimmering Shard": 0.084,
+    "Lesser Astral Essence": 0.222
+   }
+  },
+  "4318": {
+   "itemLevel": 26,
+   "observed": 680,
+   "yield": {
+    "Greater Astral Essence": 0.284,
+    "Soul Dust": 1.112,
+    "Large Glimmering Shard": 0.053
+   }
+  },
+  "4324": {
+   "itemLevel": 30,
+   "observed": 846,
+   "yield": {
+    "Greater Astral Essence": 0.33,
+    "Soul Dust": 1.08,
+    "Large Glimmering Shard": 0.053
+   }
+  },
+  "4326": {
+   "itemLevel": 37,
+   "observed": 1034,
+   "yield": {
+    "Greater Mystic Essence": 0.283,
+    "Vision Dust": 1.117,
+    "Large Glowing Shard": 0.055
+   }
+  },
+  "4343": {
+   "itemLevel": 10,
+   "observed": 281,
+   "yield": {
+    "Lesser Magic Essence": 0.295,
+    "Strange Dust": 1.16
+   }
+  },
+  "5542": {
+   "itemLevel": 19,
+   "observed": 509,
+   "yield": {
+    "Greater Magic Essence": 0.31,
+    "Strange Dust": 1.819,
+    "Small Glimmering Shard": 0.065
+   }
+  },
+  "5766": {
+   "itemLevel": 27,
+   "observed": 426,
+   "yield": {
+    "Greater Astral Essence": 0.279,
+    "Soul Dust": 1.148,
+    "Large Glimmering Shard": 0.035
+   }
+  },
+  "6238": {
+   "itemLevel": 10,
+   "observed": 5736,
+   "yield": {
+    "Lesser Magic Essence": 0.296,
+    "Strange Dust": 1.212
+   }
+  },
+  "6241": {
+   "itemLevel": 10,
+   "observed": 1567,
+   "yield": {
+    "Lesser Magic Essence": 0.316,
+    "Strange Dust": 1.187
+   }
+  },
+  "6787": {
+   "itemLevel": 22,
+   "observed": 26,
+   "yield": {
+    "Strange Dust": 3.538,
+    "Small Glimmering Shard": 0.038,
+    "Lesser Astral Essence": 0.5
+   }
+  },
+  "7046": {
+   "itemLevel": 28,
+   "observed": 1578,
+   "yield": {
+    "Greater Astral Essence": 0.318,
+    "Soul Dust": 1.113,
+    "Large Glimmering Shard": 0.051
+   }
+  },
+  "7048": {
+   "itemLevel": 29,
+   "observed": 52,
+   "yield": {
+    "Strange Dust": 0.096,
+    "Greater Astral Essence": 0.327,
+    "Soul Dust": 1.192,
+    "Large Glimmering Shard": 0.019
+   }
+  },
+  "7050": {
+   "itemLevel": 32,
+   "observed": 7,
+   "yield": {
+    "Soul Dust": 2.429,
+    "Small Glowing Shard": 0.286
+   }
+  },
+  "7051": {
+   "itemLevel": 34,
+   "observed": 175,
+   "yield": {
+    "Soul Dust": 2.783,
+    "Lesser Mystic Essence": 0.303,
+    "Small Glowing Shard": 0.04
+   }
+  },
+  "7052": {
+   "itemLevel": 35,
+   "observed": 37,
+   "yield": {
+    "Soul Dust": 2,
+    "Lesser Mystic Essence": 0.595,
+    "Small Glowing Shard": 0.027
+   }
+  },
+  "7055": {
+   "itemLevel": 35,
+   "observed": 177,
+   "yield": {
+    "Soul Dust": 2.763,
+    "Lesser Mystic Essence": 0.282,
+    "Small Glowing Shard": 0.045
+   }
+  },
+  "7057": {
+   "itemLevel": 36,
+   "observed": 1236,
+   "yield": {
+    "Greater Mystic Essence": 0.333,
+    "Vision Dust": 1.091,
+    "Large Glowing Shard": 0.045
+   }
+  },
+  "7058": {
+   "itemLevel": 37,
+   "observed": 5,
+   "yield": {
+    "Greater Mystic Essence": 0.4,
+    "Vision Dust": 0.6
+   }
+  },
+  "7062": {
+   "itemLevel": 39,
+   "observed": 7,
+   "yield": {
+    "Greater Mystic Essence": 0.714,
+    "Vision Dust": 0.571
+   }
+  },
+  "7064": {
+   "itemLevel": 42,
+   "observed": 16,
+   "yield": {
+    "Vision Dust": 2.312,
+    "Lesser Nether Essence": 0.5,
+    "Small Radiant Shard": 0.063
+   }
+  },
+  "9998": {
+   "itemLevel": 41,
+   "observed": 643,
+   "yield": {
+    "Vision Dust": 2.726,
+    "Lesser Nether Essence": 0.306,
+    "Small Radiant Shard": 0.044
+   }
+  },
+  "9999": {
+   "itemLevel": 41,
+   "observed": 1470,
+   "yield": {
+    "Vision Dust": 2.572,
+    "Lesser Nether Essence": 0.337,
+    "Small Radiant Shard": 0.044
+   }
+  },
+  "10001": {
+   "itemLevel": 42,
+   "observed": 260,
+   "yield": {
+    "Vision Dust": 2.673,
+    "Lesser Nether Essence": 0.292,
+    "Small Radiant Shard": 0.05
+   }
+  },
+  "10002": {
+   "itemLevel": 42,
+   "observed": 80,
+   "yield": {
+    "Vision Dust": 2.712,
+    "Lesser Nether Essence": 0.325,
+    "Small Radiant Shard": 0.037
+   }
+  },
+  "10003": {
+   "itemLevel": 43,
+   "observed": 3186,
+   "yield": {
+    "Vision Dust": 2.644,
+    "Lesser Nether Essence": 0.297,
+    "Small Radiant Shard": 0.054
+   }
+  },
+  "10004": {
+   "itemLevel": 43,
+   "observed": 61,
+   "yield": {
+    "Vision Dust": 3.098,
+    "Lesser Nether Essence": 0.164,
+    "Small Radiant Shard": 0.049
+   }
+  },
+  "10023": {
+   "itemLevel": 45,
+   "observed": 73,
+   "yield": {
+    "Vision Dust": 2.096,
+    "Lesser Nether Essence": 0.329,
+    "Dream Dust": 0.027,
+    "Small Radiant Shard": 0.055
+   }
+  },
+  "10024": {
+   "itemLevel": 46,
+   "observed": 3973,
+   "yield": {
+    "Greater Nether Essence": 0.294,
+    "Dream Dust": 1.145,
+    "Large Radiant Shard": 0.05
+   }
+  },
+  "10027": {
+   "itemLevel": 46,
+   "observed": 1187,
+   "yield": {
+    "Greater Nether Essence": 0.334,
+    "Dream Dust": 1.078,
+    "Large Radiant Shard": 0.055
+   }
+  },
+  "10028": {
+   "itemLevel": 47,
+   "observed": 123,
+   "yield": {
+    "Greater Nether Essence": 0.398,
+    "Dream Dust": 1.122,
+    "Large Radiant Shard": 0.041
+   }
+  },
+  "10031": {
+   "itemLevel": 48,
+   "observed": 57,
+   "yield": {
+    "Greater Nether Essence": 0.439,
+    "Dream Dust": 0.912,
+    "Large Radiant Shard": 0.035
+   }
+  },
+  "10042": {
+   "itemLevel": 45,
+   "observed": 18,
+   "yield": {
+    "Vision Dust": 2.889,
+    "Lesser Nether Essence": 0.111
+   }
+  },
+  "10044": {
+   "itemLevel": 49,
+   "observed": 38,
+   "yield": {
+    "Greater Nether Essence": 0.105,
+    "Dream Dust": 1.211,
+    "Large Radiant Shard": 0.211
+   }
+  },
+  "10047": {
+   "itemLevel": 15,
+   "observed": 202,
+   "yield": {
+    "Lesser Magic Essence": 0.307,
+    "Strange Dust": 1.173
+   }
+  },
+  "13856": {
+   "itemLevel": 51,
+   "observed": 5034,
+   "yield": {
+    "Dream Dust": 2.617,
+    "Small Brilliant Shard": 0.03,
+    "Lesser Eternal Essence": 0.339
+   }
+  },
+  "13858": {
+   "itemLevel": 52,
+   "observed": 27,
+   "yield": {
+    "Dream Dust": 3.037,
+    "Lesser Eternal Essence": 0.37
+   }
+  },
+  "13860": {
+   "itemLevel": 53,
+   "observed": 74,
+   "yield": {
+    "Dream Dust": 2.595,
+    "Lesser Eternal Essence": 0.338
+   }
+  },
+  "13863": {
+   "itemLevel": 55,
+   "observed": 3123,
+   "yield": {
+    "Dream Dust": 2.608,
+    "Small Brilliant Shard": 0.034,
+    "Lesser Eternal Essence": 0.329
+   }
+  },
+  "13864": {
+   "itemLevel": 56,
+   "observed": 136,
+   "yield": {
+    "Large Brilliant Shard": 0.015,
+    "Greater Eternal Essence": 0.368,
+    "Illusion Dust": 1.147
+   }
+  }
+ },
+ "greenTailoringItemLevels": {
+  "2569": 13,
+  "2578": 14,
+  "2580": 12,
+  "2582": 17,
+  "2583": 19,
+  "2584": 16,
+  "4307": 10,
+  "4308": 12,
+  "4309": 14,
+  "4310": 17,
+  "4312": 16,
+  "4314": 22,
+  "4316": 22,
+  "4318": 26,
+  "4324": 30,
+  "4326": 37,
+  "4343": 10,
+  "5542": 19,
+  "5766": 27,
+  "6238": 10,
+  "6241": 10,
+  "6787": 22,
+  "7046": 28,
+  "7048": 29,
+  "7050": 32,
+  "7051": 34,
+  "7052": 35,
+  "7055": 35,
+  "7057": 36,
+  "7058": 37,
+  "7062": 39,
+  "7064": 42,
+  "9998": 41,
+  "9999": 41,
+  "10001": 42,
+  "10002": 42,
+  "10003": 43,
+  "10004": 43,
+  "10023": 45,
+  "10024": 46,
+  "10026": 46,
+  "10027": 46,
+  "10028": 47,
+  "10031": 48,
+  "10042": 45,
+  "10044": 49,
+  "10047": 15,
+  "13856": 51,
+  "13858": 52,
+  "13860": 53,
+  "13863": 55,
+  "13864": 56,
+  "18258": 55,
+  "253999": 35,
+  "254013": 36,
+  "254015": 37,
+  "254017": 39,
+  "254073": 52,
+  "254075": 52,
+  "254077": 52,
+  "254093": 54,
+  "254119": 57,
+  "254121": 59,
+  "254125": 58,
+  "254127": 59,
+  "254129": 60,
+  "254131": 60,
+  "254135": 61,
+  "254137": 61
+ }
+}

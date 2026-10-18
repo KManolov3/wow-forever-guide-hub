@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { CLASS_GUIDES } from "../data/classGuides";
 import { findClass } from "../data/classes";
 import type {
@@ -27,6 +27,7 @@ import {
   trainingPlan,
 } from "../lib/classGuide";
 import { FIRST_TALENT_LEVEL, MAX_LEVEL, encodeBuild, treePoints } from "../lib/talents";
+import { GuideNav } from "./GuideNav";
 import { Icon } from "./Icon";
 
 interface Props {
@@ -86,95 +87,6 @@ const SECTIONS = [
   { id: "guide-spells", label: "Spells" },
 ] as const;
 
-/** Id of the last section whose top has scrolled up to the navigation bar, or the last one at the page bottom. */
-function sectionInView(navBottom: number): string {
-  const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-  if (atBottom) return SECTIONS[SECTIONS.length - 1].id;
-  let current: string = SECTIONS[0].id;
-  for (const { id } of SECTIONS) {
-    const top = document.getElementById(id)?.getBoundingClientRect().top;
-    if (top !== undefined && top <= navBottom + 40) current = id;
-  }
-  return current;
-}
-
-function GuideNav({ levelInput, onLevelInput }: { levelInput: string; onLevelInput: (value: string) => void }) {
-  const nav = useRef<HTMLElement>(null);
-  const links = useRef<HTMLUListElement>(null);
-  const [active, setActive] = useState<string>(SECTIONS[0].id);
-
-  // On narrow screens the links scroll sideways; keep the current one visible.
-  useEffect(() => {
-    const list = links.current;
-    const button = list?.querySelector<HTMLElement>('[aria-current="true"]');
-    if (!list || !button) return;
-    const left = button.offsetLeft - list.offsetLeft;
-    if (left < list.scrollLeft || left + button.offsetWidth > list.scrollLeft + list.clientWidth) {
-      list.scrollTo({ left: left - 16, behavior: "smooth" });
-    }
-  }, [active]);
-
-  useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => setActive(sectionInView(nav.current?.getBoundingClientRect().bottom ?? 0)));
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
-  const jump = (id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    target.focus({ preventScroll: true });
-    setActive(id);
-    // Content above can still change height (fonts, images) while the smooth scroll runs; line up again at the end.
-    window.addEventListener(
-      "scrollend",
-      () => {
-        const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
-        if (Math.abs(target.getBoundingClientRect().top - margin) > 4) target.scrollIntoView({ block: "start" });
-      },
-      { once: true },
-    );
-  };
-
-  return (
-    <nav ref={nav} className="guide-nav" aria-label="Guide sections">
-      <form className="level-jump" onSubmit={(e) => e.preventDefault()}>
-        <label htmlFor="guide-level">My level</label>
-        <input
-          id="guide-level"
-          type="number"
-          inputMode="numeric"
-          min={1}
-          max={MAX_LEVEL}
-          value={levelInput}
-          onChange={(e) => onLevelInput(e.target.value)}
-          placeholder="1–60"
-        />
-      </form>
-      <ul ref={links} className="guide-nav-links">
-        {SECTIONS.map((s) => (
-          <li key={s.id}>
-            <button aria-current={active === s.id ? "true" : undefined} onClick={() => jump(s.id)}>
-              {s.label}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}
-
 interface Ability {
   name: string;
   icon?: string;
@@ -217,7 +129,10 @@ function GuideContent({ cls, guide, spec, onSpecChange }: ContentProps) {
         </div>
       </div>
 
-      <GuideNav levelInput={levelInput} onLevelInput={setLevelInput} />
+      <GuideNav
+        sections={SECTIONS}
+        field={{ id: "guide-level", label: "My level", max: MAX_LEVEL, value: levelInput, onChange: setLevelInput }}
+      />
 
       <section className="guide-panel" aria-labelledby="leveling-title">
         <h3 id="leveling-title" className="panel-title">

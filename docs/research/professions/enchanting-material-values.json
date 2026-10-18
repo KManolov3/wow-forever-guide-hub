@@ -1,0 +1,533 @@
+{
+ "_source": "What each Enchanting material is worth, in copper, for costing the Enchanting route (scripts/professions/cheapest-route.mjs enchanting). Captured 2026-10-18 from the 1.60.1 beta datamine.",
+ "_how": "A material is worth what you give up to get it: the price of an item you would otherwise sell, divided by how many of that material disenchanting it gives on average. For each material the cheapest source wins: green armor (mostly dust), green weapons (mostly essences) or blues (shards) of any item-level band. A material in 'overrides' takes that price instead, and a material a vendor sells is never worth more than its vendor price. To revalue the route, edit 'itemPrices' (e.g. with auction-house prices of greens and blues) or 'overrides' (e.g. with auction-house prices of the materials themselves) and rerun the script.",
+ "itemPrices": {
+  "_source": "Median vendor sell price, in copper, of Forever items of each item-level band on Wowhead's item lists (https://www.wowhead.com/forever/items/<armor|weapons>/min-level:<lo>/max-level:<hi>/quality:<2|3>). 'blue' is the median rare (blue) armor price.",
+  "5-15": {
+   "greenArmor": 148,
+   "greenWeapon": 468,
+   "blue": 306
+  },
+  "16-20": {
+   "greenArmor": 388,
+   "greenWeapon": 1081,
+   "blue": 444
+  },
+  "21-25": {
+   "greenArmor": 747,
+   "greenWeapon": 2283,
+   "blue": 981
+  },
+  "26-30": {
+   "greenArmor": 1252,
+   "greenWeapon": 3371,
+   "blue": 1818
+  },
+  "31-35": {
+   "greenArmor": 2148,
+   "greenWeapon": 5871,
+   "blue": 2622
+  },
+  "36-40": {
+   "greenArmor": 3230,
+   "greenWeapon": 8964,
+   "blue": 3893
+  },
+  "41-45": {
+   "greenArmor": 4792,
+   "greenWeapon": 14090,
+   "blue": 5803
+  },
+  "46-50": {
+   "greenArmor": 6790,
+   "greenWeapon": 18940,
+   "blue": 8593
+  },
+  "51-55": {
+   "greenArmor": 9191,
+   "greenWeapon": 28095,
+   "blue": 13227
+  },
+  "56-60": {
+   "greenArmor": 12318,
+   "greenWeapon": 37846,
+   "blue": 14001
+  },
+  "61-65": {
+   "greenArmor": 17801,
+   "greenWeapon": 49281,
+   "blue": 17194
+  }
+ },
+ "itemPriceSpread": {
+  "_source": "Spread of the Forever vendor sell prices behind 'itemPrices', in copper, from the same Wowhead item lists: n = items listed in the band, p25/p50/p75 = 25th, 50th (the median used) and 75th percentile. 'blueWeapon' is collected for reference only; blue armor is the cheaper shard source. Collected 2026-10-18.",
+  "5-15": {
+   "greenArmor": {
+    "n": 343,
+    "p25": 76,
+    "p50": 148,
+    "p75": 220
+   },
+   "blue": {
+    "n": 9,
+    "p25": 243,
+    "p50": 306,
+    "p75": 308
+   },
+   "greenWeapon": {
+    "n": 156,
+    "p25": 305,
+    "p50": 468,
+    "p75": 675
+   },
+   "blueWeapon": {
+    "n": 0
+   }
+  },
+  "16-20": {
+   "greenArmor": {
+    "n": 281,
+    "p25": 280,
+    "p50": 388,
+    "p75": 545
+   },
+   "blue": {
+    "n": 80,
+    "p25": 338,
+    "p50": 444,
+    "p75": 642
+   },
+   "greenWeapon": {
+    "n": 96,
+    "p25": 922,
+    "p50": 1081,
+    "p75": 1402
+   },
+   "blueWeapon": {
+    "n": 24,
+    "p25": 1291,
+    "p50": 1352,
+    "p75": 1705
+   }
+  },
+  "21-25": {
+   "greenArmor": {
+    "n": 284,
+    "p25": 572,
+    "p50": 747,
+    "p75": 1044
+   },
+   "blue": {
+    "n": 152,
+    "p25": 788,
+    "p50": 981,
+    "p75": 1322
+   },
+   "greenWeapon": {
+    "n": 87,
+    "p25": 1694,
+    "p50": 2283,
+    "p75": 2664
+   },
+   "blueWeapon": {
+    "n": 72,
+    "p25": 2204,
+    "p50": 2822,
+    "p75": 3189
+   }
+  },
+  "26-30": {
+   "greenArmor": {
+    "n": 359,
+    "p25": 971,
+    "p50": 1252,
+    "p75": 1697
+   },
+   "blue": {
+    "n": 142,
+    "p25": 1431,
+    "p50": 1818,
+    "p75": 2355
+   },
+   "greenWeapon": {
+    "n": 72,
+    "p25": 2947,
+    "p50": 3371,
+    "p75": 4218
+   },
+   "blueWeapon": {
+    "n": 72,
+    "p25": 3840,
+    "p50": 4602,
+    "p75": 5483
+   }
+  },
+  "31-35": {
+   "greenArmor": {
+    "n": 392,
+    "p25": 1630,
+    "p50": 2148,
+    "p75": 2726
+   },
+   "blue": {
+    "n": 182,
+    "p25": 2130,
+    "p50": 2622,
+    "p75": 3234
+   },
+   "greenWeapon": {
+    "n": 58,
+    "p25": 5033,
+    "p50": 5871,
+    "p75": 6894
+   },
+   "blueWeapon": {
+    "n": 75,
+    "p25": 6164,
+    "p50": 7285,
+    "p75": 8681
+   }
+  },
+  "36-40": {
+   "greenArmor": {
+    "n": 411,
+    "p25": 2430,
+    "p50": 3230,
+    "p75": 4386
+   },
+   "blue": {
+    "n": 91,
+    "p25": 3284,
+    "p50": 3893,
+    "p75": 4716
+   },
+   "greenWeapon": {
+    "n": 77,
+    "p25": 7745,
+    "p50": 8964,
+    "p75": 10779
+   },
+   "blueWeapon": {
+    "n": 49,
+    "p25": 9805,
+    "p50": 11685,
+    "p75": 13131
+   }
+  },
+  "41-45": {
+   "greenArmor": {
+    "n": 476,
+    "p25": 3701,
+    "p50": 4792,
+    "p75": 6001
+   },
+   "blue": {
+    "n": 160,
+    "p25": 4262,
+    "p50": 5803,
+    "p75": 7597
+   },
+   "greenWeapon": {
+    "n": 66,
+    "p25": 11893,
+    "p50": 14090,
+    "p75": 15886
+   },
+   "blueWeapon": {
+    "n": 64,
+    "p25": 15435,
+    "p50": 18003,
+    "p75": 19795
+   }
+  },
+  "46-50": {
+   "greenArmor": {
+    "n": 409,
+    "p25": 5381,
+    "p50": 6790,
+    "p75": 8503
+   },
+   "blue": {
+    "n": 128,
+    "p25": 6803,
+    "p50": 8593,
+    "p75": 10543
+   },
+   "greenWeapon": {
+    "n": 41,
+    "p25": 15765,
+    "p50": 18940,
+    "p75": 23284
+   },
+   "blueWeapon": {
+    "n": 39,
+    "p25": 21469,
+    "p50": 26209,
+    "p75": 31639
+   }
+  },
+  "51-55": {
+   "greenArmor": {
+    "n": 388,
+    "p25": 7396,
+    "p50": 9191,
+    "p75": 11694
+   },
+   "blue": {
+    "n": 314,
+    "p25": 10114,
+    "p50": 13227,
+    "p75": 15979
+   },
+   "greenWeapon": {
+    "n": 48,
+    "p25": 24159,
+    "p50": 28095,
+    "p75": 32155
+   },
+   "blueWeapon": {
+    "n": 59,
+    "p25": 32877,
+    "p50": 35737,
+    "p75": 41677
+   }
+  },
+  "56-60": {
+   "greenArmor": {
+    "n": 428,
+    "p25": 9661,
+    "p50": 12318,
+    "p75": 16204
+   },
+   "blue": {
+    "n": 211,
+    "p25": 9365,
+    "p50": 14001,
+    "p75": 17912
+   },
+   "greenWeapon": {
+    "n": 63,
+    "p25": 30628,
+    "p50": 37846,
+    "p75": 43292
+   },
+   "blueWeapon": {
+    "n": 33,
+    "p25": 40154,
+    "p50": 49640,
+    "p75": 54752
+   }
+  },
+  "61-65": {
+   "greenArmor": {
+    "n": 202,
+    "p25": 13301,
+    "p50": 17801,
+    "p75": 21841
+   },
+   "blue": {
+    "n": 424,
+    "p25": 11911,
+    "p50": 17194,
+    "p75": 22768
+   },
+   "greenWeapon": {
+    "n": 22,
+    "p25": 42409,
+    "p50": 49281,
+    "p75": 55234
+   },
+   "blueWeapon": {
+    "n": 56,
+    "p25": 54840,
+    "p50": 59851,
+    "p75": 69509
+   }
+  }
+ },
+ "disenchant": {
+  "_source": "Classic disenchant table (https://warcraft.wiki.gg/wiki/Disenchanting_tables): expected count of each material per disenchant (chance x average stack). Forever's observed results match it (see forever-disenchanting.json). Blues always give one shard.",
+  "5-15": {
+   "greenArmor": {
+    "10940": 1.2,
+    "10938": 0.3
+   },
+   "greenWeapon": {
+    "10940": 0.3,
+    "10938": 1.2
+   },
+   "blue": {
+    "10978": 1
+   }
+  },
+  "16-20": {
+   "greenArmor": {
+    "10940": 1.875,
+    "10939": 0.3,
+    "10978": 0.05
+   },
+   "greenWeapon": {
+    "10940": 0.5,
+    "10939": 1.125,
+    "10978": 0.05
+   },
+   "blue": {
+    "10978": 1
+   }
+  },
+  "21-25": {
+   "greenArmor": {
+    "10940": 3.75,
+    "10998": 0.225,
+    "10978": 0.1
+   },
+   "greenWeapon": {
+    "10940": 0.75,
+    "10998": 1.125,
+    "10978": 0.1
+   },
+   "blue": {
+    "10978": 1
+   }
+  },
+  "26-30": {
+   "greenArmor": {
+    "11083": 1.125,
+    "11082": 0.3,
+    "11084": 0.05
+   },
+   "greenWeapon": {
+    "11083": 0.3,
+    "11082": 1.125,
+    "11084": 0.05
+   },
+   "blue": {
+    "11084": 1
+   }
+  },
+  "31-35": {
+   "greenArmor": {
+    "11083": 2.625,
+    "11134": 0.3,
+    "11138": 0.05
+   },
+   "greenWeapon": {
+    "11083": 0.7,
+    "11134": 1.125,
+    "11138": 0.05
+   },
+   "blue": {
+    "11138": 1
+   }
+  },
+  "36-40": {
+   "greenArmor": {
+    "11137": 1.125,
+    "11135": 0.3,
+    "11139": 0.05
+   },
+   "greenWeapon": {
+    "11137": 0.3,
+    "11135": 1.125,
+    "11139": 0.05
+   },
+   "blue": {
+    "11139": 1
+   }
+  },
+  "41-45": {
+   "greenArmor": {
+    "11137": 2.625,
+    "11174": 0.3,
+    "11177": 0.05
+   },
+   "greenWeapon": {
+    "11137": 0.7,
+    "11174": 1.125,
+    "11177": 0.05
+   },
+   "blue": {
+    "11177": 1
+   }
+  },
+  "46-50": {
+   "greenArmor": {
+    "11176": 1.125,
+    "11175": 0.3,
+    "11178": 0.05
+   },
+   "greenWeapon": {
+    "11176": 0.3,
+    "11175": 1.125,
+    "11178": 0.05
+   },
+   "blue": {
+    "11178": 1
+   }
+  },
+  "51-55": {
+   "greenArmor": {
+    "11176": 2.625,
+    "16202": 0.3,
+    "14343": 0.05
+   },
+   "greenWeapon": {
+    "11176": 0.77,
+    "16202": 1.125,
+    "14343": 0.03
+   },
+   "blue": {
+    "14343": 1
+   }
+  },
+  "56-60": {
+   "greenArmor": {
+    "16204": 1.125,
+    "16203": 0.3,
+    "14344": 0.05
+   },
+   "greenWeapon": {
+    "16204": 0.33,
+    "16203": 1.125,
+    "14344": 0.03
+   },
+   "blue": {
+    "14344": 1
+   }
+  },
+  "61-65": {
+   "greenArmor": {
+    "16204": 2.625,
+    "16203": 0.5,
+    "14344": 0.05
+   },
+   "greenWeapon": {
+    "16204": 0.77,
+    "16203": 1.875,
+    "14344": 0.03
+   },
+   "blue": {
+    "14344": 1
+   }
+  }
+ },
+ "vendorBuy": {
+  "_source": "Vendor buy prices, in copper, of what Enchanting recipes use besides its own materials (Wowhead Forever item pages).",
+  "4470": 38,
+  "11291": 4500,
+  "6217": 124,
+  "247786": 10,
+  "6338": 800
+ },
+ "overrides": {
+  "_note": "Material item id -> price in copper. Empty: no auction data before launch (4 Nov 2026)."
+ },
+ "toolRule": {
+  "_note": "Not confirmed for Forever: which runed rod an enchant needs. The guide assumes Classic's pattern by learn skill and the route adds each rod by hand when it is learnable (the route script ignores tools).",
+  "Runed Copper Rod": "enchants learned below 100",
+  "Runed Silver Rod": "learned 100–154 (rod learned at 100)",
+  "Runed Golden Rod": "learned 155–204 (rod learned at 150)",
+  "Runed Truesilver Rod": "learned 205 and up (rod learned at 200)",
+  "Runed Arcanite Rod": "some skill 300 enchants (rod learned at 290)"
+ }
+}

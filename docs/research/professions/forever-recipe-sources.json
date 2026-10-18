@@ -1,0 +1,511 @@
+{
+ "_source": "Wowhead Forever pages: each recipe's spell page (https://www.wowhead.com/forever/spell=<id>, 'Used by item' tab gives the pattern) and the pattern item page ('Sold by' with cost and faction reaction, 'Dropped by'). Captured 2026-10-18. 'unknown' = the pattern item exists in the datamine but no vendor, drop or quest is recorded yet. Merchant's Favor is currency 3402; the Horde vendors belong to Durotar Supply and Logistics.",
+ "trainers": {
+  "tailoring": {
+   "Apprentice (level 5, cap 75)": "Snang (Orgrimmar), Vhan (Thunder Bluff), Victor Ward (Undercity), Kil'hala (Crossroads), Bowen Brisboise (Tirisfal), Taleen Shimmerthread (Zephras Isle)",
+   "Journeyman (skill 50, level 10, cap 150, 5s)": "Magar (Orgrimmar), Tepa (Thunder Bluff), Rhiannon Davis (Undercity), Mahani (Camp Taurajo), Grarnik Goodstitch (Booty Bay)",
+   "Expert (skill 125, level 20, cap 225, 50s)": "Josef Gregorian (Undercity)",
+   "Artisan (skill 200, level 35, cap 300, 5g)": "Daryl Stack (Tarren Mill)",
+   "_source": "Zockify trainers page (https://www.zockify.com/forever/professions/tailoring/trainers/); Kami-labs lists the same NPCs one rank higher"
+  },
+  "enchanting": {
+   "Apprentice (level 5, cap 75)": "Jhag (Orgrimmar), Mot Dawnstrider (Thunder Bluff), Malcomb Wynn (Undercity), Pa'zula (Sen'jin Village), Vance Undergloom (Brill), Nasalanna Windsinger (Zephras Isle)",
+   "Journeyman (skill 50, level 10, cap 150, 5s)": "Godan (Orgrimmar), Teg Dawnstrider (Thunder Bluff), Lavinia Crowe (Undercity)",
+   "Expert (skill 125, level 20, cap 225, 50s)": "Hgarth (Sun Rock Retreat, Stonetalon)",
+   "Artisan (skill 200, level 35, cap 300, 5g)": "Annora (Uldaman; appears once the scorpions in her cave are dead)",
+   "_source": "Zockify trainers page (https://www.zockify.com/forever/professions/enchanting/trainers/)"
+  }
+ },
+ "tailoring": [
+  {
+   "spellId": 1257373,
+   "recipe": "Shadow Boots",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "30 Merchant's Favor"
+  },
+  {
+   "spellId": 1257385,
+   "recipe": "Shadow Gloves",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "30 Merchant's Favor"
+  },
+  {
+   "spellId": 1257391,
+   "recipe": "Shadow Sash",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "30 Merchant's Favor"
+  },
+  {
+   "spellId": 1257403,
+   "recipe": "Shadow Circlet",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "30 Merchant's Favor"
+  },
+  {
+   "spellId": 1257409,
+   "recipe": "Shadow Gown",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "30 Merchant's Favor"
+  },
+  {
+   "spellId": 1257422,
+   "recipe": "Shadow Leggings",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "30 Merchant's Favor"
+  },
+  {
+   "spellId": 1257439,
+   "recipe": "Black Handwraps",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "60 Merchant's Favor"
+  },
+  {
+   "spellId": 1257453,
+   "recipe": "Netherpearl Shoulders",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "60 Merchant's Favor"
+  },
+  {
+   "spellId": 1257459,
+   "recipe": "Netherpearl Cuffs",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "60 Merchant's Favor"
+  },
+  {
+   "spellId": 1257469,
+   "recipe": "Black Waistcord",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "60 Merchant's Favor"
+  },
+  {
+   "spellId": 1257482,
+   "recipe": "Black Sandals",
+   "source": "vendor",
+   "from": {
+    "npc": "Jim'bek",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Mivin Shadowweave (Redridge)"
+   },
+   "cost": "90 Merchant's Favor"
+  },
+  {
+   "spellId": 1257447,
+   "recipe": "Black Cord",
+   "source": "unknown"
+  },
+  {
+   "spellId": 1257476,
+   "recipe": "Black Gloves",
+   "source": "unknown"
+  },
+  {
+   "spellId": 1306543,
+   "recipe": "Fel Cape",
+   "source": "unknown"
+  },
+  {
+   "spellId": 22867,
+   "recipe": "Felcloth Gloves",
+   "source": "unknown"
+  },
+  {
+   "spellId": 1257379,
+   "recipe": "Filigreed Shadow Gown",
+   "source": "drop",
+   "from": {
+    "npc": "Sneed, Rhahk'Zor, Cookie, Mr. Smite, Gilnid (Deadmines); Fel Steed, Shadow Charger (Shadowfang Keep); Oggleflint, Jergosh the Invoker, Bazzalan, Taragaman the Hungerer (Ragefire Chasm)"
+   }
+  },
+  {
+   "spellId": 1257397,
+   "recipe": "Filigreed Shadow Leggings",
+   "source": "drop",
+   "from": {
+    "npc": "Targorr the Dread (Stockade); Lady Sarevess, Ghamoo-ra (Blackfathom Deeps)"
+   }
+  },
+  {
+   "spellId": 1257416,
+   "recipe": "Filigreed Shadow Circlet",
+   "source": "drop",
+   "from": {
+    "npc": "Dextren Ward, Kam Deepfury, Hamhock (Stockade); Interrogator Vishas, Bloodmage Thalnos (Scarlet Monastery); Overlord Ramtusk, Charlga Razorflank, Agathelos, Aggem Thorncurse, Death Speaker Jargba (Razorfen Kraul); Aku'mai, Old Serra'kis (Blackfathom Deeps)"
+   }
+  },
+  {
+   "spellId": 18409,
+   "recipe": "Runecloth Cloak",
+   "source": "vendor",
+   "from": {
+    "npc": "Darnall",
+    "zone": "Moonglade",
+    "faction": "both",
+    "limited": true
+   },
+   "cost": "1g 20s"
+  },
+  {
+   "spellId": 18406,
+   "recipe": "Runecloth Robe",
+   "source": "vendor",
+   "from": {
+    "npc": "Darnall",
+    "zone": "Moonglade",
+    "faction": "both",
+    "limited": true
+   },
+   "cost": "1g 20s"
+  },
+  {
+   "spellId": 18423,
+   "recipe": "Runecloth Boots",
+   "source": "vendor",
+   "from": {
+    "npc": "Darnall",
+    "zone": "Moonglade",
+    "faction": "both",
+    "limited": true
+   },
+   "cost": "2g"
+  },
+  {
+   "spellId": 18417,
+   "recipe": "Runecloth Gloves",
+   "source": "vendor",
+   "from": {
+    "npc": "Qia",
+    "zone": "Winterspring (Everlook)",
+    "faction": "both",
+    "limited": true
+   },
+   "cost": "1g 68s 42c"
+  },
+  {
+   "spellId": 18405,
+   "recipe": "Runecloth Bag",
+   "source": "vendor",
+   "from": {
+    "npc": "Qia",
+    "zone": "Winterspring (Everlook)",
+    "faction": "both",
+    "limited": true
+   },
+   "cost": "1g 20s"
+  },
+  {
+   "spellId": 18419,
+   "recipe": "Felcloth Pants",
+   "source": "vendor",
+   "from": {
+    "npc": "Lorelae Wintersong",
+    "zone": "Moonglade",
+    "faction": "both",
+    "limited": true
+   },
+   "cost": "1g 60s"
+  },
+  {
+   "spellId": 3862,
+   "recipe": "Icy Cloak",
+   "source": "vendor",
+   "from": {
+    "npc": "Ghok'kah",
+    "zone": "Dustwallow Marsh (Brackenwall Village)",
+    "faction": "Horde",
+    "alliance": "Micha Yance (Hillsbrad)",
+    "limited": true
+   },
+   "cost": "15s"
+  },
+  {
+   "spellId": 26085,
+   "recipe": "Soul Pouch",
+   "source": "vendor",
+   "from": {
+    "npc": "Vizzklick",
+    "zone": "Tanaris (Gadgetzan)",
+    "faction": "both"
+   },
+   "cost": "1g 20s"
+  },
+  {
+   "spellId": 18436,
+   "recipe": "Robe of Winter Night",
+   "source": "drop",
+   "from": {
+    "npc": "Cobalt Mageweaver (Winterspring)"
+   }
+  },
+  {
+   "spellId": 18442,
+   "recipe": "Felcloth Hood",
+   "source": "drop",
+   "from": {
+    "npc": "World drop from level 50+ mobs, e.g. Western Plaguelands"
+   }
+  },
+  {
+   "spellId": 18458,
+   "recipe": "Robe of the Void",
+   "source": "drop",
+   "from": {
+    "npc": "Darkmaster Gandling (Scholomance)"
+   }
+  },
+  {
+   "spellId": 12084,
+   "recipe": "Red Mageweave Headband",
+   "source": "drop",
+   "from": {
+    "npc": "World drop (Stranglethorn, Swamp of Sorrows and others)"
+   }
+  },
+  {
+   "spellId": 3864,
+   "recipe": "Star Belt",
+   "source": "drop",
+   "from": {
+    "npc": "Otto; Scarlet Monastery mobs"
+   }
+  }
+ ],
+ "enchanting": [
+  {
+   "spellId": 1248650,
+   "recipe": "Brilliant Wand",
+   "source": "vendor",
+   "from": {
+    "npc": "Beneris",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Alynsia (Redridge)"
+   },
+   "cost": "180 Merchant's Favor"
+  },
+  {
+   "spellId": 1249057,
+   "recipe": "Enchant Necklace - Spell Power",
+   "source": "vendor",
+   "from": {
+    "npc": "Beneris",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Alynsia (Redridge)"
+   },
+   "cost": "120 Merchant's Favor"
+  },
+  {
+   "spellId": 1219579,
+   "recipe": "Enchant Off-Hand - Wisdom",
+   "source": "vendor",
+   "from": {
+    "npc": "Beneris",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Alynsia (Redridge)"
+   },
+   "cost": "240 Merchant's Favor"
+  },
+  {
+   "spellId": 1248757,
+   "recipe": "Enchant Weapon - Insight",
+   "source": "vendor",
+   "from": {
+    "npc": "Beneris",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Alynsia (Redridge)"
+   },
+   "cost": "45 Merchant's Favor"
+  },
+  {
+   "spellId": 1248805,
+   "recipe": "Enchant Weapon - Revelation",
+   "source": "vendor",
+   "from": {
+    "npc": "Beneris",
+    "zone": "The Barrens",
+    "faction": "Horde",
+    "alliance": "Alynsia (Redridge)"
+   },
+   "cost": "45 Merchant's Favor"
+  },
+  {
+   "spellId": 7443,
+   "recipe": "Enchant Chest - Minor Intellect",
+   "source": "vendor",
+   "from": {
+    "npc": "Kithas (Orgrimmar), Nata Dawnstrider (Thunder Bluff), Thaddeus Webb (Undercity), Vance Undergloom (Brill), Lilly (Silverpine), Nasalanna Windsinger (Zephras Isle)",
+    "faction": "Horde"
+   },
+   "cost": "3s"
+  },
+  {
+   "spellId": 7776,
+   "recipe": "Enchant Chest - Lesser Intellect",
+   "source": "vendor",
+   "from": {
+    "npc": "Kithas (Orgrimmar), Lilly (Silverpine Forest)",
+    "faction": "Horde"
+   },
+   "cost": "4s 21c"
+  },
+  {
+   "spellId": 1248458,
+   "recipe": "Enchant Bracer - Minor Intellect",
+   "source": "drop",
+   "from": {
+    "npc": "Vile Fin Tidehunter (Silverpine Forest)"
+   }
+  },
+  {
+   "spellId": 20008,
+   "recipe": "Enchant Bracer - Greater Intellect",
+   "source": "drop",
+   "from": {
+    "npc": "Vilebranch Shadowcaster (The Hinterlands)"
+   }
+  },
+  {
+   "spellId": 20020,
+   "recipe": "Enchant Boots - Greater Stamina",
+   "source": "drop",
+   "from": {
+    "npc": "World drop (200+ mobs) and chests"
+   }
+  },
+  {
+   "spellId": 1248461,
+   "recipe": "Twisted Nether Wand",
+   "source": "unknown"
+  },
+  {
+   "spellId": 1248509,
+   "recipe": "Dreambough Wand",
+   "source": "unknown"
+  },
+  {
+   "spellId": 1248505,
+   "recipe": "Lesser Eternal Wand",
+   "source": "unknown"
+  },
+  {
+   "spellId": 1248515,
+   "recipe": "Greater Eternal Wand",
+   "source": "unknown"
+  },
+  {
+   "spellId": 20026,
+   "recipe": "Enchant Chest - Major Stamina",
+   "source": "unknown"
+  },
+  {
+   "spellId": 1248497,
+   "recipe": "Enchant Bracer - Agility",
+   "source": "unknown",
+   "formula": 249488,
+   "note": "Taught by Formula item 249488; Wowhead lists only source 1 and no Sold by, Dropped by or quest tab (checked 2026-10-18). Excluded from the route search."
+  },
+  {
+   "spellId": 1248500,
+   "recipe": "Enchant Bracer - Greater Agility",
+   "source": "unknown",
+   "formula": 249514,
+   "note": "Taught by Formula item 249514; Wowhead lists only source 1 and no Sold by, Dropped by or quest tab (checked 2026-10-18). Excluded from the route search."
+  },
+  {
+   "spellId": 1248510,
+   "recipe": "Enchant 2H Weapon - Lesser Agility",
+   "source": "unknown",
+   "formula": 249511,
+   "note": "Taught by Formula item 249511; Wowhead lists only source 1 and no Sold by, Dropped by or quest tab (checked 2026-10-18). Excluded from the route search."
+  },
+  {
+   "spellId": 1248511,
+   "recipe": "Enchant 2H Weapon - Lesser Strength",
+   "source": "unknown",
+   "formula": 249513,
+   "note": "Taught by Formula item 249513; Wowhead lists only source 1 and no Sold by, Dropped by or quest tab (checked 2026-10-18). Excluded from the route search."
+  },
+  {
+   "spellId": 1248528,
+   "recipe": "Enchant Gloves - Advanced Skinning",
+   "source": "unknown",
+   "formula": 249516,
+   "note": "Taught by Formula item 249516; Wowhead lists only source 1 and no Sold by, Dropped by or quest tab (checked 2026-10-18). Excluded from the route search."
+  },
+  {
+   "spellId": 1248599,
+   "recipe": "Enchant Bracer - Superior Agility",
+   "source": "unknown",
+   "formula": 249524,
+   "note": "Taught by Formula item 249524; Wowhead lists only source 1 and no Sold by, Dropped by or quest tab (checked 2026-10-18). Excluded from the route search."
+  }
+ ],
+ "notes": [
+  "Cerulean, Magenta and Viridian Dye (items 249409, 249430, 249431) are made by Alchemy (skill line 171, Cerulean learned at 50 from the trainer); no vendor sells them.",
+  "Strange Dust and Lesser Magic Essence are sold by a vendor for 7s 57c each in the Forever datamine; every other Enchanting material has no vendor. All Enchanting materials sell to vendors for 1 copper.",
+  "Forever's Tailoring caster sets come in six variants per piece (Shadow, Flame, Silky, Pristine, Pearly, Shining for the 60-125 line; Black, Fiery, Frothing, Gilded, Golden, Radiant for 140-235; Netherpearl, Netherflame, Nethergeld, Nethershine, Netherfroth, Netherlight for 195-205), differing only in the school-specific reagent."
+ ]
+}

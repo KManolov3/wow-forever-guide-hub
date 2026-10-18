@@ -1,0 +1,178 @@
+{
+ "_source": "Wowhead Forever item pages (https://www.wowhead.com/forever/item=<id>): 'Sold by' tab, cheapest/most common vendor cost; sell prices from the tooltip API (https://nether.wowhead.com/forever/tooltip/item/<id>). Captured 2026-10-18 from the 1.60.1 beta datamine. Prices in copper; null = no vendor sells it (Cerulean and Magenta Dye are made by Alchemy, skill line 171).",
+ "tailoringReagents": {
+  "2320": {
+   "name": "Coarse Thread",
+   "buy": 10
+  },
+  "2321": {
+   "name": "Fine Thread",
+   "buy": 100
+  },
+  "2324": {
+   "name": "Bleach",
+   "buy": 25
+  },
+  "2325": {
+   "name": "Black Dye",
+   "buy": 1000
+  },
+  "2604": {
+   "name": "Red Dye",
+   "buy": 50
+  },
+  "2605": {
+   "name": "Green Dye",
+   "buy": 100
+  },
+  "4291": {
+   "name": "Silken Thread",
+   "buy": 500
+  },
+  "4340": {
+   "name": "Gray Dye",
+   "buy": 350
+  },
+  "6260": {
+   "name": "Blue Dye",
+   "buy": 50
+  },
+  "6261": {
+   "name": "Orange Dye",
+   "buy": 1000
+  },
+  "8343": {
+   "name": "Heavy Silken Thread",
+   "buy": 2000
+  },
+  "14341": {
+   "name": "Rune Thread",
+   "buy": 5000
+  },
+  "249409": {
+   "name": "Cerulean Dye",
+   "buy": null
+  },
+  "249430": {
+   "name": "Magenta Dye",
+   "buy": null
+  }
+ },
+ "enchantingMaterials": {
+  "10938": {
+   "name": "Lesser Magic Essence",
+   "sell": 1,
+   "buy": 757
+  },
+  "10939": {
+   "name": "Greater Magic Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "10940": {
+   "name": "Strange Dust",
+   "sell": 1,
+   "buy": 757
+  },
+  "10978": {
+   "name": "Small Glimmering Shard",
+   "sell": 1,
+   "buy": null
+  },
+  "10998": {
+   "name": "Lesser Astral Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "11082": {
+   "name": "Greater Astral Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "11083": {
+   "name": "Soul Dust",
+   "sell": 1,
+   "buy": null
+  },
+  "11084": {
+   "name": "Large Glimmering Shard",
+   "sell": 1,
+   "buy": null
+  },
+  "11134": {
+   "name": "Lesser Mystic Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "11135": {
+   "name": "Greater Mystic Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "11137": {
+   "name": "Vision Dust",
+   "sell": 1,
+   "buy": null
+  },
+  "11138": {
+   "name": "Small Glowing Shard",
+   "sell": 1,
+   "buy": null
+  },
+  "11139": {
+   "name": "Large Glowing Shard",
+   "sell": 1,
+   "buy": null
+  },
+  "11174": {
+   "name": "Lesser Nether Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "11175": {
+   "name": "Greater Nether Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "11176": {
+   "name": "Dream Dust",
+   "sell": 1,
+   "buy": null
+  },
+  "11177": {
+   "name": "Small Radiant Shard",
+   "sell": 1,
+   "buy": null
+  },
+  "11178": {
+   "name": "Large Radiant Shard",
+   "sell": 1,
+   "buy": null
+  },
+  "14343": {
+   "name": "Small Brilliant Shard",
+   "sell": 1,
+   "buy": null
+  },
+  "14344": {
+   "name": "Large Brilliant Shard",
+   "sell": 1,
+   "buy": null
+  },
+  "16202": {
+   "name": "Lesser Eternal Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "16203": {
+   "name": "Greater Eternal Essence",
+   "sell": 1,
+   "buy": null
+  },
+  "16204": {
+   "name": "Illusion Dust",
+   "sell": 1,
+   "buy": null
+  }
+ }
+}
