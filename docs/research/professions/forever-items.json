@@ -1,0 +1,6272 @@
+{
+ "_source": "Wowhead Forever tooltip API (https://nether.wowhead.com/forever/tooltip/item/<id>), fetched 2026-10-18 by scripts/professions/fetch-items.mjs. sell is the vendor sell price in copper; stats are parsed from the tooltip text.",
+ "failed": [
+  "234003: HTTP 404",
+  "234004: HTTP 404",
+  "234011: HTTP 404",
+  "234005: HTTP 404",
+  "234010: HTTP 404",
+  "234006: HTTP 404",
+  "234007: HTTP 404",
+  "234008: HTTP 404"
+ ],
+ "items": {
+  "118": {
+   "name": "Minor Healing Potion",
+   "quality": 1,
+   "icon": "inv_potion_49",
+   "itemLevel": 5,
+   "sell": 5
+  },
+  "814": {
+   "name": "Flask of Oil",
+   "quality": 1,
+   "icon": "inv_drink_07",
+   "itemLevel": 1,
+   "sell": 25
+  },
+  "929": {
+   "name": "Healing Potion",
+   "quality": 1,
+   "icon": "inv_potion_51",
+   "itemLevel": 22,
+   "requiredLevel": 12,
+   "sell": 75
+  },
+  "1210": {
+   "name": "Shadowgem",
+   "quality": 2,
+   "icon": "inv_misc_gem_amethyst_01",
+   "itemLevel": 20,
+   "sell": 250
+  },
+  "1529": {
+   "name": "Jade",
+   "quality": 2,
+   "icon": "inv_misc_gem_stone_01",
+   "itemLevel": 35,
+   "sell": 700
+  },
+  "2289": {
+   "name": "Scroll of Strength II",
+   "quality": 1,
+   "icon": "inv_scroll_02",
+   "itemLevel": 35,
+   "requiredLevel": 25,
+   "sell": 87
+  },
+  "2318": {
+   "name": "Light Leather",
+   "quality": 1,
+   "icon": "inv_misc_leatherscrap_03",
+   "itemLevel": 10,
+   "sell": 15
+  },
+  "2319": {
+   "name": "Medium Leather",
+   "quality": 1,
+   "icon": "inv_misc_leatherscrap_05",
+   "itemLevel": 20,
+   "sell": 50
+  },
+  "2320": {
+   "name": "Coarse Thread",
+   "quality": 1,
+   "icon": "inv_fabric_linen_03",
+   "itemLevel": 5,
+   "sell": 2
+  },
+  "2321": {
+   "name": "Fine Thread",
+   "quality": 1,
+   "icon": "inv_fabric_wool_02",
+   "itemLevel": 20,
+   "sell": 25
+  },
+  "2324": {
+   "name": "Bleach",
+   "quality": 1,
+   "icon": "inv_drink_12",
+   "itemLevel": 5,
+   "sell": 6
+  },
+  "2325": {
+   "name": "Black Dye",
+   "quality": 1,
+   "icon": "inv_potion_63",
+   "itemLevel": 40,
+   "sell": 250
+  },
+  "2452": {
+   "name": "Swiftthistle",
+   "quality": 1,
+   "icon": "inv_misc_herb_04",
+   "itemLevel": 15,
+   "sell": 15
+  },
+  "2455": {
+   "name": "Minor Mana Potion",
+   "quality": 1,
+   "icon": "inv_potion_70",
+   "itemLevel": 15,
+   "requiredLevel": 5,
+   "sell": 10
+  },
+  "2459": {
+   "name": "Swiftness Potion",
+   "quality": 1,
+   "icon": "inv_potion_95",
+   "itemLevel": 15,
+   "requiredLevel": 5,
+   "sell": 25
+  },
+  "2568": {
+   "name": "Brown Linen Vest",
+   "quality": 1,
+   "icon": "inv_shirt_05",
+   "itemLevel": 8,
+   "requiredLevel": 3,
+   "slot": "Chest",
+   "sell": 31
+  },
+  "2569": {
+   "name": "Linen Boots",
+   "quality": 2,
+   "icon": "inv_boots_09",
+   "itemLevel": 13,
+   "requiredLevel": 8,
+   "slot": "Feet",
+   "sell": 87,
+   "stamina": 2
+  },
+  "2570": {
+   "name": "Linen Cloak",
+   "quality": 1,
+   "icon": "inv_misc_cape_14",
+   "itemLevel": 6,
+   "slot": "Back",
+   "sell": 11
+  },
+  "2572": {
+   "name": "Red Linen Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_18",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Chest",
+   "sell": 99,
+   "intellect": 1
+  },
+  "2575": {
+   "name": "Red Linen Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_red_01",
+   "itemLevel": 10,
+   "slot": "Shirt",
+   "sell": 25
+  },
+  "2576": {
+   "name": "White Linen Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_white_01",
+   "itemLevel": 7,
+   "slot": "Shirt",
+   "sell": 75
+  },
+  "2577": {
+   "name": "Blue Linen Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_blue_01",
+   "itemLevel": 10,
+   "slot": "Shirt",
+   "sell": 75
+  },
+  "2578": {
+   "name": "Barbaric Linen Vest",
+   "quality": 2,
+   "icon": "inv_chest_fur",
+   "itemLevel": 14,
+   "requiredLevel": 9,
+   "slot": "Chest",
+   "sell": 224,
+   "stamina": 2,
+   "spellPower": 2
+  },
+  "2579": {
+   "name": "Green Linen Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_green_01",
+   "itemLevel": 14,
+   "slot": "Shirt",
+   "sell": 37
+  },
+  "2580": {
+   "name": "Reinforced Linen Cape",
+   "quality": 2,
+   "icon": "inv_misc_cape_07",
+   "itemLevel": 12,
+   "requiredLevel": 7,
+   "slot": "Back",
+   "sell": 67,
+   "spellPower": 1
+  },
+  "2582": {
+   "name": "Green Woolen Vest",
+   "quality": 2,
+   "icon": "inv_chest_cloth_39",
+   "itemLevel": 17,
+   "requiredLevel": 12,
+   "slot": "Chest",
+   "sell": 216,
+   "spirit": 4,
+   "spellPower": 4
+  },
+  "2583": {
+   "name": "Woolen Boots",
+   "quality": 2,
+   "icon": "inv_boots_09",
+   "itemLevel": 19,
+   "requiredLevel": 14,
+   "slot": "Feet",
+   "sell": 359,
+   "intellect": 2,
+   "spirit": 2,
+   "spellPower": 2
+  },
+  "2584": {
+   "name": "Woolen Cape",
+   "quality": 2,
+   "icon": "inv_misc_cape_10",
+   "itemLevel": 16,
+   "requiredLevel": 11,
+   "slot": "Back",
+   "sell": 142,
+   "spirit": 1,
+   "spellPower": 1
+  },
+  "2585": {
+   "name": "Gray Woolen Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_13",
+   "itemLevel": 21,
+   "requiredLevel": 16,
+   "slot": "Chest",
+   "sell": 638,
+   "intellect": 5,
+   "spellPower": 4
+  },
+  "2587": {
+   "name": "Gray Woolen Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_grey_01",
+   "itemLevel": 20,
+   "slot": "Shirt",
+   "sell": 200
+  },
+  "2589": {
+   "name": "Linen Cloth",
+   "quality": 1,
+   "icon": "inv_fabric_linen_01",
+   "itemLevel": 5,
+   "sell": 13
+  },
+  "2592": {
+   "name": "Wool Cloth",
+   "quality": 1,
+   "icon": "inv_fabric_wool_01",
+   "itemLevel": 15,
+   "sell": 33
+  },
+  "2604": {
+   "name": "Red Dye",
+   "quality": 1,
+   "icon": "inv_potion_11",
+   "itemLevel": 10,
+   "sell": 12
+  },
+  "2605": {
+   "name": "Green Dye",
+   "quality": 1,
+   "icon": "inv_potion_12",
+   "itemLevel": 15,
+   "sell": 25
+  },
+  "2772": {
+   "name": "Iron Ore",
+   "quality": 1,
+   "icon": "inv_ore_iron_01",
+   "itemLevel": 30,
+   "sell": 150
+  },
+  "2775": {
+   "name": "Silver Ore",
+   "quality": 2,
+   "icon": "inv_stone_16",
+   "itemLevel": 10,
+   "sell": 75
+  },
+  "2842": {
+   "name": "Silver Bar",
+   "quality": 2,
+   "icon": "inv_ingot_01",
+   "itemLevel": 10,
+   "sell": 100
+  },
+  "2996": {
+   "name": "Bolt of Linen Cloth",
+   "quality": 1,
+   "icon": "inv_fabric_linen_02",
+   "itemLevel": 10,
+   "sell": 40
+  },
+  "2997": {
+   "name": "Bolt of Woolen Cloth",
+   "quality": 1,
+   "icon": "inv_fabric_wool_03",
+   "itemLevel": 25,
+   "sell": 100
+  },
+  "3013": {
+   "name": "Scroll of Protection",
+   "quality": 1,
+   "icon": "inv_scroll_07",
+   "itemLevel": 10,
+   "sell": 25
+  },
+  "3182": {
+   "name": "Spider's Silk",
+   "quality": 1,
+   "icon": "spell_nature_web",
+   "itemLevel": 20,
+   "sell": 387
+  },
+  "3356": {
+   "name": "Kingsblood",
+   "quality": 1,
+   "icon": "inv_misc_herb_03",
+   "itemLevel": 24,
+   "sell": 30
+  },
+  "3371": {
+   "name": "Empty Vial",
+   "quality": 1,
+   "icon": "inv_potion_84",
+   "itemLevel": 1,
+   "sell": 1
+  },
+  "3372": {
+   "name": "Leaded Vial",
+   "quality": 1,
+   "icon": "inv_potion_85",
+   "itemLevel": 25,
+   "sell": 10
+  },
+  "3383": {
+   "name": "Elixir of Wisdom",
+   "quality": 1,
+   "icon": "inv_potion_06",
+   "itemLevel": 20,
+   "requiredLevel": 10,
+   "sell": 100
+  },
+  "3577": {
+   "name": "Gold Bar",
+   "quality": 2,
+   "icon": "inv_ingot_03",
+   "itemLevel": 30,
+   "sell": 600
+  },
+  "3819": {
+   "name": "Wintersbite",
+   "quality": 1,
+   "icon": "inv_misc_flower_03",
+   "itemLevel": 39,
+   "sell": 100
+  },
+  "3824": {
+   "name": "Shadow Oil",
+   "quality": 1,
+   "icon": "inv_potion_23",
+   "itemLevel": 34,
+   "requiredLevel": 24,
+   "sell": 150
+  },
+  "3827": {
+   "name": "Mana Potion",
+   "quality": 1,
+   "icon": "inv_potion_72",
+   "itemLevel": 32,
+   "requiredLevel": 22,
+   "sell": 120
+  },
+  "3829": {
+   "name": "Frost Oil",
+   "quality": 1,
+   "icon": "inv_potion_20",
+   "itemLevel": 40,
+   "requiredLevel": 30,
+   "sell": 150
+  },
+  "3864": {
+   "name": "Citrine",
+   "quality": 2,
+   "icon": "inv_misc_gem_opal_02",
+   "itemLevel": 40,
+   "sell": 800
+  },
+  "4234": {
+   "name": "Heavy Leather",
+   "quality": 1,
+   "icon": "inv_misc_leatherscrap_07",
+   "itemLevel": 30,
+   "sell": 150
+  },
+  "4238": {
+   "name": "Linen Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_01",
+   "itemLevel": 5,
+   "bagSlots": 6,
+   "sell": 200
+  },
+  "4240": {
+   "name": "Woolen Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_10",
+   "itemLevel": 15,
+   "bagSlots": 8,
+   "sell": 300
+  },
+  "4241": {
+   "name": "Green Woolen Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_10_green",
+   "itemLevel": 15,
+   "bagSlots": 8,
+   "sell": 450
+  },
+  "4245": {
+   "name": "Small Silk Pack",
+   "quality": 1,
+   "icon": "inv_misc_bag_07",
+   "itemLevel": 25,
+   "bagSlots": 10,
+   "sell": 2000
+  },
+  "4291": {
+   "name": "Silken Thread",
+   "quality": 1,
+   "icon": "inv_fabric_silk_02",
+   "itemLevel": 30,
+   "sell": 125
+  },
+  "4304": {
+   "name": "Thick Leather",
+   "quality": 1,
+   "icon": "inv_misc_leatherscrap_08",
+   "itemLevel": 40,
+   "sell": 300
+  },
+  "4305": {
+   "name": "Bolt of Silk Cloth",
+   "quality": 1,
+   "icon": "inv_fabric_silk_03",
+   "itemLevel": 35,
+   "sell": 600
+  },
+  "4306": {
+   "name": "Silk Cloth",
+   "quality": 1,
+   "icon": "inv_fabric_silk_01",
+   "itemLevel": 30,
+   "sell": 150
+  },
+  "4307": {
+   "name": "Heavy Linen Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_05",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Hands",
+   "sell": 29,
+   "spellPower": 1
+  },
+  "4308": {
+   "name": "Green Linen Bracers",
+   "quality": 2,
+   "icon": "inv_bracer_12",
+   "itemLevel": 12,
+   "requiredLevel": 7,
+   "slot": "Wrist",
+   "sell": 45,
+   "spirit": 1
+  },
+  "4309": {
+   "name": "Handstitched Linen Britches",
+   "quality": 2,
+   "icon": "inv_pants_07",
+   "itemLevel": 14,
+   "requiredLevel": 9,
+   "slot": "Legs",
+   "sell": 226,
+   "intellect": 2,
+   "spellPower": 2
+  },
+  "4310": {
+   "name": "Heavy Woolen Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_05",
+   "itemLevel": 17,
+   "requiredLevel": 12,
+   "slot": "Hands",
+   "sell": 180,
+   "intellect": 2,
+   "spellPower": 2
+  },
+  "4311": {
+   "name": "Heavy Woolen Cloak",
+   "quality": 2,
+   "icon": "inv_misc_cape_14",
+   "itemLevel": 21,
+   "requiredLevel": 16,
+   "slot": "Back",
+   "sell": 475,
+   "spirit": 4,
+   "spellPower": 4
+  },
+  "4312": {
+   "name": "Soft-soled Linen Boots",
+   "quality": 2,
+   "icon": "inv_boots_09",
+   "itemLevel": 16,
+   "requiredLevel": 11,
+   "slot": "Feet",
+   "sell": 237,
+   "stamina": 2,
+   "spellPower": 2
+  },
+  "4313": {
+   "name": "Red Woolen Boots",
+   "quality": 2,
+   "icon": "inv_boots_09",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Feet",
+   "sell": 416,
+   "spirit": 5,
+   "spellPower": 4
+  },
+  "4314": {
+   "name": "Double-Stitched Woolen Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_06",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Shoulder",
+   "sell": 331,
+   "stamina": 4,
+   "spellPower": 4
+  },
+  "4315": {
+   "name": "Reinforced Woolen Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_09",
+   "itemLevel": 24,
+   "requiredLevel": 19,
+   "slot": "Shoulder",
+   "sell": 425,
+   "intellect": 4,
+   "spellPower": 5
+  },
+  "4316": {
+   "name": "Heavy Woolen Pants",
+   "quality": 2,
+   "icon": "inv_pants_01",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Legs",
+   "sell": 743,
+   "spirit": 6,
+   "spellPower": 3
+  },
+  "4317": {
+   "name": "Phoenix Pants",
+   "quality": 2,
+   "icon": "inv_pants_06",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Legs",
+   "sell": 1076,
+   "intellect": 4,
+   "firePower": 10
+  },
+  "4318": {
+   "name": "Gloves of Meditation",
+   "quality": 2,
+   "icon": "inv_gauntlets_05",
+   "itemLevel": 26,
+   "requiredLevel": 21,
+   "slot": "Hands",
+   "sell": 610,
+   "spirit": 7,
+   "spellPower": 5
+  },
+  "4319": {
+   "name": "Azure Silk Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_17",
+   "itemLevel": 29,
+   "requiredLevel": 24,
+   "slot": "Hands",
+   "sell": 815,
+   "spirit": 3
+  },
+  "4320": {
+   "name": "Spidersilk Boots",
+   "quality": 3,
+   "icon": "inv_boots_05",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Feet",
+   "sell": 979,
+   "stamina": 4,
+   "intellect": 4,
+   "spellPower": 7
+  },
+  "4321": {
+   "name": "Spider Silk Slippers",
+   "quality": 2,
+   "icon": "inv_boots_03",
+   "itemLevel": 28,
+   "requiredLevel": 23,
+   "slot": "Feet",
+   "sell": 1120,
+   "spirit": 7,
+   "spellPower": 3
+  },
+  "4322": {
+   "name": "Enchanter's Cowl",
+   "quality": 2,
+   "icon": "inv_helmet_31",
+   "itemLevel": 33,
+   "requiredLevel": 28,
+   "slot": "Head",
+   "sell": 1810,
+   "intellect": 10,
+   "spellPower": 6
+  },
+  "4323": {
+   "name": "Shadow Hood",
+   "quality": 2,
+   "icon": "inv_helmet_27",
+   "itemLevel": 34,
+   "requiredLevel": 29,
+   "slot": "Head",
+   "sell": 1999,
+   "intellect": 11,
+   "shadowPower": 7
+  },
+  "4324": {
+   "name": "Azure Silk Vest",
+   "quality": 2,
+   "icon": "inv_chest_cloth_37",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Chest",
+   "sell": 1874,
+   "intellect": 9
+  },
+  "4325": {
+   "name": "Boots of the Enchanter",
+   "quality": 2,
+   "icon": "inv_boots_05",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Feet",
+   "sell": 2272,
+   "spirit": 8,
+   "spellPower": 5
+  },
+  "4326": {
+   "name": "Long Silken Cloak",
+   "quality": 2,
+   "icon": "inv_misc_cape_02",
+   "itemLevel": 37,
+   "requiredLevel": 32,
+   "slot": "Back",
+   "sell": 2496,
+   "intellect": 5,
+   "spellPower": 6
+  },
+  "4327": {
+   "name": "Icy Cloak",
+   "quality": 3,
+   "icon": "inv_misc_cape_04",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Back",
+   "sell": 3788,
+   "spirit": 6,
+   "spellPower": 7
+  },
+  "4328": {
+   "name": "Spider Belt",
+   "quality": 2,
+   "icon": "inv_belt_25",
+   "itemLevel": 36,
+   "requiredLevel": 31,
+   "slot": "Waist",
+   "sell": 1524,
+   "intellect": 8
+  },
+  "4329": {
+   "name": "Star Belt",
+   "quality": 2,
+   "icon": "inv_belt_06",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Waist",
+   "sell": 2120,
+   "spirit": 4,
+   "spellPower": 13
+  },
+  "4330": {
+   "name": "Stylish Red Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_red_01",
+   "itemLevel": 22,
+   "slot": "Shirt",
+   "sell": 250
+  },
+  "4331": {
+   "name": "Phoenix Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_19",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Hands",
+   "sell": 526,
+   "firePower": 9
+  },
+  "4332": {
+   "name": "Bright Yellow Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_yellow_01",
+   "itemLevel": 27,
+   "slot": "Shirt",
+   "sell": 500
+  },
+  "4333": {
+   "name": "Dark Silk Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_black_01",
+   "itemLevel": 31,
+   "slot": "Shirt",
+   "sell": 1200
+  },
+  "4334": {
+   "name": "Formal White Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_08",
+   "itemLevel": 34,
+   "slot": "Shirt",
+   "sell": 550
+  },
+  "4335": {
+   "name": "Rich Purple Silk Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_16",
+   "itemLevel": 37,
+   "slot": "Shirt",
+   "sell": 1500
+  },
+  "4336": {
+   "name": "Black Swashbuckler's Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_black_01",
+   "itemLevel": 40,
+   "slot": "Shirt",
+   "sell": 1500
+  },
+  "4337": {
+   "name": "Thick Spider's Silk",
+   "quality": 1,
+   "icon": "spell_nature_web",
+   "itemLevel": 35,
+   "sell": 750
+  },
+  "4338": {
+   "name": "Mageweave Cloth",
+   "quality": 1,
+   "icon": "inv_fabric_mageweave_01",
+   "itemLevel": 40,
+   "sell": 250
+  },
+  "4339": {
+   "name": "Bolt of Mageweave",
+   "quality": 1,
+   "icon": "inv_fabric_mageweave_03",
+   "itemLevel": 45,
+   "sell": 1250
+  },
+  "4340": {
+   "name": "Gray Dye",
+   "quality": 1,
+   "icon": "inv_drink_10",
+   "itemLevel": 25,
+   "sell": 87
+  },
+  "4341": {
+   "name": "Yellow Dye",
+   "quality": 1,
+   "icon": "inv_potion_12",
+   "itemLevel": 25,
+   "sell": 125
+  },
+  "4342": {
+   "name": "Purple Dye",
+   "quality": 1,
+   "icon": "inv_potion_02",
+   "itemLevel": 50,
+   "sell": 625
+  },
+  "4343": {
+   "name": "Brown Linen Pants",
+   "quality": 2,
+   "icon": "inv_pants_06",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Legs",
+   "sell": 60,
+   "spellPower": 1
+  },
+  "4344": {
+   "name": "Brown Linen Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_02",
+   "itemLevel": 7,
+   "slot": "Shirt",
+   "sell": 11
+  },
+  "4470": {
+   "name": "Simple Wood",
+   "quality": 1,
+   "icon": "inv_tradeskillitem_01",
+   "itemLevel": 5,
+   "sell": 9
+  },
+  "4589": {
+   "name": "Long Elegant Feather",
+   "quality": 1,
+   "icon": "spell_magic_featherfall",
+   "itemLevel": 1,
+   "sell": 530
+  },
+  "4605": {
+   "name": "Red-speckled Mushroom",
+   "quality": 1,
+   "icon": "inv_mushroom_11",
+   "itemLevel": 15,
+   "requiredLevel": 5,
+   "sell": 6
+  },
+  "4625": {
+   "name": "Firebloom",
+   "quality": 1,
+   "icon": "inv_misc_herb_19",
+   "itemLevel": 41,
+   "sell": 250
+  },
+  "5498": {
+   "name": "Small Lustrous Pearl",
+   "quality": 2,
+   "icon": "inv_misc_gem_pearl_03",
+   "itemLevel": 15,
+   "sell": 200
+  },
+  "5500": {
+   "name": "Iridescent Pearl",
+   "quality": 2,
+   "icon": "inv_misc_gem_pearl_02",
+   "itemLevel": 25,
+   "sell": 750
+  },
+  "5542": {
+   "name": "Pearl-clasped Cloak",
+   "quality": 2,
+   "icon": "inv_misc_cape_11",
+   "itemLevel": 19,
+   "requiredLevel": 14,
+   "slot": "Back",
+   "sell": 370,
+   "intellect": 3,
+   "spellPower": 2
+  },
+  "5637": {
+   "name": "Large Fang",
+   "quality": 1,
+   "icon": "inv_misc_bone_08",
+   "itemLevel": 30,
+   "sell": 75
+  },
+  "5762": {
+   "name": "Red Linen Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_02",
+   "itemLevel": 5,
+   "bagSlots": 8,
+   "sell": 250
+  },
+  "5763": {
+   "name": "Red Woolen Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_10_red",
+   "itemLevel": 15,
+   "bagSlots": 8,
+   "sell": 700
+  },
+  "5764": {
+   "name": "Green Silk Pack",
+   "quality": 1,
+   "icon": "inv_misc_bag_07_green",
+   "itemLevel": 25,
+   "bagSlots": 10,
+   "sell": 3000
+  },
+  "5765": {
+   "name": "Black Silk Pack",
+   "quality": 1,
+   "icon": "inv_misc_bag_07_black",
+   "itemLevel": 25,
+   "bagSlots": 10,
+   "sell": 4000
+  },
+  "5766": {
+   "name": "Lesser Wizard's Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_17",
+   "itemLevel": 27,
+   "requiredLevel": 22,
+   "slot": "Chest",
+   "sell": 1338,
+   "intellect": 8,
+   "spellPower": 5
+  },
+  "5770": {
+   "name": "Robes of Arcana",
+   "quality": 2,
+   "icon": "inv_chest_cloth_29",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Chest",
+   "sell": 1807,
+   "spirit": 7,
+   "spellPower": 8
+  },
+  "6037": {
+   "name": "Truesilver Bar",
+   "quality": 2,
+   "icon": "inv_ingot_08",
+   "itemLevel": 50,
+   "sell": 1250
+  },
+  "6048": {
+   "name": "Shadow Protection Potion",
+   "quality": 1,
+   "icon": "inv_potion_44",
+   "itemLevel": 27,
+   "requiredLevel": 17,
+   "sell": 100
+  },
+  "6217": {
+   "name": "Copper Rod",
+   "quality": 1,
+   "icon": "inv_misc_flute_01",
+   "itemLevel": 5,
+   "sell": 24
+  },
+  "6218": {
+   "name": "Runed Copper Rod",
+   "quality": 1,
+   "icon": "inv_staff_goldfeathered_01",
+   "itemLevel": 5,
+   "sell": 24,
+   "bindsOnPickup": true
+  },
+  "6238": {
+   "name": "Brown Linen Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_21",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Chest",
+   "sell": 98,
+   "spirit": 1
+  },
+  "6239": {
+   "name": "Red Linen Vest",
+   "quality": 2,
+   "icon": "inv_chest_cloth_40",
+   "itemLevel": 12,
+   "requiredLevel": 7,
+   "slot": "Chest",
+   "sell": 160,
+   "intellect": 2,
+   "spellPower": 1
+  },
+  "6240": {
+   "name": "Blue Linen Vest",
+   "quality": 2,
+   "icon": "inv_chest_cloth_37",
+   "itemLevel": 12,
+   "requiredLevel": 7,
+   "slot": "Chest",
+   "sell": 161,
+   "spirit": 2,
+   "spellPower": 1
+  },
+  "6241": {
+   "name": "White Linen Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_04",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Chest",
+   "sell": 99,
+   "intellect": 1
+  },
+  "6242": {
+   "name": "Blue Linen Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_23",
+   "itemLevel": 14,
+   "requiredLevel": 9,
+   "slot": "Chest",
+   "sell": 243,
+   "spirit": 3,
+   "spellPower": 2
+  },
+  "6260": {
+   "name": "Blue Dye",
+   "quality": 1,
+   "icon": "inv_potion_15",
+   "itemLevel": 10,
+   "sell": 12
+  },
+  "6261": {
+   "name": "Orange Dye",
+   "quality": 1,
+   "icon": "inv_potion_35",
+   "itemLevel": 35,
+   "sell": 250
+  },
+  "6263": {
+   "name": "Blue Overalls",
+   "quality": 2,
+   "icon": "inv_shirt_13",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Chest",
+   "sell": 589,
+   "stamina": 4
+  },
+  "6264": {
+   "name": "Greater Adept's Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_24",
+   "itemLevel": 23,
+   "requiredLevel": 18,
+   "slot": "Chest",
+   "sell": 884,
+   "intellect": 2,
+   "spirit": 7,
+   "spellPower": 1
+  },
+  "6338": {
+   "name": "Silver Rod",
+   "quality": 1,
+   "icon": "inv_staff_01",
+   "itemLevel": 20,
+   "sell": 125
+  },
+  "6339": {
+   "name": "Runed Silver Rod",
+   "quality": 1,
+   "icon": "inv_staff_01",
+   "itemLevel": 20,
+   "sell": 24,
+   "bindsOnPickup": true
+  },
+  "6370": {
+   "name": "Blackmouth Oil",
+   "quality": 1,
+   "icon": "inv_drink_12",
+   "itemLevel": 15,
+   "sell": 10
+  },
+  "6371": {
+   "name": "Fire Oil",
+   "quality": 1,
+   "icon": "inv_potion_38",
+   "itemLevel": 25,
+   "sell": 12
+  },
+  "6384": {
+   "name": "Stylish Blue Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_blue_01",
+   "itemLevel": 25,
+   "slot": "Shirt",
+   "sell": 250
+  },
+  "6385": {
+   "name": "Stylish Green Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_green_01",
+   "itemLevel": 25,
+   "slot": "Shirt",
+   "sell": 250
+  },
+  "6786": {
+   "name": "Simple Dress",
+   "quality": 1,
+   "icon": "inv_shirt_12",
+   "itemLevel": 10,
+   "slot": "Chest",
+   "sell": 59
+  },
+  "6787": {
+   "name": "White Woolen Dress",
+   "quality": 2,
+   "icon": "inv_shirt_12",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Chest",
+   "sell": 466,
+   "stamina": 5,
+   "spirit": 4
+  },
+  "6795": {
+   "name": "White Swashbuckler's Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_white_01",
+   "itemLevel": 32,
+   "slot": "Shirt",
+   "sell": 500
+  },
+  "6796": {
+   "name": "Red Swashbuckler's Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_red_01",
+   "itemLevel": 35,
+   "slot": "Shirt",
+   "sell": 750
+  },
+  "7026": {
+   "name": "Linen Belt",
+   "quality": 1,
+   "icon": "inv_belt_05",
+   "itemLevel": 9,
+   "requiredLevel": 4,
+   "slot": "Waist",
+   "sell": 22
+  },
+  "7046": {
+   "name": "Azure Silk Pants",
+   "quality": 2,
+   "icon": "inv_pants_08",
+   "itemLevel": 28,
+   "requiredLevel": 23,
+   "slot": "Legs",
+   "sell": 1494,
+   "intellect": 6
+  },
+  "7047": {
+   "name": "Hands of Darkness",
+   "quality": 2,
+   "icon": "inv_gauntlets_22",
+   "itemLevel": 29,
+   "requiredLevel": 24,
+   "slot": "Hands",
+   "sell": 824,
+   "spirit": 5,
+   "shadowPower": 9
+  },
+  "7048": {
+   "name": "Azure Silk Hood",
+   "quality": 2,
+   "icon": "inv_helmet_29",
+   "itemLevel": 29,
+   "requiredLevel": 24,
+   "slot": "Head",
+   "sell": 745,
+   "stamina": 8
+  },
+  "7049": {
+   "name": "Truefaith Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_16",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Hands",
+   "sell": 914,
+   "intellect": 3
+  },
+  "7050": {
+   "name": "Silk Headband",
+   "quality": 2,
+   "icon": "inv_misc_bandana_01",
+   "itemLevel": 32,
+   "requiredLevel": 27,
+   "slot": "Head",
+   "sell": 999,
+   "stamina": 8,
+   "spellPower": 9
+  },
+  "7051": {
+   "name": "Earthen Vest",
+   "quality": 2,
+   "icon": "inv_shirt_04",
+   "itemLevel": 34,
+   "requiredLevel": 29,
+   "slot": "Chest",
+   "sell": 2696,
+   "stamina": 6,
+   "spirit": 10
+  },
+  "7052": {
+   "name": "Azure Silk Belt",
+   "quality": 2,
+   "icon": "inv_belt_22",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Waist",
+   "sell": 1488,
+   "stamina": 5
+  },
+  "7053": {
+   "name": "Azure Silk Cloak",
+   "quality": 2,
+   "icon": "inv_chest_cloth_14",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Back",
+   "sell": 2240,
+   "spirit": 3
+  },
+  "7054": {
+   "name": "Robe of Power",
+   "quality": 3,
+   "icon": "inv_chest_cloth_02",
+   "itemLevel": 38,
+   "requiredLevel": 33,
+   "slot": "Chest",
+   "sell": 4700,
+   "bindsOnPickup": true,
+   "intellect": 12,
+   "spirit": 8,
+   "spellPower": 14
+  },
+  "7055": {
+   "name": "Crimson Silk Belt",
+   "quality": 2,
+   "icon": "inv_belt_04",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Waist",
+   "sell": 1503,
+   "intellect": 7,
+   "spellPower": 6
+  },
+  "7056": {
+   "name": "Crimson Silk Cloak",
+   "quality": 2,
+   "icon": "inv_chest_cloth_16",
+   "itemLevel": 36,
+   "requiredLevel": 31,
+   "slot": "Back",
+   "sell": 2314,
+   "stamina": 3,
+   "spellPower": 5
+  },
+  "7057": {
+   "name": "Green Silken Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_18",
+   "itemLevel": 36,
+   "requiredLevel": 31,
+   "slot": "Shoulder",
+   "sell": 2323,
+   "intellect": 11,
+   "spellPower": 8
+  },
+  "7058": {
+   "name": "Crimson Silk Vest",
+   "quality": 2,
+   "icon": "inv_shirt_04",
+   "itemLevel": 37,
+   "requiredLevel": 32,
+   "slot": "Chest",
+   "sell": 2052,
+   "intellect": 10,
+   "spellPower": 12
+  },
+  "7059": {
+   "name": "Crimson Silk Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_23",
+   "itemLevel": 38,
+   "requiredLevel": 33,
+   "slot": "Shoulder",
+   "sell": 2781,
+   "intellect": 8,
+   "spirit": 7
+  },
+  "7060": {
+   "name": "Azure Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_27",
+   "itemLevel": 38,
+   "requiredLevel": 33,
+   "slot": "Shoulder",
+   "sell": 2791,
+   "stamina": 5
+  },
+  "7061": {
+   "name": "Earthen Silk Belt",
+   "quality": 2,
+   "icon": "inv_belt_24",
+   "itemLevel": 39,
+   "requiredLevel": 34,
+   "slot": "Waist",
+   "sell": 2017,
+   "spirit": 8
+  },
+  "7062": {
+   "name": "Crimson Silk Pantaloons",
+   "quality": 2,
+   "icon": "inv_pants_06",
+   "itemLevel": 39,
+   "requiredLevel": 34,
+   "slot": "Legs",
+   "sell": 2430,
+   "intellect": 13,
+   "spellPower": 8
+  },
+  "7063": {
+   "name": "Crimson Silk Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_25",
+   "itemLevel": 41,
+   "requiredLevel": 36,
+   "slot": "Chest",
+   "sell": 4741,
+   "intellect": 15,
+   "firePower": 9
+  },
+  "7064": {
+   "name": "Crimson Silk Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_05",
+   "itemLevel": 42,
+   "requiredLevel": 37,
+   "slot": "Hands",
+   "sell": 2569,
+   "intellect": 6,
+   "firePower": 14
+  },
+  "7065": {
+   "name": "Green Silk Armor",
+   "quality": 2,
+   "icon": "inv_chest_cloth_06",
+   "itemLevel": 33,
+   "requiredLevel": 28,
+   "slot": "Chest",
+   "sell": 2398,
+   "intellect": 13,
+   "spellPower": 9
+  },
+  "7067": {
+   "name": "Elemental Earth",
+   "quality": 1,
+   "icon": "inv_ore_iron_01",
+   "itemLevel": 25,
+   "sell": 400
+  },
+  "7068": {
+   "name": "Elemental Fire",
+   "quality": 1,
+   "icon": "spell_fire_fire",
+   "itemLevel": 25,
+   "sell": 400
+  },
+  "7069": {
+   "name": "Elemental Air",
+   "quality": 1,
+   "icon": "spell_nature_tranquility",
+   "itemLevel": 25,
+   "sell": 400
+  },
+  "7070": {
+   "name": "Elemental Water",
+   "quality": 1,
+   "icon": "inv_potion_03",
+   "itemLevel": 25,
+   "sell": 400
+  },
+  "7071": {
+   "name": "Iron Buckle",
+   "quality": 1,
+   "icon": "inv_misc_armorkit_12",
+   "itemLevel": 30,
+   "sell": 100
+  },
+  "7072": {
+   "name": "Naga Scale",
+   "quality": 1,
+   "icon": "inv_misc_monsterscales_01",
+   "itemLevel": 25,
+   "sell": 150
+  },
+  "7075": {
+   "name": "Core of Earth",
+   "quality": 1,
+   "icon": "inv_stone_05",
+   "itemLevel": 45,
+   "sell": 400
+  },
+  "7076": {
+   "name": "Essence of Earth",
+   "quality": 2,
+   "icon": "spell_nature_strengthofearthtotem02",
+   "itemLevel": 55,
+   "sell": 400
+  },
+  "7077": {
+   "name": "Heart of Fire",
+   "quality": 1,
+   "icon": "spell_fire_lavaspawn",
+   "itemLevel": 45,
+   "sell": 400
+  },
+  "7078": {
+   "name": "Essence of Fire",
+   "quality": 2,
+   "icon": "spell_fire_volcano",
+   "itemLevel": 55,
+   "sell": 400
+  },
+  "7079": {
+   "name": "Globe of Water",
+   "quality": 1,
+   "icon": "inv_misc_orb_01",
+   "itemLevel": 45,
+   "sell": 400
+  },
+  "7080": {
+   "name": "Essence of Water",
+   "quality": 2,
+   "icon": "spell_nature_acid_01",
+   "itemLevel": 55,
+   "sell": 400
+  },
+  "7081": {
+   "name": "Breath of Wind",
+   "quality": 1,
+   "icon": "spell_nature_cyclone",
+   "itemLevel": 45,
+   "sell": 400
+  },
+  "7082": {
+   "name": "Essence of Air",
+   "quality": 2,
+   "icon": "spell_nature_earthbind",
+   "itemLevel": 55,
+   "sell": 400
+  },
+  "7392": {
+   "name": "Green Whelp Scale",
+   "quality": 1,
+   "icon": "inv_misc_monsterscales_12",
+   "itemLevel": 1,
+   "sell": 200
+  },
+  "7909": {
+   "name": "Aquamarine",
+   "quality": 2,
+   "icon": "inv_misc_gem_crystal_02",
+   "itemLevel": 45,
+   "sell": 1000
+  },
+  "7910": {
+   "name": "Star Ruby",
+   "quality": 2,
+   "icon": "inv_misc_gem_ruby_02",
+   "itemLevel": 50,
+   "sell": 5000
+  },
+  "7971": {
+   "name": "Black Pearl",
+   "quality": 2,
+   "icon": "inv_misc_gem_pearl_01",
+   "itemLevel": 40,
+   "sell": 1000
+  },
+  "7972": {
+   "name": "Ichor of Undeath",
+   "quality": 1,
+   "icon": "inv_misc_slime_01",
+   "itemLevel": 45,
+   "sell": 400
+  },
+  "8151": {
+   "name": "Flask of Mojo",
+   "quality": 1,
+   "icon": "inv_potion_15",
+   "itemLevel": 40,
+   "sell": 250
+  },
+  "8152": {
+   "name": "Flask of Big Mojo",
+   "quality": 1,
+   "icon": "inv_potion_12",
+   "itemLevel": 40,
+   "sell": 500
+  },
+  "8153": {
+   "name": "Wildvine",
+   "quality": 1,
+   "icon": "inv_misc_herb_03",
+   "itemLevel": 40,
+   "sell": 5
+  },
+  "8170": {
+   "name": "Rugged Leather",
+   "quality": 1,
+   "icon": "inv_misc_leatherscrap_02",
+   "itemLevel": 50,
+   "sell": 500
+  },
+  "8343": {
+   "name": "Heavy Silken Thread",
+   "quality": 1,
+   "icon": "inv_fabric_silk_02",
+   "itemLevel": 40,
+   "sell": 500
+  },
+  "8831": {
+   "name": "Purple Lotus",
+   "quality": 1,
+   "icon": "inv_misc_herb_17",
+   "itemLevel": 42,
+   "sell": 300
+  },
+  "8838": {
+   "name": "Sungrass",
+   "quality": 1,
+   "icon": "inv_misc_herb_18",
+   "itemLevel": 46,
+   "sell": 60
+  },
+  "8925": {
+   "name": "Crystal Vial",
+   "quality": 1,
+   "icon": "inv_potion_86",
+   "itemLevel": 35,
+   "sell": 125
+  },
+  "9210": {
+   "name": "Ghost Dye",
+   "quality": 1,
+   "icon": "inv_poison_mindnumbing",
+   "itemLevel": 49,
+   "sell": 750
+  },
+  "9224": {
+   "name": "Potion of Demon Slaying",
+   "quality": 1,
+   "icon": "inv_potion_27",
+   "itemLevel": 50,
+   "requiredLevel": 40,
+   "sell": 700
+  },
+  "9998": {
+   "name": "Black Mageweave Vest",
+   "quality": 2,
+   "icon": "inv_chest_leather_03",
+   "itemLevel": 41,
+   "requiredLevel": 36,
+   "slot": "Chest",
+   "sell": 4815,
+   "spirit": 12,
+   "spellPower": 11
+  },
+  "9999": {
+   "name": "Black Mageweave Leggings",
+   "quality": 2,
+   "icon": "inv_pants_09",
+   "itemLevel": 41,
+   "requiredLevel": 36,
+   "slot": "Legs",
+   "sell": 4832,
+   "spirit": 14,
+   "spellPower": 8
+  },
+  "10001": {
+   "name": "Black Mageweave Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_13",
+   "itemLevel": 42,
+   "requiredLevel": 37,
+   "slot": "Chest",
+   "sell": 5257,
+   "intellect": 8,
+   "spirit": 14
+  },
+  "10002": {
+   "name": "Shadoweave Pants",
+   "quality": 2,
+   "icon": "inv_pants_11",
+   "itemLevel": 42,
+   "requiredLevel": 37,
+   "slot": "Legs",
+   "sell": 5276,
+   "stamina": 6,
+   "shadowPower": 21
+  },
+  "10003": {
+   "name": "Black Mageweave Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_05",
+   "itemLevel": 43,
+   "requiredLevel": 38,
+   "slot": "Hands",
+   "sell": 2859,
+   "spellPower": 15
+  },
+  "10004": {
+   "name": "Shadoweave Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_38",
+   "itemLevel": 43,
+   "requiredLevel": 38,
+   "slot": "Chest",
+   "sell": 5738,
+   "spirit": 7,
+   "shadowPower": 21
+  },
+  "10007": {
+   "name": "Red Mageweave Vest",
+   "quality": 2,
+   "icon": "inv_shirt_09",
+   "itemLevel": 43,
+   "requiredLevel": 38,
+   "slot": "Chest",
+   "sell": 5799,
+   "intellect": 18
+  },
+  "10008": {
+   "name": "White Bandit Mask",
+   "quality": 2,
+   "icon": "inv_helmet_30",
+   "itemLevel": 43,
+   "requiredLevel": 38,
+   "slot": "Head",
+   "sell": 3492
+  },
+  "10009": {
+   "name": "Red Mageweave Pants",
+   "quality": 2,
+   "icon": "inv_pants_06",
+   "itemLevel": 43,
+   "requiredLevel": 38,
+   "slot": "Legs",
+   "sell": 5284,
+   "intellect": 12,
+   "spellPower": 14
+  },
+  "10018": {
+   "name": "Red Mageweave Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_19",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Hands",
+   "sell": 3275,
+   "intellect": 10,
+   "spellPower": 11
+  },
+  "10019": {
+   "name": "Dreamweave Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_18",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Hands",
+   "sell": 3944,
+   "intellect": 4,
+   "spirit": 7,
+   "spellPower": 18
+  },
+  "10021": {
+   "name": "Dreamweave Vest",
+   "quality": 3,
+   "icon": "inv_chest_cloth_42",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Chest",
+   "sell": 7946,
+   "intellect": 9,
+   "spirit": 14,
+   "spellPower": 18
+  },
+  "10023": {
+   "name": "Shadoweave Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_09",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Hands",
+   "sell": 3334,
+   "intellect": 5,
+   "shadowPower": 17
+  },
+  "10024": {
+   "name": "Black Mageweave Headband",
+   "quality": 2,
+   "icon": "inv_misc_bandana_01",
+   "itemLevel": 46,
+   "requiredLevel": 41,
+   "slot": "Head",
+   "sell": 5421,
+   "intellect": 12,
+   "spellPower": 13
+  },
+  "10025": {
+   "name": "Shadoweave Mask",
+   "quality": 2,
+   "icon": "inv_helmet_27",
+   "itemLevel": 49,
+   "requiredLevel": 44,
+   "slot": "Head",
+   "sell": 6790,
+   "intellect": 10,
+   "shadowPower": 24
+  },
+  "10026": {
+   "name": "Black Mageweave Boots",
+   "quality": 2,
+   "icon": "inv_boots_05",
+   "itemLevel": 46,
+   "requiredLevel": 41,
+   "slot": "Feet",
+   "sell": 5459,
+   "intellect": 7,
+   "spellPower": 11
+  },
+  "10027": {
+   "name": "Black Mageweave Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_25",
+   "itemLevel": 46,
+   "requiredLevel": 41,
+   "slot": "Shoulder",
+   "sell": 5479,
+   "intellect": 9,
+   "spellPower": 10
+  },
+  "10028": {
+   "name": "Shadoweave Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_25",
+   "itemLevel": 47,
+   "requiredLevel": 42,
+   "slot": "Shoulder",
+   "sell": 5938,
+   "stamina": 7,
+   "shadowPower": 17
+  },
+  "10029": {
+   "name": "Red Mageweave Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_23",
+   "itemLevel": 47,
+   "requiredLevel": 42,
+   "slot": "Shoulder",
+   "sell": 5391,
+   "intellect": 15,
+   "spellPower": 7
+  },
+  "10030": {
+   "name": "Admiral's Hat",
+   "quality": 2,
+   "icon": "inv_helmet_29",
+   "itemLevel": 48,
+   "requiredLevel": 43,
+   "slot": "Head",
+   "sell": 6007
+  },
+  "10031": {
+   "name": "Shadoweave Boots",
+   "quality": 2,
+   "icon": "inv_boots_05",
+   "itemLevel": 48,
+   "requiredLevel": 43,
+   "slot": "Feet",
+   "sell": 6030,
+   "spirit": 10,
+   "shadowPower": 14
+  },
+  "10033": {
+   "name": "Red Mageweave Headband",
+   "quality": 2,
+   "icon": "inv_misc_bandana_03",
+   "itemLevel": 48,
+   "requiredLevel": 43,
+   "slot": "Head",
+   "sell": 6075,
+   "intellect": 20,
+   "spellPower": 19
+  },
+  "10034": {
+   "name": "Tuxedo Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_08",
+   "itemLevel": 1,
+   "slot": "Shirt",
+   "sell": 2000
+  },
+  "10035": {
+   "name": "Tuxedo Pants",
+   "quality": 1,
+   "icon": "inv_pants_01",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Legs",
+   "sell": 1735
+  },
+  "10036": {
+   "name": "Tuxedo Jacket",
+   "quality": 1,
+   "icon": "inv_shirt_black_01",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Chest",
+   "sell": 1741
+  },
+  "10040": {
+   "name": "White Wedding Dress",
+   "quality": 1,
+   "icon": "inv_chest_cloth_04",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Chest",
+   "sell": 1767
+  },
+  "10041": {
+   "name": "Dreamweave Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Head",
+   "sell": 8593,
+   "intellect": 10,
+   "spirit": 12,
+   "spellPower": 21
+  },
+  "10042": {
+   "name": "Cindercloth Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_25",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Chest",
+   "sell": 6644,
+   "firePower": 27
+  },
+  "10044": {
+   "name": "Cindercloth Boots",
+   "quality": 2,
+   "icon": "inv_boots_05",
+   "itemLevel": 49,
+   "requiredLevel": 44,
+   "slot": "Feet",
+   "sell": 6765,
+   "firePower": 21
+  },
+  "10045": {
+   "name": "Simple Linen Pants",
+   "quality": 1,
+   "icon": "inv_pants_11",
+   "itemLevel": 7,
+   "requiredLevel": 2,
+   "slot": "Legs",
+   "sell": 23
+  },
+  "10046": {
+   "name": "Simple Linen Boots",
+   "quality": 1,
+   "icon": "inv_boots_05",
+   "itemLevel": 9,
+   "requiredLevel": 4,
+   "slot": "Feet",
+   "sell": 32
+  },
+  "10047": {
+   "name": "Simple Kilt",
+   "quality": 2,
+   "icon": "inv_pants_11",
+   "itemLevel": 15,
+   "requiredLevel": 10,
+   "slot": "Legs",
+   "sell": 164,
+   "stamina": 3,
+   "spellPower": 2
+  },
+  "10048": {
+   "name": "Colorful Kilt",
+   "quality": 2,
+   "icon": "inv_pants_02",
+   "itemLevel": 19,
+   "requiredLevel": 14,
+   "slot": "Legs",
+   "sell": 935,
+   "spirit": 5,
+   "spellPower": 5
+  },
+  "10050": {
+   "name": "Mageweave Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_10_black",
+   "itemLevel": 35,
+   "bagSlots": 12,
+   "sell": 2500
+  },
+  "10051": {
+   "name": "Red Mageweave Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_10_red",
+   "itemLevel": 35,
+   "bagSlots": 12,
+   "sell": 2500
+  },
+  "10052": {
+   "name": "Orange Martial Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_orange_01",
+   "itemLevel": 40,
+   "slot": "Shirt",
+   "sell": 1500
+  },
+  "10053": {
+   "name": "Simple Black Dress",
+   "quality": 1,
+   "icon": "inv_chest_cloth_21",
+   "itemLevel": 47,
+   "slot": "Chest",
+   "sell": 4499
+  },
+  "10054": {
+   "name": "Lavender Mageweave Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_purple_01",
+   "itemLevel": 46,
+   "slot": "Shirt",
+   "sell": 3000
+  },
+  "10055": {
+   "name": "Pink Mageweave Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_red_01",
+   "itemLevel": 47,
+   "slot": "Shirt",
+   "sell": 3000
+  },
+  "10056": {
+   "name": "Orange Mageweave Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_orange_01",
+   "itemLevel": 43,
+   "slot": "Shirt",
+   "sell": 1500
+  },
+  "10285": {
+   "name": "Shadow Silk",
+   "quality": 1,
+   "icon": "spell_nature_web",
+   "itemLevel": 40,
+   "sell": 1000
+  },
+  "10286": {
+   "name": "Heart of the Wild",
+   "quality": 1,
+   "icon": "inv_misc_herb_08",
+   "itemLevel": 45,
+   "sell": 400
+  },
+  "10290": {
+   "name": "Pink Dye",
+   "quality": 1,
+   "icon": "inv_potion_09",
+   "itemLevel": 50,
+   "sell": 625
+  },
+  "10308": {
+   "name": "Scroll of Intellect IV",
+   "quality": 1,
+   "icon": "inv_scroll_01",
+   "itemLevel": 60,
+   "requiredLevel": 50,
+   "sell": 112
+  },
+  "10938": {
+   "name": "Lesser Magic Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essencemagicsmall",
+   "itemLevel": 10,
+   "sell": 1
+  },
+  "10939": {
+   "name": "Greater Magic Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essencemagiclarge",
+   "itemLevel": 15,
+   "sell": 1
+  },
+  "10940": {
+   "name": "Strange Dust",
+   "quality": 1,
+   "icon": "inv_enchant_duststrange",
+   "itemLevel": 10,
+   "sell": 1
+  },
+  "10978": {
+   "name": "Small Glimmering Shard",
+   "quality": 3,
+   "icon": "inv_enchant_shardglimmeringsmall",
+   "itemLevel": 20,
+   "sell": 1
+  },
+  "10998": {
+   "name": "Lesser Astral Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essenceastralsmall",
+   "itemLevel": 20,
+   "sell": 1
+  },
+  "11040": {
+   "name": "Morrowgrain",
+   "quality": 1,
+   "icon": "inv_misc_herb_05",
+   "itemLevel": 50,
+   "sell": 1
+  },
+  "11082": {
+   "name": "Greater Astral Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essenceastrallarge",
+   "itemLevel": 25,
+   "sell": 1
+  },
+  "11083": {
+   "name": "Soul Dust",
+   "quality": 1,
+   "icon": "inv_enchant_dustsoul",
+   "itemLevel": 25,
+   "sell": 1
+  },
+  "11084": {
+   "name": "Large Glimmering Shard",
+   "quality": 3,
+   "icon": "inv_enchant_shardglimmeringlarge",
+   "itemLevel": 25,
+   "sell": 1
+  },
+  "11128": {
+   "name": "Golden Rod",
+   "quality": 1,
+   "icon": "inv_staff_10",
+   "itemLevel": 30,
+   "sell": 500
+  },
+  "11130": {
+   "name": "Runed Golden Rod",
+   "quality": 1,
+   "icon": "inv_staff_10",
+   "itemLevel": 30,
+   "sell": 500,
+   "bindsOnPickup": true
+  },
+  "11134": {
+   "name": "Lesser Mystic Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essencemysticalsmall",
+   "itemLevel": 30,
+   "sell": 1
+  },
+  "11135": {
+   "name": "Greater Mystic Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essencemysticallarge",
+   "itemLevel": 35,
+   "sell": 1
+  },
+  "11137": {
+   "name": "Vision Dust",
+   "quality": 1,
+   "icon": "inv_enchant_dustvision",
+   "itemLevel": 35,
+   "sell": 1
+  },
+  "11138": {
+   "name": "Small Glowing Shard",
+   "quality": 3,
+   "icon": "inv_enchant_shardglowingsmall",
+   "itemLevel": 30,
+   "sell": 1
+  },
+  "11139": {
+   "name": "Large Glowing Shard",
+   "quality": 3,
+   "icon": "inv_enchant_shardglowinglarge",
+   "itemLevel": 35,
+   "sell": 1
+  },
+  "11144": {
+   "name": "Truesilver Rod",
+   "quality": 1,
+   "icon": "inv_staff_11",
+   "itemLevel": 40,
+   "sell": 1000
+  },
+  "11145": {
+   "name": "Runed Truesilver Rod",
+   "quality": 1,
+   "icon": "inv_staff_11",
+   "itemLevel": 40,
+   "sell": 1250,
+   "bindsOnPickup": true
+  },
+  "11174": {
+   "name": "Lesser Nether Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essencenethersmall",
+   "itemLevel": 40,
+   "sell": 1
+  },
+  "11175": {
+   "name": "Greater Nether Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essencenetherlarge",
+   "itemLevel": 45,
+   "sell": 1
+  },
+  "11176": {
+   "name": "Dream Dust",
+   "quality": 1,
+   "icon": "inv_enchant_dustdream",
+   "itemLevel": 45,
+   "sell": 1
+  },
+  "11177": {
+   "name": "Small Radiant Shard",
+   "quality": 3,
+   "icon": "inv_enchant_shardradientsmall",
+   "itemLevel": 40,
+   "sell": 1
+  },
+  "11178": {
+   "name": "Large Radiant Shard",
+   "quality": 3,
+   "icon": "inv_enchant_shardradientlarge",
+   "itemLevel": 45,
+   "sell": 1
+  },
+  "11287": {
+   "name": "Lesser Magic Wand",
+   "quality": 2,
+   "icon": "inv_staff_02",
+   "itemLevel": 15,
+   "requiredLevel": 5,
+   "slot": "Ranged",
+   "sell": 110,
+   "spellPower": 1,
+   "dps": 11.33
+  },
+  "11288": {
+   "name": "Greater Magic Wand",
+   "quality": 2,
+   "icon": "inv_staff_07",
+   "itemLevel": 23,
+   "requiredLevel": 13,
+   "slot": "Ranged",
+   "sell": 200,
+   "spellPower": 2,
+   "dps": 17.5
+  },
+  "11289": {
+   "name": "Lesser Mystic Wand",
+   "quality": 2,
+   "icon": "inv_staff_02",
+   "itemLevel": 31,
+   "requiredLevel": 26,
+   "slot": "Ranged",
+   "sell": 450,
+   "intellect": 4,
+   "dps": 25.38
+  },
+  "11291": {
+   "name": "Star Wood",
+   "quality": 1,
+   "icon": "inv_tradeskillitem_03",
+   "itemLevel": 30,
+   "sell": 1125
+  },
+  "11382": {
+   "name": "Blood of the Mountain",
+   "quality": 2,
+   "icon": "inv_misc_gem_bloodstone_03",
+   "itemLevel": 50,
+   "sell": 750
+  },
+  "11754": {
+   "name": "Black Diamond",
+   "quality": 2,
+   "icon": "inv_misc_gem_01",
+   "itemLevel": 1,
+   "sell": 0
+  },
+  "11811": {
+   "name": "Smoking Heart of the Mountain",
+   "quality": 3,
+   "icon": "inv_misc_gem_bloodstone_01",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Trinket",
+   "sell": 15152,
+   "bindsOnPickup": true
+  },
+  "12359": {
+   "name": "Thorium Bar",
+   "quality": 1,
+   "icon": "inv_ingot_07",
+   "itemLevel": 50,
+   "sell": 600
+  },
+  "12360": {
+   "name": "Arcanite Bar",
+   "quality": 2,
+   "icon": "inv_misc_stonetablet_05",
+   "itemLevel": 55,
+   "sell": 5000
+  },
+  "12363": {
+   "name": "Arcane Crystal",
+   "quality": 2,
+   "icon": "inv_misc_gem_topaz_01",
+   "itemLevel": 60,
+   "sell": 2000
+  },
+  "12364": {
+   "name": "Huge Emerald",
+   "quality": 2,
+   "icon": "inv_misc_gem_emerald_01",
+   "itemLevel": 60,
+   "sell": 10000
+  },
+  "12655": {
+   "name": "Enchanted Thorium Bar",
+   "quality": 1,
+   "icon": "inv_ingot_eternium",
+   "itemLevel": 55,
+   "sell": 500
+  },
+  "12662": {
+   "name": "Demonic Rune",
+   "quality": 2,
+   "icon": "inv_misc_rune_04",
+   "itemLevel": 50,
+   "sell": 600,
+   "bindsOnPickup": true
+  },
+  "12735": {
+   "name": "Frayed Abomination Stitching",
+   "quality": 2,
+   "icon": "inv_misc_pelt_boar_ruin_03",
+   "itemLevel": 1,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "12753": {
+   "name": "Skin of Shadow",
+   "quality": 2,
+   "icon": "inv_misc_shadowegg",
+   "itemLevel": 1,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "12800": {
+   "name": "Azerothian Diamond",
+   "quality": 2,
+   "icon": "inv_misc_gem_diamond_01",
+   "itemLevel": 60,
+   "sell": 10000
+  },
+  "12803": {
+   "name": "Living Essence",
+   "quality": 2,
+   "icon": "spell_nature_abolishmagic",
+   "itemLevel": 55,
+   "sell": 500
+  },
+  "12804": {
+   "name": "Powerful Mojo",
+   "quality": 1,
+   "icon": "spell_nature_astralrecalgroup",
+   "itemLevel": 55,
+   "sell": 2000
+  },
+  "12808": {
+   "name": "Essence of Undeath",
+   "quality": 2,
+   "icon": "spell_shadow_shadetruesight",
+   "itemLevel": 55,
+   "sell": 1000
+  },
+  "12809": {
+   "name": "Guardian Stone",
+   "quality": 2,
+   "icon": "inv_stone_02",
+   "itemLevel": 60,
+   "sell": 10000
+  },
+  "12810": {
+   "name": "Enchanted Leather",
+   "quality": 1,
+   "icon": "inv_misc_rune_05",
+   "itemLevel": 55,
+   "sell": 500
+  },
+  "12811": {
+   "name": "Righteous Orb",
+   "quality": 2,
+   "icon": "inv_misc_gem_pearl_03",
+   "itemLevel": 60,
+   "sell": 20000
+  },
+  "12938": {
+   "name": "Blood of Heroes",
+   "quality": 1,
+   "icon": "inv_potion_33",
+   "itemLevel": 60,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "13180": {
+   "name": "Stratholme Holy Water",
+   "quality": 1,
+   "icon": "inv_potion_75",
+   "itemLevel": 1,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "13458": {
+   "name": "Greater Nature Protection Potion",
+   "quality": 1,
+   "icon": "inv_potion_22",
+   "itemLevel": 58,
+   "requiredLevel": 48,
+   "sell": 750
+  },
+  "13467": {
+   "name": "Icecap",
+   "quality": 1,
+   "icon": "inv_misc_herb_icecap",
+   "itemLevel": 58,
+   "sell": 250
+  },
+  "13468": {
+   "name": "Black Lotus",
+   "quality": 2,
+   "icon": "inv_misc_herb_blacklotus",
+   "itemLevel": 60,
+   "sell": 1000
+  },
+  "13856": {
+   "name": "Runecloth Belt",
+   "quality": 2,
+   "icon": "inv_belt_15",
+   "itemLevel": 51,
+   "requiredLevel": 46,
+   "slot": "Waist",
+   "sell": 5112,
+   "intellect": 12,
+   "spellPower": 8
+  },
+  "13857": {
+   "name": "Runecloth Tunic",
+   "quality": 2,
+   "icon": "inv_chest_cloth_04",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Chest",
+   "sell": 10878,
+   "intellect": 11,
+   "spellPower": 17
+  },
+  "13858": {
+   "name": "Runecloth Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_04",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Chest",
+   "sell": 10917,
+   "intellect": 17,
+   "spellPower": 11
+  },
+  "13860": {
+   "name": "Runecloth Cloak",
+   "quality": 2,
+   "icon": "inv_misc_cape_10",
+   "itemLevel": 53,
+   "requiredLevel": 48,
+   "slot": "Back",
+   "sell": 8741,
+   "intellect": 8,
+   "spellPower": 9
+  },
+  "13863": {
+   "name": "Runecloth Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_25",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Hands",
+   "sell": 6617,
+   "intellect": 9,
+   "spirit": 9,
+   "spellPower": 12
+  },
+  "13864": {
+   "name": "Runecloth Boots",
+   "quality": 2,
+   "icon": "inv_boots_05",
+   "itemLevel": 56,
+   "requiredLevel": 51,
+   "slot": "Feet",
+   "sell": 9553,
+   "spirit": 14,
+   "spellPower": 11
+  },
+  "13865": {
+   "name": "Runecloth Pants",
+   "quality": 2,
+   "icon": "inv_pants_09",
+   "itemLevel": 57,
+   "requiredLevel": 52,
+   "slot": "Legs",
+   "sell": 13555,
+   "spirit": 20,
+   "spellPower": 14
+  },
+  "13866": {
+   "name": "Runecloth Headband",
+   "quality": 2,
+   "icon": "inv_misc_bandana_03",
+   "itemLevel": 59,
+   "requiredLevel": 54,
+   "slot": "Head",
+   "sell": 11358,
+   "intellect": 20,
+   "spellPower": 15
+  },
+  "13867": {
+   "name": "Runecloth Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_21",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Shoulder",
+   "sell": 12570,
+   "intellect": 15,
+   "spellPower": 12
+  },
+  "13868": {
+   "name": "Frostweave Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_03",
+   "itemLevel": 51,
+   "requiredLevel": 46,
+   "slot": "Chest",
+   "sell": 9665,
+   "spirit": 11
+  },
+  "13869": {
+   "name": "Frostweave Tunic",
+   "quality": 2,
+   "icon": "inv_chest_cloth_08",
+   "itemLevel": 51,
+   "requiredLevel": 46,
+   "slot": "Chest",
+   "sell": 9702,
+   "intellect": 11
+  },
+  "13870": {
+   "name": "Frostweave Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_05",
+   "itemLevel": 53,
+   "requiredLevel": 47,
+   "slot": "Hands",
+   "sell": 5471,
+   "intellect": 6
+  },
+  "13871": {
+   "name": "Frostweave Pants",
+   "quality": 2,
+   "icon": "inv_pants_08",
+   "itemLevel": 56,
+   "requiredLevel": 51,
+   "slot": "Legs",
+   "sell": 13436,
+   "spirit": 12
+  },
+  "13926": {
+   "name": "Golden Pearl",
+   "quality": 2,
+   "icon": "inv_misc_gem_pearl_04",
+   "itemLevel": 40,
+   "sell": 10000
+  },
+  "14042": {
+   "name": "Cindercloth Vest",
+   "quality": 2,
+   "icon": "inv_chest_cloth_07",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Chest",
+   "sell": 10561,
+   "spirit": 11,
+   "firePower": 24
+  },
+  "14043": {
+   "name": "Cindercloth Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_05",
+   "itemLevel": 54,
+   "requiredLevel": 49,
+   "slot": "Hands",
+   "sell": 5955,
+   "spirit": 11,
+   "firePower": 17
+  },
+  "14044": {
+   "name": "Cindercloth Cloak",
+   "quality": 2,
+   "icon": "inv_misc_cape_18",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Back",
+   "sell": 9503,
+   "intellect": 8,
+   "firePower": 13
+  },
+  "14045": {
+   "name": "Cindercloth Pants",
+   "quality": 2,
+   "icon": "inv_pants_06",
+   "itemLevel": 56,
+   "requiredLevel": 51,
+   "slot": "Legs",
+   "sell": 13480,
+   "intellect": 12,
+   "firePower": 26
+  },
+  "14046": {
+   "name": "Runecloth Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_19",
+   "itemLevel": 52,
+   "bagSlots": 14,
+   "sell": 5000
+  },
+  "14047": {
+   "name": "Runecloth",
+   "quality": 1,
+   "icon": "inv_fabric_purplefire_01",
+   "itemLevel": 50,
+   "sell": 400
+  },
+  "14048": {
+   "name": "Bolt of Runecloth",
+   "quality": 1,
+   "icon": "inv_fabric_purplefire_02",
+   "itemLevel": 55,
+   "sell": 2000
+  },
+  "14100": {
+   "name": "Brightcloth Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_26",
+   "itemLevel": 54,
+   "requiredLevel": 49,
+   "slot": "Chest",
+   "sell": 12089,
+   "spellPower": 18
+  },
+  "14101": {
+   "name": "Brightcloth Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_21",
+   "itemLevel": 54,
+   "requiredLevel": 49,
+   "slot": "Hands",
+   "sell": 6066,
+   "spellPower": 13
+  },
+  "14103": {
+   "name": "Brightcloth Cloak",
+   "quality": 2,
+   "icon": "inv_misc_cape_11",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Back",
+   "sell": 9716
+  },
+  "14104": {
+   "name": "Brightcloth Pants",
+   "quality": 2,
+   "icon": "inv_pants_09",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Legs",
+   "sell": 15484,
+   "spellPower": 19
+  },
+  "14106": {
+   "name": "Felcloth Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_09",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Chest",
+   "sell": 18053,
+   "stamina": 7,
+   "shadowPower": 36
+  },
+  "14107": {
+   "name": "Felcloth Pants",
+   "quality": 2,
+   "icon": "inv_pants_06",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Legs",
+   "sell": 13140,
+   "intellect": 12,
+   "shadowPower": 26
+  },
+  "14108": {
+   "name": "Felcloth Boots",
+   "quality": 2,
+   "icon": "inv_boots_05",
+   "itemLevel": 57,
+   "requiredLevel": 52,
+   "slot": "Feet",
+   "sell": 11112,
+   "spirit": 12,
+   "firePower": 17
+  },
+  "14111": {
+   "name": "Felcloth Hood",
+   "quality": 2,
+   "icon": "inv_helmet_34",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Head",
+   "sell": 10775,
+   "intellect": 10,
+   "shadowPower": 30
+  },
+  "14112": {
+   "name": "Felcloth Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_23",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Shoulder",
+   "sell": 13509,
+   "spirit": 5,
+   "shadowPower": 26
+  },
+  "14128": {
+   "name": "Wizardweave Robe",
+   "quality": 2,
+   "icon": "inv_chest_cloth_46",
+   "itemLevel": 60,
+   "requiredLevel": 55,
+   "slot": "Chest",
+   "sell": 16093,
+   "spellPower": 20
+  },
+  "14130": {
+   "name": "Wizardweave Turban",
+   "quality": 2,
+   "icon": "inv_helmet_63",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Head",
+   "sell": 12768,
+   "spellPower": 21
+  },
+  "14132": {
+   "name": "Wizardweave Leggings",
+   "quality": 2,
+   "icon": "inv_pants_09",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Legs",
+   "sell": 12441,
+   "spellPower": 19
+  },
+  "14134": {
+   "name": "Cloak of Fire",
+   "quality": 3,
+   "icon": "inv_misc_cape_18",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Back",
+   "sell": 11280,
+   "firePower": 14
+  },
+  "14136": {
+   "name": "Robe of Winter Night",
+   "quality": 3,
+   "icon": "inv_chest_cloth_49",
+   "itemLevel": 57,
+   "requiredLevel": 52,
+   "slot": "Chest",
+   "sell": 17025,
+   "intellect": 12,
+   "shadowPower": 40
+  },
+  "14137": {
+   "name": "Mooncloth Leggings",
+   "quality": 3,
+   "icon": "inv_pants_13",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Legs",
+   "sell": 18113,
+   "stamina": 12,
+   "spirit": 21
+  },
+  "14138": {
+   "name": "Mooncloth Vest",
+   "quality": 3,
+   "icon": "inv_chest_cloth_08",
+   "itemLevel": 60,
+   "requiredLevel": 55,
+   "slot": "Chest",
+   "sell": 20042,
+   "intellect": 20,
+   "spirit": 19
+  },
+  "14139": {
+   "name": "Mooncloth Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_02",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Shoulder",
+   "sell": 15840,
+   "stamina": 9,
+   "spirit": 11
+  },
+  "14140": {
+   "name": "Mooncloth Circlet",
+   "quality": 3,
+   "icon": "inv_misc_bandana_01",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Head",
+   "sell": 16693,
+   "stamina": 13,
+   "spirit": 15
+  },
+  "14141": {
+   "name": "Ghostweave Vest",
+   "quality": 2,
+   "icon": "inv_shirt_08",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Chest",
+   "sell": 12859,
+   "spirit": 20,
+   "spellPower": 9
+  },
+  "14142": {
+   "name": "Ghostweave Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_05",
+   "itemLevel": 54,
+   "requiredLevel": 49,
+   "slot": "Hands",
+   "sell": 6087,
+   "spirit": 15,
+   "spellPower": 9
+  },
+  "14143": {
+   "name": "Ghostweave Belt",
+   "quality": 2,
+   "icon": "inv_belt_16",
+   "itemLevel": 53,
+   "requiredLevel": 48,
+   "slot": "Waist",
+   "sell": 5763,
+   "spirit": 9,
+   "spellPower": 8
+  },
+  "14144": {
+   "name": "Ghostweave Pants",
+   "quality": 2,
+   "icon": "inv_pants_01",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Legs",
+   "sell": 14374,
+   "spirit": 20,
+   "spellPower": 26
+  },
+  "14146": {
+   "name": "Gloves of Spell Mastery",
+   "quality": 4,
+   "icon": "inv_gauntlets_06",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Hands",
+   "sell": 14084,
+   "classes": "Priest , Mage , Warlock Requires Level",
+   "intellect": 10,
+   "spellPower": 9
+  },
+  "14152": {
+   "name": "Robe of the Archmage",
+   "quality": 4,
+   "icon": "inv_chest_cloth_38",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Chest",
+   "sell": 28815,
+   "bindsOnPickup": true,
+   "classes": "Mage Requires Level",
+   "intellect": 12,
+   "spellPower": 40
+  },
+  "14153": {
+   "name": "Robe of the Void",
+   "quality": 4,
+   "icon": "inv_chest_cloth_51",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Chest",
+   "sell": 28920,
+   "bindsOnPickup": true,
+   "classes": "Warlock Requires Level",
+   "stamina": 10,
+   "intellect": 9,
+   "spellPower": 46
+  },
+  "14154": {
+   "name": "Truefaith Vestments",
+   "quality": 4,
+   "icon": "inv_chest_cloth_31",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Chest",
+   "sell": 29028,
+   "bindsOnPickup": true,
+   "classes": "Priest Requires Level",
+   "stamina": 14,
+   "spirit": 16
+  },
+  "14155": {
+   "name": "Mooncloth Bag",
+   "quality": 2,
+   "icon": "inv_misc_bag_14",
+   "itemLevel": 60,
+   "bagSlots": 18,
+   "sell": 20000
+  },
+  "14156": {
+   "name": "Bottomless Bag",
+   "quality": 3,
+   "icon": "inv_misc_bag_13",
+   "itemLevel": 62,
+   "bagSlots": 20,
+   "sell": 40000
+  },
+  "14227": {
+   "name": "Ironweb Spider Silk",
+   "quality": 1,
+   "icon": "spell_nature_web",
+   "itemLevel": 50,
+   "sell": 2500
+  },
+  "14256": {
+   "name": "Felcloth",
+   "quality": 1,
+   "icon": "inv_fabric_felrag",
+   "itemLevel": 50,
+   "sell": 2000
+  },
+  "14341": {
+   "name": "Rune Thread",
+   "quality": 1,
+   "icon": "spell_shadow_antimagicshell",
+   "itemLevel": 50,
+   "sell": 1250
+  },
+  "14342": {
+   "name": "Mooncloth",
+   "quality": 1,
+   "icon": "inv_fabric_moonrag_01",
+   "itemLevel": 55,
+   "sell": 4000
+  },
+  "14343": {
+   "name": "Small Brilliant Shard",
+   "quality": 3,
+   "icon": "inv_enchant_shardbrilliantsmall",
+   "itemLevel": 50,
+   "sell": 1
+  },
+  "14344": {
+   "name": "Large Brilliant Shard",
+   "quality": 3,
+   "icon": "inv_enchant_shardbrilliantlarge",
+   "itemLevel": 55,
+   "sell": 1
+  },
+  "15407": {
+   "name": "Cured Rugged Hide",
+   "quality": 1,
+   "icon": "inv_misc_pelt_bear_03",
+   "itemLevel": 50,
+   "sell": 500
+  },
+  "15802": {
+   "name": "Mooncloth Boots",
+   "quality": 3,
+   "icon": "inv_boots_05",
+   "itemLevel": 56,
+   "requiredLevel": 51,
+   "slot": "Feet",
+   "sell": 11648,
+   "intellect": 14,
+   "spirit": 13
+  },
+  "16202": {
+   "name": "Lesser Eternal Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essenceeternalsmall",
+   "itemLevel": 50,
+   "sell": 1
+  },
+  "16203": {
+   "name": "Greater Eternal Essence",
+   "quality": 2,
+   "icon": "inv_enchant_essenceeternallarge",
+   "itemLevel": 55,
+   "sell": 1
+  },
+  "16204": {
+   "name": "Illusion Dust",
+   "quality": 1,
+   "icon": "inv_enchant_dustillusion",
+   "itemLevel": 55,
+   "sell": 1
+  },
+  "16206": {
+   "name": "Arcanite Rod",
+   "quality": 1,
+   "icon": "inv_staff_19",
+   "itemLevel": 55,
+   "sell": 1000
+  },
+  "16207": {
+   "name": "Runed Arcanite Rod",
+   "quality": 1,
+   "icon": "inv_wand_09",
+   "itemLevel": 58,
+   "sell": 1250,
+   "bindsOnPickup": true
+  },
+  "16979": {
+   "name": "Flarecore Gloves",
+   "quality": 4,
+   "icon": "inv_gauntlets_26",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Hands",
+   "sell": 14902,
+   "classes": "Priest , Mage , Warlock Requires Level",
+   "stamina": 10,
+   "intellect": 14
+  },
+  "16980": {
+   "name": "Flarecore Mantle",
+   "quality": 4,
+   "icon": "inv_shoulder_23",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Shoulder",
+   "sell": 21365,
+   "stamina": 9,
+   "intellect": 10,
+   "spirit": 10
+  },
+  "17010": {
+   "name": "Fiery Core",
+   "quality": 3,
+   "icon": "spell_fire_flamebolt",
+   "itemLevel": 60,
+   "sell": 2000
+  },
+  "17011": {
+   "name": "Lava Core",
+   "quality": 3,
+   "icon": "spell_nature_earthquake",
+   "itemLevel": 60,
+   "sell": 2000
+  },
+  "17012": {
+   "name": "Core Leather",
+   "quality": 1,
+   "icon": "inv_ammo_firetar",
+   "itemLevel": 60,
+   "sell": 1000
+  },
+  "17034": {
+   "name": "Maple Seed",
+   "quality": 1,
+   "icon": "inv_misc_food_02",
+   "itemLevel": 20,
+   "sell": 50
+  },
+  "17035": {
+   "name": "Stranglethorn Seed",
+   "quality": 1,
+   "icon": "inv_misc_food_02",
+   "itemLevel": 30,
+   "sell": 100
+  },
+  "17723": {
+   "name": "Green Holiday Shirt",
+   "quality": 1,
+   "icon": "inv_shirt_green_01",
+   "itemLevel": 40,
+   "slot": "Shirt",
+   "sell": 750
+  },
+  "18240": {
+   "name": "Ogre Tannin",
+   "quality": 2,
+   "icon": "inv_potion_08",
+   "itemLevel": 1,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "18256": {
+   "name": "Imbued Vial",
+   "quality": 1,
+   "icon": "inv_potion_87",
+   "itemLevel": 55,
+   "sell": 1500
+  },
+  "18258": {
+   "name": "Gordok Ogre Suit",
+   "quality": 2,
+   "icon": "inv_chest_chain_14",
+   "itemLevel": 55,
+   "requiredLevel": 55,
+   "sell": 0
+  },
+  "18263": {
+   "name": "Flarecore Wraps",
+   "quality": 4,
+   "icon": "inv_bracer_09",
+   "itemLevel": 64,
+   "requiredLevel": 60,
+   "slot": "Wrist",
+   "sell": 16911,
+   "intellect": 8
+  },
+  "18405": {
+   "name": "Belt of the Archmage",
+   "quality": 4,
+   "icon": "inv_belt_31",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Waist",
+   "sell": 14744,
+   "stamina": 10,
+   "intellect": 16,
+   "spellPower": 20
+  },
+  "18407": {
+   "name": "Felcloth Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_19",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Hands",
+   "sell": 11139,
+   "stamina": 9,
+   "shadowPower": 33
+  },
+  "18408": {
+   "name": "Inferno Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_19",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Hands",
+   "sell": 11178,
+   "intellect": 9,
+   "firePower": 33
+  },
+  "18409": {
+   "name": "Mooncloth Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_17",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Hands",
+   "sell": 11219,
+   "stamina": 9,
+   "intellect": 16
+  },
+  "18413": {
+   "name": "Cloak of Warding",
+   "quality": 3,
+   "icon": "inv_misc_cape_06",
+   "itemLevel": 62,
+   "requiredLevel": 57,
+   "slot": "Back",
+   "sell": 17070
+  },
+  "18486": {
+   "name": "Mooncloth Robe",
+   "quality": 3,
+   "icon": "inv_chest_cloth_04",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Chest",
+   "sell": 21683,
+   "stamina": 12,
+   "intellect": 25
+  },
+  "18512": {
+   "name": "Larval Acid",
+   "quality": 1,
+   "icon": "inv_potion_22",
+   "itemLevel": 55,
+   "sell": 4000
+  },
+  "19047": {
+   "name": "Wisdom of the Timbermaw",
+   "quality": 3,
+   "icon": "inv_belt_09",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Waist",
+   "sell": 9232,
+   "intellect": 14,
+   "spirit": 9
+  },
+  "19050": {
+   "name": "Mantle of the Timbermaw",
+   "quality": 3,
+   "icon": "inv_shoulder_19",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Shoulder",
+   "sell": 18758,
+   "intellect": 13,
+   "spellPower": 17
+  },
+  "19056": {
+   "name": "Argent Boots",
+   "quality": 3,
+   "icon": "inv_boots_cloth_03",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Feet",
+   "sell": 12941,
+   "stamina": 21,
+   "spellPower": 8
+  },
+  "19059": {
+   "name": "Argent Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_13",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Shoulder",
+   "sell": 17541,
+   "spirit": 7,
+   "spellPower": 25
+  },
+  "19156": {
+   "name": "Flarecore Robe",
+   "quality": 4,
+   "icon": "inv_chest_cloth_18",
+   "itemLevel": 66,
+   "requiredLevel": 60,
+   "slot": "Chest",
+   "sell": 34911,
+   "stamina": 35,
+   "spellPower": 23
+  },
+  "19165": {
+   "name": "Flarecore Leggings",
+   "quality": 4,
+   "icon": "inv_pants_06",
+   "itemLevel": 70,
+   "requiredLevel": 60,
+   "slot": "Legs",
+   "sell": 45006,
+   "stamina": 21,
+   "spellPower": 43
+  },
+  "19682": {
+   "name": "Bloodvine Vest",
+   "quality": 3,
+   "icon": "inv_chest_cloth_07",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Chest",
+   "sell": 25035,
+   "intellect": 13,
+   "spellPower": 27
+  },
+  "19683": {
+   "name": "Bloodvine Leggings",
+   "quality": 3,
+   "icon": "inv_pants_cloth_14",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Legs",
+   "sell": 25129,
+   "intellect": 6,
+   "spellPower": 37
+  },
+  "19684": {
+   "name": "Bloodvine Boots",
+   "quality": 3,
+   "icon": "inv_boots_cloth_02",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Feet",
+   "sell": 18915,
+   "intellect": 16,
+   "spellPower": 19
+  },
+  "19726": {
+   "name": "Bloodvine",
+   "quality": 2,
+   "icon": "inv_misc_herb_09",
+   "itemLevel": 60,
+   "sell": 500
+  },
+  "20520": {
+   "name": "Dark Rune",
+   "quality": 2,
+   "icon": "spell_shadow_sealofkings",
+   "itemLevel": 55,
+   "sell": 2000
+  },
+  "20537": {
+   "name": "Runed Stygian Boots",
+   "quality": 3,
+   "icon": "inv_boots_05",
+   "itemLevel": 63,
+   "requiredLevel": 58,
+   "slot": "Feet",
+   "sell": 17736,
+   "stamina": 8,
+   "shadowPower": 14
+  },
+  "20538": {
+   "name": "Runed Stygian Leggings",
+   "quality": 3,
+   "icon": "inv_pants_cloth_05",
+   "itemLevel": 63,
+   "requiredLevel": 58,
+   "slot": "Legs",
+   "sell": 23733,
+   "stamina": 13,
+   "shadowPower": 20
+  },
+  "20539": {
+   "name": "Runed Stygian Belt",
+   "quality": 3,
+   "icon": "inv_belt_14",
+   "itemLevel": 63,
+   "requiredLevel": 58,
+   "slot": "Waist",
+   "sell": 11908,
+   "stamina": 10,
+   "shadowPower": 11
+  },
+  "20725": {
+   "name": "Nexus Crystal",
+   "quality": 4,
+   "icon": "inv_enchant_shardnexuslarge",
+   "itemLevel": 60,
+   "sell": 1
+  },
+  "20744": {
+   "name": "Minor Wizard Oil",
+   "quality": 1,
+   "icon": "inv_poison_mindnumbing",
+   "itemLevel": 15,
+   "requiredLevel": 5,
+   "sell": 100
+  },
+  "20745": {
+   "name": "Minor Mana Oil",
+   "quality": 1,
+   "icon": "inv_potion_98",
+   "itemLevel": 30,
+   "requiredLevel": 20,
+   "sell": 500
+  },
+  "20746": {
+   "name": "Lesser Wizard Oil",
+   "quality": 1,
+   "icon": "inv_potion_103",
+   "itemLevel": 40,
+   "requiredLevel": 30,
+   "sell": 1000
+  },
+  "20747": {
+   "name": "Lesser Mana Oil",
+   "quality": 1,
+   "icon": "inv_potion_99",
+   "itemLevel": 50,
+   "requiredLevel": 40,
+   "sell": 1000
+  },
+  "20748": {
+   "name": "Brilliant Mana Oil",
+   "quality": 1,
+   "icon": "inv_potion_100",
+   "itemLevel": 55,
+   "requiredLevel": 45,
+   "sell": 1000
+  },
+  "20749": {
+   "name": "Brilliant Wizard Oil",
+   "quality": 1,
+   "icon": "inv_potion_105",
+   "itemLevel": 55,
+   "requiredLevel": 45,
+   "sell": 1000
+  },
+  "20750": {
+   "name": "Wizard Oil",
+   "quality": 1,
+   "icon": "inv_potion_104",
+   "itemLevel": 50,
+   "requiredLevel": 40,
+   "sell": 1000
+  },
+  "21154": {
+   "name": "Festival Dress",
+   "quality": 1,
+   "icon": "inv_chest_cloth_56",
+   "itemLevel": 1,
+   "slot": "Chest",
+   "sell": 1
+  },
+  "21340": {
+   "name": "Soul Pouch",
+   "quality": 2,
+   "icon": "inv_misc_bag_soulbag",
+   "itemLevel": 52,
+   "bagSlots": 24,
+   "sell": 5000,
+   "classes": "Warlock Sell Price"
+  },
+  "21341": {
+   "name": "Felcloth Bag",
+   "quality": 3,
+   "icon": "inv_misc_bag_felclothbag",
+   "itemLevel": 57,
+   "bagSlots": 32,
+   "sell": 20000,
+   "classes": "Warlock Sell Price"
+  },
+  "21342": {
+   "name": "Core Felcloth Bag",
+   "quality": 4,
+   "icon": "inv_misc_bag_corefelclothbag",
+   "itemLevel": 60,
+   "bagSlots": 28,
+   "sell": 80000,
+   "classes": "Warlock Sell Price"
+  },
+  "21542": {
+   "name": "Festival Suit",
+   "quality": 1,
+   "icon": "inv_chest_cloth_55",
+   "itemLevel": 1,
+   "slot": "Chest",
+   "sell": 1
+  },
+  "22246": {
+   "name": "Enchanted Mageweave Pouch",
+   "quality": 2,
+   "icon": "inv_misc_bag_enchantedmageweave",
+   "itemLevel": 45,
+   "bagSlots": 20,
+   "sell": 2500
+  },
+  "22248": {
+   "name": "Enchanted Runecloth Bag",
+   "quality": 2,
+   "icon": "inv_misc_bag_enchantedrunecloth",
+   "itemLevel": 55,
+   "bagSlots": 26,
+   "sell": 10000
+  },
+  "22249": {
+   "name": "Big Bag of Enchantment",
+   "quality": 2,
+   "icon": "inv_misc_bag_bigbagofenchantments",
+   "itemLevel": 65,
+   "bagSlots": 32,
+   "sell": 30000
+  },
+  "22251": {
+   "name": "Cenarion Herb Bag",
+   "quality": 2,
+   "icon": "inv_misc_bag_cenarionherbbag",
+   "itemLevel": 55,
+   "bagSlots": 26,
+   "sell": 10000
+  },
+  "22252": {
+   "name": "Satchel of Cenarius",
+   "quality": 2,
+   "icon": "inv_misc_bag_satchelofcenarius",
+   "itemLevel": 65,
+   "bagSlots": 32,
+   "sell": 30000
+  },
+  "22652": {
+   "name": "Glacial Vest",
+   "quality": 4,
+   "icon": "inv_chest_cloth_08",
+   "itemLevel": 80,
+   "requiredLevel": 60,
+   "slot": "Chest",
+   "sell": 69171,
+   "stamina": 26,
+   "spellPower": 21
+  },
+  "22654": {
+   "name": "Glacial Gloves",
+   "quality": 4,
+   "icon": "inv_gauntlets_06",
+   "itemLevel": 80,
+   "requiredLevel": 60,
+   "slot": "Hands",
+   "sell": 34846,
+   "stamina": 22,
+   "spellPower": 15
+  },
+  "22655": {
+   "name": "Glacial Wrists",
+   "quality": 4,
+   "icon": "inv_bracer_07",
+   "itemLevel": 80,
+   "requiredLevel": 60,
+   "slot": "Wrist",
+   "sell": 34973,
+   "stamina": 20,
+   "spellPower": 12
+  },
+  "22658": {
+   "name": "Glacial Cloak",
+   "quality": 4,
+   "icon": "inv_misc_cape_16",
+   "itemLevel": 80,
+   "requiredLevel": 60,
+   "slot": "Back",
+   "sell": 53045,
+   "stamina": 18
+  },
+  "22660": {
+   "name": "Gaea's Embrace",
+   "quality": 3,
+   "icon": "inv_misc_cape_17",
+   "itemLevel": 70,
+   "requiredLevel": 60,
+   "slot": "Back",
+   "sell": 24601,
+   "stamina": 6
+  },
+  "22682": {
+   "name": "Frozen Rune",
+   "quality": 3,
+   "icon": "inv_misc_rune_09",
+   "itemLevel": 80,
+   "requiredLevel": 60,
+   "sell": 20000
+  },
+  "22756": {
+   "name": "Sylvan Vest",
+   "quality": 3,
+   "icon": "inv_chest_plate07",
+   "itemLevel": 70,
+   "requiredLevel": 60,
+   "slot": "Chest",
+   "sell": 33164,
+   "stamina": 15,
+   "spellPower": 12
+  },
+  "22757": {
+   "name": "Sylvan Crown",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 70,
+   "requiredLevel": 60,
+   "slot": "Head",
+   "sell": 24961,
+   "stamina": 10,
+   "spellPower": 18
+  },
+  "22758": {
+   "name": "Sylvan Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_18",
+   "itemLevel": 70,
+   "requiredLevel": 60,
+   "slot": "Shoulder",
+   "sell": 25051,
+   "stamina": 18,
+   "spellPower": 7
+  },
+  "34085": {
+   "name": "Red Winter Clothes",
+   "quality": 1,
+   "icon": "inv_chest_christmas02",
+   "itemLevel": 1,
+   "slot": "Chest",
+   "sell": 7
+  },
+  "34087": {
+   "name": "Green Winter Clothes",
+   "quality": 1,
+   "icon": "inv_chest_christmas01",
+   "itemLevel": 1,
+   "slot": "Chest",
+   "sell": 7
+  },
+  "210781": {
+   "name": "Phoenix Bindings",
+   "quality": 3,
+   "icon": "inv_bracer_25a",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Wrist",
+   "sell": 744,
+   "firePower": 13
+  },
+  "213378": {
+   "name": "Unstable Microfilament",
+   "quality": 2,
+   "icon": "inv_gizmo_09",
+   "itemLevel": 40,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "213379": {
+   "name": "Hyperconductive Arcano-Filament",
+   "quality": 3,
+   "icon": "inv_misc_thread_eternium",
+   "itemLevel": 40,
+   "sell": 280
+  },
+  "215365": {
+   "name": "Invoker's Mantle",
+   "quality": 2,
+   "icon": "inv_shoulder_02",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Shoulder",
+   "sell": 1371,
+   "intellect": 5,
+   "spellPower": 7
+  },
+  "215366": {
+   "name": "Invoker's Cord",
+   "quality": 2,
+   "icon": "inv_belt_03",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Waist",
+   "sell": 864,
+   "intellect": 5,
+   "spellPower": 7
+  },
+  "217287": {
+   "name": "Greater Mystic Wand",
+   "quality": 2,
+   "icon": "inv_wand_07",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Ranged",
+   "sell": 600,
+   "spellPower": 5,
+   "dps": 29
+  },
+  "217308": {
+   "name": "Enchanted Sigil: Innovation",
+   "quality": 2,
+   "icon": "inv_sigil_mimiron",
+   "itemLevel": 40,
+   "requiredLevel": 40,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "220606": {
+   "name": "Idol of the Dream",
+   "quality": 3,
+   "icon": "inv_relics_idolofferocity",
+   "itemLevel": 60,
+   "requiredLevel": 55,
+   "sell": 11850,
+   "bindsOnPickup": true
+  },
+  "220792": {
+   "name": "Scroll of Spatial Mending",
+   "quality": 2,
+   "icon": "inv_scroll_09",
+   "itemLevel": 15,
+   "sell": 150
+  },
+  "227844": {
+   "name": "Leather-Reinforced Runecloth Bag",
+   "quality": 3,
+   "icon": "inv_misc_bag_26_spellfire",
+   "itemLevel": 60,
+   "bagSlots": 18,
+   "sell": 40000
+  },
+  "228175": {
+   "name": "Libram of Holy Alacrity",
+   "quality": 3,
+   "icon": "inv_relics_libramofhope",
+   "itemLevel": 60,
+   "requiredLevel": 55,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "228176": {
+   "name": "Totem of Thunder",
+   "quality": 3,
+   "icon": "inv_relics_totemofrebirth",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "228978": {
+   "name": "Enchanted Sigil: Flowing Waters",
+   "quality": 3,
+   "icon": "inv_sigil_hodir",
+   "itemLevel": 60,
+   "requiredLevel": 60,
+   "sell": 0,
+   "bindsOnPickup": true
+  },
+  "228980": {
+   "name": "Conductive Shield Coating",
+   "quality": 1,
+   "icon": "inv_potion_100",
+   "itemLevel": 50,
+   "requiredLevel": 40,
+   "sell": 400
+  },
+  "232611": {
+   "name": "Magnificent Trollshine",
+   "quality": 1,
+   "icon": "inv_potion_96",
+   "itemLevel": 55,
+   "requiredLevel": 45,
+   "sell": 1000
+  },
+  "234012": {
+   "name": "Hive Thistle",
+   "quality": 1,
+   "icon": "inv_misc_spineleaf-_01",
+   "itemLevel": 60,
+   "sell": 15
+  },
+  "239147": {
+   "name": "Crusader's Knapsack",
+   "quality": 3,
+   "icon": "inv_misc_bag_22",
+   "itemLevel": 1,
+   "bagSlots": 24,
+   "sell": 0
+  },
+  "239148": {
+   "name": "Crimson Dawnwoven Bag",
+   "quality": 4,
+   "icon": "inv_misc_bag_26_spellfire",
+   "itemLevel": 1,
+   "bagSlots": 30,
+   "sell": 0
+  },
+  "247786": {
+   "name": "Mote of Magic",
+   "quality": 1,
+   "icon": "inv_elemental_mote_mana",
+   "itemLevel": 5,
+   "sell": 1
+  },
+  "247789": {
+   "name": "Novice's Practice Wand",
+   "quality": 1,
+   "icon": "inv_weapon_shortblade_09",
+   "itemLevel": 6,
+   "slot": "Ranged",
+   "sell": 5,
+   "dps": 4
+  },
+  "248819": {
+   "name": "Fel Crystal",
+   "quality": 2,
+   "icon": "inv_misc_uncutgemnormal1",
+   "itemLevel": 60,
+   "sell": 3000
+  },
+  "248820": {
+   "name": "Torbernite",
+   "quality": 2,
+   "icon": "inv_jewelcrafting_gem_34",
+   "itemLevel": 60,
+   "sell": 15000
+  },
+  "248822": {
+   "name": "Death Lotus",
+   "quality": 2,
+   "icon": "inv_nulllotus_void",
+   "itemLevel": 60,
+   "sell": 1500
+  },
+  "249144": {
+   "name": "Twisted Nether Wand",
+   "quality": 2,
+   "icon": "inv_wand_03",
+   "itemLevel": 42,
+   "requiredLevel": 37,
+   "slot": "Ranged",
+   "sell": 1000,
+   "spellPower": 6,
+   "dps": 34
+  },
+  "249232": {
+   "name": "Lesser Eternal Wand",
+   "quality": 2,
+   "icon": "inv_wand_05",
+   "itemLevel": 54,
+   "requiredLevel": 49,
+   "slot": "Ranged",
+   "sell": 2000,
+   "spellPower": 8,
+   "dps": 45.75
+  },
+  "249234": {
+   "name": "Dreambough Wand",
+   "quality": 2,
+   "icon": "inv_wand_04",
+   "itemLevel": 48,
+   "requiredLevel": 43,
+   "slot": "Ranged",
+   "sell": 1500,
+   "spellPower": 7,
+   "dps": 39.17
+  },
+  "249237": {
+   "name": "Greater Eternal Wand",
+   "quality": 2,
+   "icon": "inv_wand_14",
+   "itemLevel": 60,
+   "requiredLevel": 55,
+   "slot": "Ranged",
+   "sell": 2500,
+   "spellPower": 9,
+   "dps": 53.33
+  },
+  "249274": {
+   "name": "Stranglevine",
+   "quality": 2,
+   "icon": "inv_herbalism_70_nightmaredreamleaf",
+   "itemLevel": 60,
+   "sell": 250
+  },
+  "249385": {
+   "name": "Brilliant Wand",
+   "quality": 3,
+   "icon": "inv_wand_07",
+   "itemLevel": 60,
+   "requiredLevel": 55,
+   "slot": "Ranged",
+   "sell": 5263,
+   "bindsOnPickup": true,
+   "intellect": 7,
+   "spellPower": 9,
+   "dps": 59.58
+  },
+  "249391": {
+   "name": "Pyrite",
+   "quality": 2,
+   "icon": "inv_ore_pyrite_nugget",
+   "itemLevel": 25,
+   "sell": 100
+  },
+  "249392": {
+   "name": "Glimmering Staff",
+   "quality": 3,
+   "icon": "inv_staff_19",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Two-Hand",
+   "sell": 601,
+   "bindsOnPickup": true,
+   "stamina": 11,
+   "intellect": 11,
+   "spellPower": 34,
+   "dps": 18.41
+  },
+  "249393": {
+   "name": "Soulstaff",
+   "quality": 3,
+   "icon": "inv_staff_31",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Two-Hand",
+   "sell": 601,
+   "bindsOnPickup": true,
+   "stamina": 11,
+   "spirit": 11,
+   "spellPower": 34,
+   "dps": 18.33
+  },
+  "249394": {
+   "name": "Orb of Mystic Insight",
+   "quality": 3,
+   "icon": "inv_misc_orb_blue",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Held In Off-hand",
+   "sell": 499,
+   "bindsOnPickup": true,
+   "intellect": 6,
+   "spellPower": 7
+  },
+  "249395": {
+   "name": "Orb of Souls",
+   "quality": 3,
+   "icon": "inv_misc_orb_04",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Held In Off-hand",
+   "sell": 496,
+   "bindsOnPickup": true,
+   "spirit": 6
+  },
+  "249396": {
+   "name": "Mystic Mushroom",
+   "quality": 3,
+   "icon": "inv_mushroom_11",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "sell": 499,
+   "bindsOnPickup": true,
+   "classes": "Druid Requires Level"
+  },
+  "249397": {
+   "name": "Tenets of the Silver Hand",
+   "quality": 3,
+   "icon": "inv_misc_book_13",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "sell": 450,
+   "bindsOnPickup": true,
+   "classes": "Paladin Requires Level"
+  },
+  "249398": {
+   "name": "Polished Driftwood Icon",
+   "quality": 3,
+   "icon": "spell_shaman_totemrecall",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "sell": 499,
+   "bindsOnPickup": true,
+   "classes": "Shaman Requires Level"
+  },
+  "249399": {
+   "name": "Frilled Lichen",
+   "quality": 2,
+   "icon": "inv_misc_food_109_honeylichen",
+   "itemLevel": 25,
+   "sell": 30
+  },
+  "249409": {
+   "name": "Cerulean Dye",
+   "quality": 2,
+   "icon": "inv_inscription_inkcerulean01",
+   "itemLevel": 25,
+   "sell": 75
+  },
+  "249410": {
+   "name": "Sulfuric Acid",
+   "quality": 2,
+   "icon": "trade_alchemy",
+   "itemLevel": 25,
+   "sell": 125
+  },
+  "249424": {
+   "name": "Rosecap",
+   "quality": 2,
+   "icon": "inv_misc_herb_talandrasrose",
+   "itemLevel": 45,
+   "sell": 95
+  },
+  "249425": {
+   "name": "Bauxite",
+   "quality": 2,
+   "icon": "inv_ore_manticytenugget",
+   "itemLevel": 45,
+   "sell": 250
+  },
+  "249427": {
+   "name": "Pristine Leather",
+   "quality": 2,
+   "icon": "item_pristinehide",
+   "itemLevel": 25,
+   "sell": 125
+  },
+  "249428": {
+   "name": "Pristine Hide",
+   "quality": 2,
+   "icon": "inv_leatherworking_90_leatherhide",
+   "itemLevel": 45,
+   "sell": 250
+  },
+  "249429": {
+   "name": "Pristine Scale",
+   "quality": 2,
+   "icon": "inv_misc_monsterscales_09",
+   "itemLevel": 60,
+   "sell": 375
+  },
+  "249430": {
+   "name": "Magenta Dye",
+   "quality": 2,
+   "icon": "inv_inscription_inkpurple02",
+   "itemLevel": 45,
+   "sell": 250
+  },
+  "249431": {
+   "name": "Viridian Dye",
+   "quality": 2,
+   "icon": "inv_inscription_inkgreen01",
+   "itemLevel": 60,
+   "sell": 375
+  },
+  "249432": {
+   "name": "Sandpaper",
+   "quality": 2,
+   "icon": "inv_inscription_papyrus",
+   "itemLevel": 45,
+   "sell": 250
+  },
+  "249441": {
+   "name": "Talons of Wrath",
+   "quality": 3,
+   "icon": "spell_nature_natureswrath",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "sell": 2001,
+   "bindsOnPickup": true,
+   "classes": "Druid Requires Level"
+  },
+  "249442": {
+   "name": "Libram of Invocation",
+   "quality": 3,
+   "icon": "inv_relics_libramofhope",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "sell": 2655,
+   "bindsOnPickup": true
+  },
+  "249443": {
+   "name": "Totem of Ancestral Protection",
+   "quality": 3,
+   "icon": "inv_relics_totemofrage",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "sell": 4752,
+   "bindsOnPickup": true
+  },
+  "249453": {
+   "name": "Radiant Staff",
+   "quality": 3,
+   "icon": "inv_staff_13",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Two-Hand",
+   "sell": 33605,
+   "bindsOnPickup": true,
+   "stamina": 19,
+   "intellect": 19,
+   "spellPower": 56,
+   "dps": 32.29
+  },
+  "249454": {
+   "name": "Dreamstaff",
+   "quality": 3,
+   "icon": "inv_staff_14",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Two-Hand",
+   "sell": 33731,
+   "bindsOnPickup": true,
+   "stamina": 19,
+   "spirit": 19,
+   "dps": 32.29
+  },
+  "249455": {
+   "name": "Truesilver Conduit",
+   "quality": 3,
+   "icon": "inv_rod_enchantedadamantite",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Held In Off-hand",
+   "sell": 10835,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spellPower": 10
+  },
+  "249456": {
+   "name": "Twisting Essence Jar",
+   "quality": 3,
+   "icon": "inv_10_misc_dragonorb_color1",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Held In Off-hand",
+   "sell": 10877,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "spirit": 8
+  },
+  "249469": {
+   "name": "Frozen Heart of the Mountain",
+   "quality": 3,
+   "icon": "inv_misc_gem_sapphire_01",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Trinket",
+   "sell": 1500,
+   "bindsOnPickup": true
+  },
+  "249470": {
+   "name": "Molten Heart of the Mountain",
+   "quality": 3,
+   "icon": "inv_misc_gem_ruby_01",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Trinket",
+   "sell": 1500,
+   "bindsOnPickup": true
+  },
+  "249473": {
+   "name": "Dormant Heart of the Mountain",
+   "quality": 3,
+   "icon": "inv_misc_gem_diamond_01",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Trinket",
+   "sell": 1500,
+   "bindsOnPickup": true
+  },
+  "249726": {
+   "name": "Azerothium Bar",
+   "quality": 2,
+   "icon": "inv_ingot_livingsteel",
+   "itemLevel": 55,
+   "sell": 3000
+  },
+  "253664": {
+   "name": "Linen Reagent Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_30",
+   "itemLevel": 5,
+   "bagSlots": 6,
+   "sell": 200
+  },
+  "253667": {
+   "name": "Woolen Reagent Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_30",
+   "itemLevel": 15,
+   "bagSlots": 8,
+   "sell": 1250
+  },
+  "253885": {
+   "name": "Novice Arcanist's Sash",
+   "quality": 3,
+   "icon": "inv_belt_43a",
+   "itemLevel": 15,
+   "requiredLevel": 10,
+   "slot": "Waist",
+   "sell": 174,
+   "bindsOnPickup": true,
+   "stamina": 3,
+   "intellect": 3,
+   "spellPower": 4
+  },
+  "253887": {
+   "name": "Novice Ardent's Sash",
+   "quality": 3,
+   "icon": "inv_belt_43",
+   "itemLevel": 15,
+   "requiredLevel": 10,
+   "slot": "Waist",
+   "sell": 176,
+   "bindsOnPickup": true,
+   "intellect": 3,
+   "spirit": 3
+  },
+  "253889": {
+   "name": "Pristine Boots",
+   "quality": 3,
+   "icon": "inv_boots_cloth_03",
+   "itemLevel": 17,
+   "requiredLevel": 12,
+   "slot": "Feet",
+   "sell": 351,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3
+  },
+  "253891": {
+   "name": "Silky Boots",
+   "quality": 3,
+   "icon": "inv_boots_cloth_01",
+   "itemLevel": 17,
+   "requiredLevel": 12,
+   "slot": "Feet",
+   "sell": 320,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3
+  },
+  "253893": {
+   "name": "Flame Boots",
+   "quality": 3,
+   "icon": "inv_boots_cloth_02",
+   "itemLevel": 17,
+   "requiredLevel": 12,
+   "slot": "Feet",
+   "sell": 323,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3,
+   "firePower": 6
+  },
+  "253895": {
+   "name": "Shadow Boots",
+   "quality": 3,
+   "icon": "inv_boots_cloth_05",
+   "itemLevel": 17,
+   "requiredLevel": 12,
+   "slot": "Feet",
+   "sell": 325,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3,
+   "shadowPower": 6
+  },
+  "253897": {
+   "name": "Pearly Boots",
+   "quality": 3,
+   "icon": "inv_boots_05",
+   "itemLevel": 17,
+   "requiredLevel": 12,
+   "slot": "Feet",
+   "sell": 328,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3
+  },
+  "253899": {
+   "name": "Shining Boots",
+   "quality": 3,
+   "icon": "inv_boots_cloth_08",
+   "itemLevel": 17,
+   "requiredLevel": 12,
+   "slot": "Feet",
+   "sell": 330,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3
+  },
+  "253901": {
+   "name": "Filigreed Pristine Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_32",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Chest",
+   "sell": 693,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 5,
+   "spirit": 3
+  },
+  "253903": {
+   "name": "Filigreed Silky Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_03",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Chest",
+   "sell": 698,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 5,
+   "spirit": 3
+  },
+  "253905": {
+   "name": "Filigreed Flame Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_02",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Chest",
+   "sell": 703,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 5,
+   "spirit": 3,
+   "firePower": 9
+  },
+  "253907": {
+   "name": "Filigreed Shadow Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_48",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Chest",
+   "sell": 708,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 5,
+   "spirit": 3,
+   "shadowPower": 9
+  },
+  "253909": {
+   "name": "Filigreed Pearly Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_51",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Chest",
+   "sell": 713,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 5,
+   "spirit": 3
+  },
+  "253911": {
+   "name": "Filigreed Shining Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_26",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Chest",
+   "sell": 650,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 5,
+   "spirit": 3
+  },
+  "253913": {
+   "name": "Pristine Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_16",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Hands",
+   "sell": 327,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3
+  },
+  "253915": {
+   "name": "Silky Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_17",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Hands",
+   "sell": 330,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3
+  },
+  "253917": {
+   "name": "Flame Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_19",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Hands",
+   "sell": 341,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3,
+   "firePower": 7
+  },
+  "253919": {
+   "name": "Shadow Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_27",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Hands",
+   "sell": 344,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3,
+   "shadowPower": 7
+  },
+  "253921": {
+   "name": "Pearly Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_20",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Hands",
+   "sell": 346,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3
+  },
+  "253923": {
+   "name": "Shining Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_21",
+   "itemLevel": 20,
+   "requiredLevel": 15,
+   "slot": "Hands",
+   "sell": 349,
+   "bindsOnPickup": true,
+   "stamina": 4,
+   "intellect": 3
+  },
+  "253925": {
+   "name": "Pristine Sash",
+   "quality": 3,
+   "icon": "inv_belt_43",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Waist",
+   "sell": 465,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 4
+  },
+  "253927": {
+   "name": "Silky Sash",
+   "quality": 3,
+   "icon": "inv_belt_43a",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Waist",
+   "sell": 468,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 4
+  },
+  "253929": {
+   "name": "Flame Sash",
+   "quality": 3,
+   "icon": "inv_belt_43c",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Waist",
+   "sell": 471,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 4,
+   "firePower": 7
+  },
+  "253931": {
+   "name": "Shadow Sash",
+   "quality": 3,
+   "icon": "inv_belt_43",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Waist",
+   "sell": 429,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 4,
+   "shadowPower": 7
+  },
+  "253933": {
+   "name": "Pearly Sash",
+   "quality": 3,
+   "icon": "inv_belt_43a",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Waist",
+   "sell": 445,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 4
+  },
+  "253935": {
+   "name": "Shining Sash",
+   "quality": 3,
+   "icon": "inv_belt_43b",
+   "itemLevel": 22,
+   "requiredLevel": 17,
+   "slot": "Waist",
+   "sell": 448,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 4
+  },
+  "253937": {
+   "name": "Filigreed Pristine Leggings",
+   "quality": 3,
+   "icon": "inv_pants_01",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Legs",
+   "sell": 1303,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 6,
+   "spirit": 4
+  },
+  "253939": {
+   "name": "Filigreed Silky Leggings",
+   "quality": 3,
+   "icon": "inv_pants_08",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Legs",
+   "sell": 1312,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 6,
+   "spirit": 4
+  },
+  "253941": {
+   "name": "Filigreed Flame Leggings",
+   "quality": 3,
+   "icon": "inv_pants_06",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Legs",
+   "sell": 1322,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 6,
+   "spirit": 4,
+   "firePower": 11
+  },
+  "253943": {
+   "name": "Filigreed Shadow Leggings",
+   "quality": 3,
+   "icon": "inv_pants_11",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Legs",
+   "sell": 1332,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 6,
+   "spirit": 4,
+   "shadowPower": 11
+  },
+  "253945": {
+   "name": "Filigreed Pearly Leggings",
+   "quality": 3,
+   "icon": "inv_pants_10",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Legs",
+   "sell": 1341,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 6,
+   "spirit": 4
+  },
+  "253947": {
+   "name": "Filigreed Shining Leggings",
+   "quality": 3,
+   "icon": "inv_pants_cloth_01",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Legs",
+   "sell": 1351,
+   "bindsOnPickup": true,
+   "stamina": 5,
+   "intellect": 6,
+   "spirit": 4
+  },
+  "253949": {
+   "name": "Pristine Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Head",
+   "sell": 948,
+   "bindsOnPickup": true,
+   "stamina": 10
+  },
+  "253951": {
+   "name": "Silky Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Head",
+   "sell": 955,
+   "bindsOnPickup": true,
+   "stamina": 10
+  },
+  "253953": {
+   "name": "Flame Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Head",
+   "sell": 962,
+   "bindsOnPickup": true,
+   "stamina": 10,
+   "firePower": 11
+  },
+  "253955": {
+   "name": "Shadow Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Head",
+   "sell": 970,
+   "bindsOnPickup": true,
+   "stamina": 10,
+   "shadowPower": 11
+  },
+  "253957": {
+   "name": "Pearly Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Head",
+   "sell": 977,
+   "bindsOnPickup": true,
+   "stamina": 10
+  },
+  "253959": {
+   "name": "Shining Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 25,
+   "requiredLevel": 20,
+   "slot": "Head",
+   "sell": 984,
+   "bindsOnPickup": true,
+   "stamina": 10
+  },
+  "253961": {
+   "name": "Pristine Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_32",
+   "itemLevel": 27,
+   "requiredLevel": 22,
+   "slot": "Chest",
+   "sell": 1643,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4
+  },
+  "253963": {
+   "name": "Silky Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_03",
+   "itemLevel": 27,
+   "requiredLevel": 22,
+   "slot": "Chest",
+   "sell": 1655,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4
+  },
+  "253965": {
+   "name": "Flame Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_02",
+   "itemLevel": 27,
+   "requiredLevel": 22,
+   "slot": "Chest",
+   "sell": 1548,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4,
+   "firePower": 13
+  },
+  "253967": {
+   "name": "Shadow Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_48",
+   "itemLevel": 27,
+   "requiredLevel": 22,
+   "slot": "Chest",
+   "sell": 1560,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4,
+   "shadowPower": 13
+  },
+  "253969": {
+   "name": "Pearly Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_51",
+   "itemLevel": 27,
+   "requiredLevel": 22,
+   "slot": "Chest",
+   "sell": 1572,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4
+  },
+  "253971": {
+   "name": "Shining Gown",
+   "quality": 3,
+   "icon": "inv_chest_cloth_26",
+   "itemLevel": 27,
+   "requiredLevel": 22,
+   "slot": "Chest",
+   "sell": 1584,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4
+  },
+  "253973": {
+   "name": "Silk Reagent Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_01",
+   "itemLevel": 25,
+   "bagSlots": 10,
+   "sell": 200
+  },
+  "253975": {
+   "name": "Filigreed Pristine Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Head",
+   "sell": 1605,
+   "bindsOnPickup": true,
+   "stamina": 12
+  },
+  "253977": {
+   "name": "Filigreed Silky Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Head",
+   "sell": 1616,
+   "bindsOnPickup": true,
+   "stamina": 12
+  },
+  "253979": {
+   "name": "Filigreed Flame Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Head",
+   "sell": 1628,
+   "bindsOnPickup": true,
+   "stamina": 12,
+   "firePower": 14
+  },
+  "253981": {
+   "name": "Filigreed Shadow Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Head",
+   "sell": 1640,
+   "bindsOnPickup": true,
+   "stamina": 12,
+   "shadowPower": 14
+  },
+  "253983": {
+   "name": "Filigreed Pearly Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Head",
+   "sell": 1695,
+   "bindsOnPickup": true,
+   "stamina": 12
+  },
+  "253985": {
+   "name": "Filigreed Shining Circlet",
+   "quality": 3,
+   "icon": "inv_crown_01",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Head",
+   "sell": 1545,
+   "bindsOnPickup": true,
+   "stamina": 12
+  },
+  "253987": {
+   "name": "Pristine Leggings",
+   "quality": 3,
+   "icon": "inv_pants_01",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Legs",
+   "sell": 2076,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5
+  },
+  "253989": {
+   "name": "Silky Leggings",
+   "quality": 3,
+   "icon": "inv_pants_08",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Legs",
+   "sell": 2092,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5
+  },
+  "253991": {
+   "name": "Flame Leggings",
+   "quality": 3,
+   "icon": "inv_pants_06",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Legs",
+   "sell": 2108,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5,
+   "firePower": 14
+  },
+  "253993": {
+   "name": "Shadow Leggings",
+   "quality": 3,
+   "icon": "inv_pants_11",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Legs",
+   "sell": 2124,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5,
+   "shadowPower": 14
+  },
+  "253995": {
+   "name": "Pearly Leggings",
+   "quality": 3,
+   "icon": "inv_pants_10",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Legs",
+   "sell": 2139,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5
+  },
+  "253997": {
+   "name": "Shining Leggings",
+   "quality": 3,
+   "icon": "inv_pants_cloth_01",
+   "itemLevel": 30,
+   "requiredLevel": 25,
+   "slot": "Legs",
+   "sell": 2155,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5
+  },
+  "253999": {
+   "name": "Earthen Leggings",
+   "quality": 2,
+   "icon": "inv_pants_09",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Legs",
+   "sell": 2990,
+   "spirit": 11
+  },
+  "254001": {
+   "name": "Gilded Slippers",
+   "quality": 3,
+   "icon": "inv_boots_cloth_08",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Feet",
+   "sell": 2711,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4
+  },
+  "254003": {
+   "name": "Frothing Slippers",
+   "quality": 3,
+   "icon": "inv_boots_cloth_03",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Feet",
+   "sell": 2730,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4
+  },
+  "254005": {
+   "name": "Fiery Slippers",
+   "quality": 3,
+   "icon": "inv_boots_cloth_02",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Feet",
+   "sell": 2488,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4,
+   "firePower": 13
+  },
+  "254007": {
+   "name": "Black Slippers",
+   "quality": 3,
+   "icon": "inv_boots_cloth_21",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Feet",
+   "sell": 2507,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4,
+   "shadowPower": 13
+  },
+  "254009": {
+   "name": "Golden Slippers",
+   "quality": 3,
+   "icon": "inv_boots_cloth_06",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Feet",
+   "sell": 2526,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4
+  },
+  "254011": {
+   "name": "Radiant Slippers",
+   "quality": 3,
+   "icon": "inv_boots_cloth_26",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Feet",
+   "sell": 2545,
+   "bindsOnPickup": true,
+   "stamina": 6,
+   "intellect": 7,
+   "spirit": 4
+  },
+  "254013": {
+   "name": "Earthen Silk Slippers",
+   "quality": 2,
+   "icon": "inv_boots_cloth_22",
+   "itemLevel": 36,
+   "requiredLevel": 31,
+   "slot": "Feet",
+   "sell": 2351,
+   "spirit": 7
+  },
+  "254015": {
+   "name": "Earthen Silk Hood",
+   "quality": 2,
+   "icon": "inv_helmet_29",
+   "itemLevel": 37,
+   "requiredLevel": 32,
+   "slot": "Head",
+   "sell": 2675,
+   "spirit": 10
+  },
+  "254017": {
+   "name": "Earthen Silk Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_24",
+   "itemLevel": 39,
+   "requiredLevel": 34,
+   "slot": "Hands",
+   "sell": 2095,
+   "spirit": 8
+  },
+  "254019": {
+   "name": "Earthen Silk Cuffs",
+   "quality": 2,
+   "icon": "inv_bracer_09",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Wrist",
+   "sell": 2279,
+   "spirit": 5
+  },
+  "254021": {
+   "name": "Gilded Handwraps",
+   "quality": 3,
+   "icon": "inv_gauntlets_29",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Hands",
+   "sell": 2754,
+   "stamina": 9,
+   "intellect": 7
+  },
+  "254023": {
+   "name": "Frothing Handwraps",
+   "quality": 3,
+   "icon": "inv_gauntlets_30",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Hands",
+   "sell": 2773,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 7
+  },
+  "254025": {
+   "name": "Fiery Handwraps",
+   "quality": 3,
+   "icon": "inv_gauntlets_13",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Hands",
+   "sell": 2528,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 7,
+   "firePower": 14
+  },
+  "254027": {
+   "name": "Black Handwraps",
+   "quality": 3,
+   "icon": "inv_gauntlets_27",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Hands",
+   "sell": 2547,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 7,
+   "shadowPower": 14
+  },
+  "254029": {
+   "name": "Golden Handwraps",
+   "quality": 3,
+   "icon": "inv_gauntlets_23",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Hands",
+   "sell": 2567,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 7
+  },
+  "254031": {
+   "name": "Radiant Handwraps",
+   "quality": 3,
+   "icon": "inv_gauntlets_16",
+   "itemLevel": 40,
+   "requiredLevel": 35,
+   "slot": "Hands",
+   "sell": 2656,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 7
+  },
+  "254033": {
+   "name": "Earthen Silk Shoulders",
+   "quality": 2,
+   "icon": "inv_shoulder_25",
+   "itemLevel": 41,
+   "requiredLevel": 36,
+   "slot": "Shoulder",
+   "sell": 3613,
+   "spirit": 8
+  },
+  "254035": {
+   "name": "Mageweave Reagent Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_01",
+   "itemLevel": 35,
+   "bagSlots": 12,
+   "sell": 200
+  },
+  "254037": {
+   "name": "Gilded Cord",
+   "quality": 3,
+   "icon": "inv_belt_08",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Waist",
+   "sell": 3989,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6
+  },
+  "254039": {
+   "name": "Frothing Cord",
+   "quality": 3,
+   "icon": "inv_belt_03",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Waist",
+   "sell": 4018,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6
+  },
+  "254041": {
+   "name": "Fiery Cord",
+   "quality": 3,
+   "icon": "inv_belt_39c",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Waist",
+   "sell": 4046,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6,
+   "firePower": 14
+  },
+  "254043": {
+   "name": "Black Cord",
+   "quality": 3,
+   "icon": "inv_belt_09",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Waist",
+   "sell": 4075,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6,
+   "shadowPower": 14
+  },
+  "254045": {
+   "name": "Golden Cord",
+   "quality": 3,
+   "icon": "inv_belt_34",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Waist",
+   "sell": 3714,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6
+  },
+  "254047": {
+   "name": "Radiant Cord",
+   "quality": 3,
+   "icon": "inv_belt_37b",
+   "itemLevel": 45,
+   "requiredLevel": 40,
+   "slot": "Waist",
+   "sell": 3846,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6
+  },
+  "254049": {
+   "name": "Nethergeld Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_22",
+   "itemLevel": 47,
+   "requiredLevel": 42,
+   "slot": "Shoulder",
+   "sell": 6779,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6
+  },
+  "254051": {
+   "name": "Netherfroth Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_02",
+   "itemLevel": 47,
+   "requiredLevel": 42,
+   "slot": "Shoulder",
+   "sell": 6828,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6
+  },
+  "254053": {
+   "name": "Netherflame Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_23",
+   "itemLevel": 47,
+   "requiredLevel": 42,
+   "slot": "Shoulder",
+   "sell": 6879,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6,
+   "firePower": 17
+  },
+  "254055": {
+   "name": "Netherpearl Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_25",
+   "itemLevel": 47,
+   "requiredLevel": 42,
+   "slot": "Shoulder",
+   "sell": 6928,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6,
+   "shadowPower": 17
+  },
+  "254057": {
+   "name": "Nethershine Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_09",
+   "itemLevel": 47,
+   "requiredLevel": 42,
+   "slot": "Shoulder",
+   "sell": 6979,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6
+  },
+  "254059": {
+   "name": "Netherlight Shoulders",
+   "quality": 3,
+   "icon": "inv_shoulder_05",
+   "itemLevel": 47,
+   "requiredLevel": 42,
+   "slot": "Shoulder",
+   "sell": 7028,
+   "bindsOnPickup": true,
+   "stamina": 8,
+   "intellect": 8,
+   "spirit": 6
+  },
+  "254061": {
+   "name": "Nethergeld Cuffs",
+   "quality": 3,
+   "icon": "inv_bracer_23b",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Wrist",
+   "sell": 5835,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5
+  },
+  "254063": {
+   "name": "Netherfroth Cuffs",
+   "quality": 3,
+   "icon": "inv_bracer_22a",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Wrist",
+   "sell": 5463,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5
+  },
+  "254065": {
+   "name": "Netherflame Cuffs",
+   "quality": 3,
+   "icon": "inv_bracer_23a",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Wrist",
+   "sell": 5505,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5,
+   "firePower": 13
+  },
+  "254067": {
+   "name": "Netherpearl Cuffs",
+   "quality": 3,
+   "icon": "inv_bracer_13",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Wrist",
+   "sell": 5546,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5,
+   "shadowPower": 13
+  },
+  "254069": {
+   "name": "Nethershine Cuffs",
+   "quality": 3,
+   "icon": "inv_bracer_21b",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Wrist",
+   "sell": 5587,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5
+  },
+  "254071": {
+   "name": "Netherlight Cuffs",
+   "quality": 3,
+   "icon": "inv_bracer_20b",
+   "itemLevel": 50,
+   "requiredLevel": 45,
+   "slot": "Wrist",
+   "sell": 5628,
+   "bindsOnPickup": true,
+   "stamina": 7,
+   "intellect": 7,
+   "spirit": 5
+  },
+  "254073": {
+   "name": "Ghostweave Cord",
+   "quality": 2,
+   "icon": "inv_belt_16",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Waist",
+   "sell": 5359,
+   "spirit": 11,
+   "spellPower": 14
+  },
+  "254075": {
+   "name": "Earthenweave Gloves",
+   "quality": 2,
+   "icon": "inv_gauntlets_21",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Hands",
+   "sell": 5398,
+   "spirit": 11
+  },
+  "254077": {
+   "name": "Earthenweave Cord",
+   "quality": 2,
+   "icon": "inv_belt_39c",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Waist",
+   "sell": 5437,
+   "spirit": 11
+  },
+  "254079": {
+   "name": "Runecloth Reagent Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_01",
+   "itemLevel": 52,
+   "bagSlots": 14,
+   "sell": 200
+  },
+  "254081": {
+   "name": "Gilded Waistcord",
+   "quality": 3,
+   "icon": "inv_belt_07",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Waist",
+   "sell": 6149,
+   "bindsOnPickup": true,
+   "stamina": 12,
+   "intellect": 9
+  },
+  "254083": {
+   "name": "Frothing Waistcord",
+   "quality": 3,
+   "icon": "inv_belt_39a",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Waist",
+   "sell": 6196,
+   "bindsOnPickup": true,
+   "stamina": 12,
+   "intellect": 9
+  },
+  "254085": {
+   "name": "Fiery Waistcord",
+   "quality": 3,
+   "icon": "inv_belt_37a",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Waist",
+   "sell": 6242,
+   "bindsOnPickup": true,
+   "stamina": 12,
+   "intellect": 9,
+   "firePower": 19
+  },
+  "254087": {
+   "name": "Black Waistcord",
+   "quality": 3,
+   "icon": "inv_belt_04",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Waist",
+   "sell": 6289,
+   "bindsOnPickup": true,
+   "stamina": 12,
+   "intellect": 9,
+   "shadowPower": 19
+  },
+  "254089": {
+   "name": "Golden Waistcord",
+   "quality": 3,
+   "icon": "inv_belt_32",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Waist",
+   "sell": 6336,
+   "bindsOnPickup": true,
+   "stamina": 12,
+   "intellect": 9
+  },
+  "254091": {
+   "name": "Radiant Waistcord",
+   "quality": 3,
+   "icon": "inv_belt_43",
+   "itemLevel": 52,
+   "requiredLevel": 47,
+   "slot": "Waist",
+   "sell": 6383,
+   "bindsOnPickup": true,
+   "stamina": 12,
+   "intellect": 9
+  },
+  "254093": {
+   "name": "Earthenweave Boots",
+   "quality": 2,
+   "icon": "inv_boots_07",
+   "itemLevel": 54,
+   "requiredLevel": 49,
+   "slot": "Feet",
+   "sell": 9030,
+   "spirit": 11
+  },
+  "254095": {
+   "name": "Gilded Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_11",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Hands",
+   "sell": 7915,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 10,
+   "spirit": 8
+  },
+  "254097": {
+   "name": "Frothing Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_17",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Hands",
+   "sell": 7211,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 10,
+   "spirit": 8
+  },
+  "254099": {
+   "name": "Fiery Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_19",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Hands",
+   "sell": 7267,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 10,
+   "spirit": 8,
+   "firePower": 19
+  },
+  "254101": {
+   "name": "Black Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_32",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Hands",
+   "sell": 7323,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 10,
+   "spirit": 8,
+   "shadowPower": 19
+  },
+  "254103": {
+   "name": "Golden Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_21",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Hands",
+   "sell": 7379,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 10,
+   "spirit": 8
+  },
+  "254105": {
+   "name": "Radiant Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_20",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Hands",
+   "sell": 7434,
+   "bindsOnPickup": true,
+   "stamina": 9,
+   "intellect": 10,
+   "spirit": 8
+  },
+  "254107": {
+   "name": "Gilded Sandals",
+   "quality": 3,
+   "icon": "inv_boots_cloth_06",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Feet",
+   "sell": 11236,
+   "bindsOnPickup": true,
+   "stamina": 13,
+   "intellect": 9
+  },
+  "254109": {
+   "name": "Frothing Sandals",
+   "quality": 3,
+   "icon": "inv_boots_07",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Feet",
+   "sell": 11319,
+   "bindsOnPickup": true,
+   "stamina": 13,
+   "intellect": 9
+  },
+  "254111": {
+   "name": "Fiery Sandals",
+   "quality": 3,
+   "icon": "inv_boots_05",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Feet",
+   "sell": 11704,
+   "bindsOnPickup": true,
+   "stamina": 13,
+   "intellect": 9,
+   "firePower": 20
+  },
+  "254113": {
+   "name": "Black Sandals",
+   "quality": 3,
+   "icon": "inv_boots_05",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Feet",
+   "sell": 11787,
+   "bindsOnPickup": true,
+   "stamina": 13,
+   "intellect": 9,
+   "shadowPower": 20
+  },
+  "254115": {
+   "name": "Golden Sandals",
+   "quality": 3,
+   "icon": "inv_boots_cloth_11",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Feet",
+   "sell": 11870,
+   "bindsOnPickup": true,
+   "stamina": 13,
+   "intellect": 9
+  },
+  "254117": {
+   "name": "Radiant Sandals",
+   "quality": 3,
+   "icon": "inv_boots_cloth_03",
+   "itemLevel": 55,
+   "requiredLevel": 50,
+   "slot": "Feet",
+   "sell": 10816,
+   "bindsOnPickup": true,
+   "stamina": 13,
+   "intellect": 9
+  },
+  "254119": {
+   "name": "Earthenweave Mantle",
+   "quality": 2,
+   "icon": "inv_shoulder_05",
+   "itemLevel": 57,
+   "requiredLevel": 52,
+   "slot": "Shoulder",
+   "sell": 10205,
+   "spirit": 12
+  },
+  "254121": {
+   "name": "Earthenweave Vest",
+   "quality": 2,
+   "icon": "inv_chest_cloth_20",
+   "itemLevel": 59,
+   "requiredLevel": 54,
+   "slot": "Chest",
+   "sell": 15262,
+   "spirit": 17
+  },
+  "254123": {
+   "name": "Runecloth Cuffs",
+   "quality": 2,
+   "icon": "inv_bracer_13",
+   "itemLevel": 57,
+   "requiredLevel": 52,
+   "slot": "Wrist",
+   "sell": 6908,
+   "intellect": 10,
+   "spellPower": 11
+  },
+  "254125": {
+   "name": "Earthenweave Leggings",
+   "quality": 2,
+   "icon": "inv_pants_06",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Legs",
+   "sell": 14756,
+   "spirit": 16
+  },
+  "254127": {
+   "name": "Ghostweave Mantle",
+   "quality": 2,
+   "icon": "inv_shoulder_09",
+   "itemLevel": 59,
+   "requiredLevel": 54,
+   "slot": "Shoulder",
+   "sell": 12020,
+   "spirit": 12,
+   "spellPower": 15
+  },
+  "254129": {
+   "name": "Ghostweave Boots",
+   "quality": 2,
+   "icon": "inv_boots_cloth_17",
+   "itemLevel": 60,
+   "requiredLevel": 55,
+   "slot": "Feet",
+   "sell": 12714,
+   "spirit": 13,
+   "spellPower": 16
+  },
+  "254131": {
+   "name": "Earthenweave Cuffs",
+   "quality": 2,
+   "icon": "inv_bracer_13",
+   "itemLevel": 60,
+   "requiredLevel": 55,
+   "slot": "Wrist",
+   "sell": 8536,
+   "spirit": 10
+  },
+  "254133": {
+   "name": "Mooncloth Reagent Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_01",
+   "itemLevel": 60,
+   "bagSlots": 18,
+   "sell": 200
+  },
+  "254135": {
+   "name": "Ghostweave Hood",
+   "quality": 2,
+   "icon": "inv_helmet_26",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Head",
+   "sell": 13637,
+   "spirit": 18,
+   "spellPower": 21
+  },
+  "254137": {
+   "name": "Earthenweave Crown",
+   "quality": 2,
+   "icon": "inv_crown_02",
+   "itemLevel": 61,
+   "requiredLevel": 56,
+   "slot": "Head",
+   "sell": 12426,
+   "spirit": 18
+  },
+  "254139": {
+   "name": "Bottomless Reagent Bag",
+   "quality": 1,
+   "icon": "inv_misc_bag_01",
+   "itemLevel": 62,
+   "bagSlots": 20,
+   "sell": 200
+  },
+  "273128": {
+   "name": "Maker's Spark",
+   "quality": 2,
+   "icon": "inv_enchant_essencecosmicgreater",
+   "itemLevel": 60,
+   "sell": 25000
+  },
+  "273131": {
+   "name": "Bottled Screams",
+   "quality": 2,
+   "icon": "spell_holy_senseundead",
+   "itemLevel": 60,
+   "sell": 25000
+  },
+  "273904": {
+   "name": "Manaflare Pants",
+   "quality": 4,
+   "icon": "inv_pant_cloth_raidmagehyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Legs",
+   "sell": 26588,
+   "classes": "Mage Requires Level"
+  },
+  "273905": {
+   "name": "Manaflare Gloves",
+   "quality": 4,
+   "icon": "inv_glove_cloth_raidmagehyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Hands",
+   "sell": 13345,
+   "classes": "Mage Requires Level"
+  },
+  "273906": {
+   "name": "Manaflare Mantle",
+   "quality": 4,
+   "icon": "inv_shoulder_cloth_raidmagehyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Shoulder",
+   "sell": 20093,
+   "classes": "Mage Requires Level"
+  },
+  "273907": {
+   "name": "Manaflare Boots",
+   "quality": 4,
+   "icon": "inv_boot_cloth_raidmagehyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Feet",
+   "sell": 20170,
+   "classes": "Mage Requires Level"
+  },
+  "273920": {
+   "name": "Pants of Conviction",
+   "quality": 4,
+   "icon": "inv_pant_cloth_raidpriesthyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Legs",
+   "sell": 28964,
+   "classes": "Priest Requires Level"
+  },
+  "273921": {
+   "name": "Gloves of Conviction",
+   "quality": 4,
+   "icon": "inv_glove_cloth_raidpriesthyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Hands",
+   "sell": 14532,
+   "classes": "Priest Requires Level"
+  },
+  "273922": {
+   "name": "Mantle of Conviction",
+   "quality": 4,
+   "icon": "inv_shoulder_r_cloth_raidpriesthyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Shoulder",
+   "sell": 21875,
+   "classes": "Priest Requires Level"
+  },
+  "273923": {
+   "name": "Treads of Conviction",
+   "quality": 4,
+   "icon": "inv_boot_cloth_raidpriesthyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Feet",
+   "sell": 19861,
+   "classes": "Priest Requires Level"
+  },
+  "273924": {
+   "name": "Leggings of Conviction",
+   "quality": 4,
+   "icon": "inv_pant_cloth_raidpriesthyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Legs",
+   "sell": 26585,
+   "classes": "Priest Requires Level"
+  },
+  "273925": {
+   "name": "Handguards of Conviction",
+   "quality": 4,
+   "icon": "inv_glove_cloth_raidpriesthyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Hands",
+   "sell": 13342,
+   "classes": "Priest Requires Level"
+  },
+  "273926": {
+   "name": "Pauldrons of Conviction",
+   "quality": 4,
+   "icon": "inv_shoulder_r_cloth_raidpriesthyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Shoulder",
+   "sell": 20091,
+   "classes": "Priest Requires Level"
+  },
+  "273927": {
+   "name": "Boots of Conviction",
+   "quality": 4,
+   "icon": "inv_boot_cloth_raidpriesthyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Feet",
+   "sell": 20168,
+   "classes": "Priest Requires Level"
+  },
+  "273940": {
+   "name": "Demonheart Leggings",
+   "quality": 4,
+   "icon": "inv_pant_cloth_raidwarlockhyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Legs",
+   "sell": 28958,
+   "classes": "Warlock Requires Level"
+  },
+  "273941": {
+   "name": "Demonheart Gloves",
+   "quality": 4,
+   "icon": "inv_glove_cloth_raidwarlockhyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Hands",
+   "sell": 14530,
+   "classes": "Warlock Requires Level"
+  },
+  "273942": {
+   "name": "Demonheart Spaulders",
+   "quality": 4,
+   "icon": "inv_shoulder_cloth_raidwarlockhyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Shoulder",
+   "sell": 21873,
+   "classes": "Warlock Requires Level"
+  },
+  "273943": {
+   "name": "Demonheart Boots",
+   "quality": 4,
+   "icon": "inv_boot_cloth_raidwarlockhyjalc60_d_01",
+   "itemLevel": 61,
+   "requiredLevel": 60,
+   "slot": "Feet",
+   "sell": 19859,
+   "classes": "Warlock Requires Level"
+  },
+  "274030": {
+   "name": "Malleable Essence of Nature",
+   "quality": 4,
+   "icon": "ability_druid_cyclone",
+   "itemLevel": 60,
+   "sell": 0
+  },
+  "275604": {
+   "name": "Venomspew Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_18",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Hands",
+   "sell": 9017,
+   "stamina": 19,
+   "intellect": 11
+  },
+  "275605": {
+   "name": "Venomspew Cord",
+   "quality": 3,
+   "icon": "inv_belt_25",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Waist",
+   "sell": 9050,
+   "stamina": 17,
+   "intellect": 14
+  },
+  "275606": {
+   "name": "Venomspew Footpads",
+   "quality": 3,
+   "icon": "inv_boots_cloth_04",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Feet",
+   "sell": 13626,
+   "spirit": 8,
+   "spellPower": 22
+  },
+  "275607": {
+   "name": "Swarmtender's Gloves",
+   "quality": 3,
+   "icon": "inv_gauntlets_17",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Hands",
+   "sell": 9117,
+   "spirit": 20
+  },
+  "275608": {
+   "name": "Swarmtender's Cord",
+   "quality": 3,
+   "icon": "inv_belt_03",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Waist",
+   "sell": 9149,
+   "stamina": 21
+  },
+  "275609": {
+   "name": "Swarmtender's Footpads",
+   "quality": 3,
+   "icon": "inv_boots_cloth_01",
+   "itemLevel": 58,
+   "requiredLevel": 53,
+   "slot": "Feet",
+   "sell": 13774,
+   "stamina": 10
+  },
+  "277010": {
+   "name": "Cloudy Stormsewn Vest",
+   "quality": 2,
+   "icon": "inv_chest-_cloth_skybornec60_b_01",
+   "itemLevel": 12,
+   "requiredLevel": 7,
+   "slot": "Chest",
+   "sell": 151,
+   "intellect": 2
+  },
+  "277011": {
+   "name": "Cloudy Stormsewn Cuffs",
+   "quality": 2,
+   "icon": "inv_bracer_cloth_skybornec60_b_01",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Wrist",
+   "sell": 46,
+   "intellect": 1
+  },
+  "277012": {
+   "name": "Cloudy Stormsewn Handwraps",
+   "quality": 2,
+   "icon": "inv_glove_cloth_skybornec60_b_01",
+   "itemLevel": 11,
+   "requiredLevel": 6,
+   "slot": "Hands",
+   "sell": 60,
+   "spirit": 1
+  },
+  "277013": {
+   "name": "Cloudy Stormsewn Cord",
+   "quality": 2,
+   "icon": "inv_belt_cloth_skybornec60_b_01",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Waist",
+   "sell": 47,
+   "stamina": 1
+  },
+  "277014": {
+   "name": "Cloudy Stormsewn Leggings",
+   "quality": 2,
+   "icon": "inv_pant_cloth_skybornec60_b_01",
+   "itemLevel": 12,
+   "requiredLevel": 7,
+   "slot": "Legs",
+   "sell": 157,
+   "stamina": 2
+  },
+  "277015": {
+   "name": "Cloudy Stormsewn Shoes",
+   "quality": 2,
+   "icon": "inv_boot_cloth_skybornec60_b_01",
+   "itemLevel": 11,
+   "requiredLevel": 6,
+   "slot": "Feet",
+   "sell": 94,
+   "spirit": 1
+  },
+  "277034": {
+   "name": "Azure Stormsewn Vest",
+   "quality": 2,
+   "icon": "inv_chest-_cloth_skybornec60_b_01",
+   "itemLevel": 12,
+   "requiredLevel": 7,
+   "slot": "Chest",
+   "sell": 157,
+   "intellect": 2
+  },
+  "277035": {
+   "name": "Azure Stormsewn Cuffs",
+   "quality": 2,
+   "icon": "inv_bracer_cloth_skybornec60_b_01",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Wrist",
+   "sell": 48,
+   "intellect": 1
+  },
+  "277036": {
+   "name": "Azure Stormsewn Handwraps",
+   "quality": 2,
+   "icon": "inv_glove_cloth_skybornec60_b_01",
+   "itemLevel": 11,
+   "requiredLevel": 6,
+   "slot": "Hands",
+   "sell": 63,
+   "spirit": 1
+  },
+  "277037": {
+   "name": "Azure Stormsewn Cord",
+   "quality": 2,
+   "icon": "inv_belt_cloth_skybornec60_b_01",
+   "itemLevel": 10,
+   "requiredLevel": 5,
+   "slot": "Waist",
+   "sell": 49,
+   "stamina": 1
+  },
+  "277038": {
+   "name": "Azure Stormsewn Leggings",
+   "quality": 2,
+   "icon": "inv_pant_cloth_skybornec60_b_01",
+   "itemLevel": 12,
+   "requiredLevel": 7,
+   "slot": "Legs",
+   "sell": 160,
+   "stamina": 2
+  },
+  "277039": {
+   "name": "Azure Stormsewn Shoes",
+   "quality": 2,
+   "icon": "inv_boot_cloth_skybornec60_b_01",
+   "itemLevel": 11,
+   "requiredLevel": 6,
+   "slot": "Feet",
+   "sell": 96,
+   "spirit": 1
+  },
+  "277046": {
+   "name": "Cloudy Stormsewn Cowl",
+   "quality": 2,
+   "icon": "inv_helm_cloth_skybornec60_b_01",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Head",
+   "sell": 2113,
+   "stamina": 9,
+   "intellect": 9
+  },
+  "277047": {
+   "name": "Cloudy Stormsewn Epaulets",
+   "quality": 2,
+   "icon": "inv_shoulder_cloth_skybornec60_b_01",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Shoulder",
+   "sell": 2121,
+   "stamina": 7,
+   "spirit": 7
+  },
+  "277054": {
+   "name": "Azure Stormsewn Cowl",
+   "quality": 2,
+   "icon": "inv_helm_cloth_skybornec60_b_01",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Head",
+   "sell": 2177,
+   "stamina": 9,
+   "intellect": 9
+  },
+  "277055": {
+   "name": "Azure Stormsewn Epaulets",
+   "quality": 2,
+   "icon": "inv_shoulder_cloth_skybornec60_b_01",
+   "itemLevel": 35,
+   "requiredLevel": 30,
+   "slot": "Shoulder",
+   "sell": 2185,
+   "stamina": 7,
+   "spirit": 7
+  },
+  "279246": {
+   "name": "Torch of Light",
+   "quality": 4,
+   "icon": "inv_torch_lit",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Ranged",
+   "sell": 66513,
+   "spirit": 11,
+   "dps": 76.76
+  },
+  "279247": {
+   "name": "Steadfast Libram",
+   "quality": 4,
+   "icon": "inv_relics_libramofgrace",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "sell": 24157
+  },
+  "279248": {
+   "name": "Libram of Infusion",
+   "quality": 4,
+   "icon": "inv_misc_book_13",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "sell": 24924
+  },
+  "279249": {
+   "name": "Totem of Urgency",
+   "quality": 4,
+   "icon": "inv_ability_totemicshaman_surgingtotem",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "sell": 25015
+  },
+  "279250": {
+   "name": "Idol of Swiftness",
+   "quality": 4,
+   "icon": "ability_druid_nourish",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "sell": 25109
+  },
+  "279251": {
+   "name": "Idol of the Ursine Twins",
+   "quality": 4,
+   "icon": "inv_misc_idol_04",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "sell": 25203
+  },
+  "279266": {
+   "name": "Robes of Fiery Devastation",
+   "quality": 4,
+   "icon": "inv_chest_cloth_17",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Chest",
+   "sell": 32978,
+   "stamina": 27,
+   "intellect": 24,
+   "firePower": 26
+  },
+  "279267": {
+   "name": "Mana-infused Cord",
+   "quality": 4,
+   "icon": "inv_belt_06",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Waist",
+   "sell": 16551,
+   "stamina": 21,
+   "spirit": 18
+  },
+  "279268": {
+   "name": "Rime-encrusted Boots",
+   "quality": 4,
+   "icon": "inv_boots_cloth_19",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Feet",
+   "sell": 24918,
+   "stamina": 21,
+   "spirit": 18
+  },
+  "279269": {
+   "name": "Fel Cape",
+   "quality": 4,
+   "icon": "inv_misc_cape_01",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Back",
+   "sell": 25012,
+   "stamina": 16,
+   "shadowPower": 15
+  },
+  "279270": {
+   "name": "Cloak of Earth and Sky",
+   "quality": 4,
+   "icon": "inv_misc_cape_13",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "slot": "Back",
+   "sell": 25106,
+   "classes": "Shaman , Druid Requires Level",
+   "stamina": 16,
+   "spirit": 14,
+   "firePower": 15
+  },
+  "279271": {
+   "name": "Felblood Soul Bag",
+   "quality": 4,
+   "icon": "inv_misc_bag_corefelclothbag",
+   "itemLevel": 65,
+   "requiredLevel": 60,
+   "bagSlots": 30,
+   "sell": 80000,
+   "classes": "Warlock Requires Level"
+  },
+  "279943": {
+   "name": "Spinning Wheel",
+   "quality": 1,
+   "icon": "10prof_table_tailoring01",
+   "itemLevel": 28,
+   "sell": 0
+  },
+  "279959": {
+   "name": "Loom",
+   "quality": 1,
+   "icon": "inv_tailoring_80_tidespraylinen",
+   "itemLevel": 60,
+   "sell": 0
+  },
+  "279972": {
+   "name": "Faction Banner",
+   "quality": 1,
+   "icon": "inv_banner_03",
+   "itemLevel": 4,
+   "sell": 0
+  },
+  "279973": {
+   "name": "Faction Banner",
+   "quality": 1,
+   "icon": "inv_banner_03",
+   "itemLevel": 4,
+   "sell": 0
+  },
+  "279976": {
+   "name": "Enchanted Lute",
+   "quality": 1,
+   "icon": "inv_10_enchanting2_magicswirl_bronze",
+   "itemLevel": 4,
+   "sell": 0
+  },
+  "279985": {
+   "name": "Arcane Salvager",
+   "quality": 1,
+   "icon": "inv_eng_bottledelements",
+   "itemLevel": 28,
+   "sell": 0
+  },
+  "279987": {
+   "name": "Arcane Forge",
+   "quality": 1,
+   "icon": "inv_enchanting_modifiedcraftingreagent_indigo",
+   "itemLevel": 60,
+   "sell": 0
+  }
+ }
+}

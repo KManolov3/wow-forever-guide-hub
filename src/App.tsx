@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { CLASSES, findClass } from "./data/classes";
 import type { WowClass } from "./data/types";
+import { DEFAULT_PROFESSION, isProfession } from "./data/professions/ids";
 import { STARTING_ZONES, type StartingZoneId, isStartingZone } from "./data/startingZones";
 import { ClassQuiz } from "./components/ClassQuiz";
 import { Icon } from "./components/Icon";
@@ -23,37 +24,60 @@ import "./App.css";
 const LAUNCH = new Date("2026-11-04T15:00:00-08:00");
 
 const LevelingGuide = lazy(() => import("./components/LevelingGuide").then((m) => ({ default: m.LevelingGuide })));
+const ClassGuideView = lazy(() => import("./components/ClassGuideView").then((m) => ({ default: m.ClassGuideView })));
+const ProfessionGuideView = lazy(() =>
+  import("./components/ProfessionGuideView").then((m) => ({ default: m.ProfessionGuideView })),
+);
 
 const GUIDE_PATH = "leveling";
+const CLASS_GUIDE_PATH = "guide";
+const PROFESSIONS_PATH = "professions";
+/** Class the class guide opens on until another one is picked there. */
+const DEFAULT_GUIDE_CLASS = findClass("warlock") ?? CLASSES[0];
 
 interface State {
-  view: "talents" | "leveling";
+  view: "talents" | "leveling" | "guide" | "professions";
   cls: WowClass;
   build: Build;
   start: StartingZoneId;
+  /** Class shown in the class guide, kept apart from the calculator's class so browsing guides keeps the build. */
+  guideClass: WowClass;
+  /** Talent tree id of the spec shown in the class guide; empty for the guide's default spec. */
+  spec: string;
+  /** Id of the profession shown in the profession guides. */
+  profession: string;
+  /** Class the profession guides focus on; empty for none. */
+  professionClass: string;
 }
 
 /**
- * Reads the view from the URL hash: `#/leveling/<starting-zone>` for the leveling guide, otherwise
- * `#/<class>/<build>`. Whatever the hash does not mention keeps its previous value.
+ * Reads the view from the URL hash: `#/leveling/<starting-zone>` for the leveling guide,
+ * `#/guide/<class>/<spec>` for the class guide, `#/professions/<profession>/<class>` for the profession guides, otherwise `#/<class>/<build>`. Whatever the hash does not
+ * mention keeps its previous value.
  */
 function readHash(prev?: State): State {
-  const [, first = "", second = ""] = window.location.hash.split("/");
-  if (first === GUIDE_PATH) {
+  const [, first = "", second = "", third = ""] = window.location.hash.split("/");
+  const start = prev?.start ?? STARTING_ZONES[0];
+  const guide = { guideClass: prev?.guideClass ?? DEFAULT_GUIDE_CLASS, spec: prev?.spec ?? "" };
+  const professionKept = { profession: prev?.profession ?? DEFAULT_PROFESSION, professionClass: prev?.professionClass ?? "" };
+  if (first === GUIDE_PATH || first === CLASS_GUIDE_PATH || first === PROFESSIONS_PATH) {
     const cls = prev?.cls ?? CLASSES[0];
-    return {
-      view: "leveling",
-      cls,
-      build: prev?.build ?? emptyBuild(cls),
-      start: isStartingZone(second) ? second : (prev?.start ?? STARTING_ZONES[0]),
-    };
+    const kept = { cls, build: prev?.build ?? emptyBuild(cls), ...professionKept };
+    if (first === GUIDE_PATH) return { view: "leveling", ...kept, ...guide, start: isStartingZone(second) ? second : start };
+    if (first === PROFESSIONS_PATH) {
+      const profession = isProfession(second) ? second : kept.profession;
+      return { view: "professions", ...kept, ...guide, start, profession, professionClass: findClass(third)?.id ?? "" };
+    }
+    const guideClass = findClass(second) ?? guide.guideClass;
+    const spec = guideClass.trees.some((t) => t.id === third) ? third : "";
+    return { view: "guide", ...kept, start, guideClass, spec };
   }
   const cls = findClass(first) ?? CLASSES[0];
-  return { view: "talents", cls, build: decodeBuild(cls, second), start: prev?.start ?? STARTING_ZONES[0] };
+  return { view: "talents", cls, build: decodeBuild(cls, second), start, ...guide, ...professionKept };
 }
 
 export default function App() {
-  const [{ view, cls, build, start }, setState] = useState<State>(() => readHash());
+  const [{ view, cls, build, start, guideClass, spec, profession, professionClass }, setState] = useState<State>(() => readHash());
   const [copied, setCopied] = useState(false);
   const [quizOpen, setQuizOpen] = useState(false);
   const [suggested, setSuggested] = useState<{ classId: string; treeIndex: number } | null>(null);
@@ -62,11 +86,18 @@ export default function App() {
 
   const talentsHash = `#/${cls.id}/${encoded.replace(/-+$/, "")}`;
   const guideHash = `#/${GUIDE_PATH}/${start}`;
+  const classGuideHash = `#/${CLASS_GUIDE_PATH}/${guideClass.id}${spec ? `/${spec}` : ""}`;
+  const professionsHash = `#/${PROFESSIONS_PATH}/${profession}${professionClass ? `/${professionClass}` : ""}`;
 
   useEffect(() => {
-    const hash = view === "leveling" ? guideHash : talentsHash;
+    const hash = {
+      leveling: guideHash,
+      guide: classGuideHash,
+      professions: professionsHash,
+      talents: talentsHash,
+    }[view];
     if (window.location.hash !== hash) window.history.replaceState(null, "", hash);
-  }, [view, talentsHash, guideHash]);
+  }, [view, talentsHash, guideHash, classGuideHash, professionsHash]);
 
   useEffect(() => {
     const onHash = () => setState((s) => readHash(s));
@@ -79,9 +110,14 @@ export default function App() {
   const daysToLaunch = Math.ceil((LAUNCH.getTime() - Date.now()) / 86_400_000);
 
   const selectClass = (next: WowClass) => {
+    if (view === "guide") {
+      setState((s) => ({ ...s, guideClass: next, spec: "" }));
+      return;
+    }
     setSuggested(null);
     setState((s) => ({ ...s, cls: next, build: emptyBuild(next) }));
   };
+  const pickedClass = view === "guide" ? guideClass : cls;
 
   const chooseFromQuiz = (next: WowClass, treeIndex: number) => {
     setState((s) => ({ ...s, view: "talents", cls: next, build: emptyBuild(next) }));
@@ -100,14 +136,22 @@ export default function App() {
   };
 
   return (
-    <div className="app" style={{ "--class-color": cls.color } as React.CSSProperties}>
+    <div className="app" style={{ "--class-color": pickedClass.color } as React.CSSProperties}>
       <header className="masthead">
         <div>
           <h1>
             World of Warcraft<span className="forever">: Forever</span>
           </h1>
           <p className="subtitle">
-            {view === "leveling" ? "Horde Leveling Guide" : "Talent Calculator"} ·{" "}
+            {
+              {
+                leveling: "Horde Leveling Guide",
+                guide: "Class Guide",
+                professions: "Horde Profession Guides",
+                talents: "Talent Calculator",
+              }[view]
+            }{" "}
+            ·{" "}
             {daysToLaunch > 0 ? `launches in ${daysToLaunch} day${daysToLaunch === 1 ? "" : "s"}` : "now live"}
           </p>
         </div>
@@ -115,8 +159,14 @@ export default function App() {
           <a href={talentsHash} aria-current={view === "talents" ? "page" : undefined}>
             Talents
           </a>
+          <a href={classGuideHash} aria-current={view === "guide" ? "page" : undefined}>
+            Class guide
+          </a>
           <a href={guideHash} aria-current={view === "leveling" ? "page" : undefined}>
             Leveling guide
+          </a>
+          <a href={professionsHash} aria-current={view === "professions" ? "page" : undefined}>
+            Professions
           </a>
         </div>
         <button className="quiz-launch" onClick={() => setQuizOpen(true)} aria-haspopup="dialog">
@@ -126,7 +176,17 @@ export default function App() {
 
       <ClassQuiz open={quizOpen} onClose={() => setQuizOpen(false)} onChoose={chooseFromQuiz} />
 
-      {view === "leveling" ? (
+      {view === "professions" ? (
+        <Suspense fallback={<p className="empty">Loading the profession guides…</p>}>
+          <ProfessionGuideView
+            key={profession}
+            profession={profession}
+            onProfessionChange={(next) => setState((s) => ({ ...s, profession: next }))}
+            classId={professionClass}
+            onClassChange={(next) => setState((s) => ({ ...s, professionClass: next }))}
+          />
+        </Suspense>
+      ) : view === "leveling" ? (
         <>
           <Suspense fallback={<p className="empty">Loading the leveling guide…</p>}>
             <LevelingGuide key={start} start={start} onStartChange={(next) => setState((s) => ({ ...s, start: next }))} />
@@ -143,10 +203,10 @@ export default function App() {
             {CLASSES.map((c) => (
               <button
                 key={c.id}
-                className={`class-button ${c.id === cls.id ? "selected" : ""}`}
+                className={`class-button ${c.id === pickedClass.id ? "selected" : ""}`}
                 style={{ "--class-color": c.color } as React.CSSProperties}
                 onClick={() => selectClass(c)}
-                aria-pressed={c.id === cls.id}
+                aria-pressed={c.id === pickedClass.id}
               >
                 <Icon name={c.icon ?? `classicon_${c.id}`} label={c.name} size={36} className="round" />
                 <span className="class-label">{c.name}</span>
@@ -154,7 +214,11 @@ export default function App() {
             ))}
           </nav>
 
-          {CLASSES.length === 0 ? (
+          {view === "guide" ? (
+            <Suspense fallback={<p className="empty">Loading the class guide…</p>}>
+              <ClassGuideView cls={guideClass} spec={spec} onSpecChange={(next) => setState((s) => ({ ...s, spec: next }))} />
+            </Suspense>
+          ) : CLASSES.length === 0 ? (
             <p className="empty">No class data loaded.</p>
           ) : (
             <>

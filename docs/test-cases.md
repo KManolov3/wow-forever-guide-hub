@@ -872,6 +872,115 @@ Answers are matched by the start of their label. Tank answers used below, in que
 - **Steps:** On `#/leveling`, open "Find my class", press Esc, click "Talents" and pick Warrior.
 - **Expected:** The quiz opens and closes over the guide; the calculator then works as usual.
 
+## N. Class guide
+
+Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
+
+### TC-81 Header opens the class guide
+- **PRD:** FR-21, FR-31
+- **Steps:** Load `#/warlock`, click "Class guide", then "Talents".
+- **Expected:** The hash is `#/guide/warlock`, the subtitle says "Class Guide", the link is marked current and Affliction is selected; "Talents" returns to the Warlock calculator.
+
+### TC-82 Spec picker and spec URLs
+- **PRD:** FR-31, FR-36
+- **Steps:** On `#/guide/warlock` click "Destruction"; load `#/guide/warlock/demonology`; load `#/guide/warlock/frost`.
+- **Expected:** The hash becomes `#/guide/warlock/destruction` with "Playing Destruction" shown; Demonology is selected from its link; an unknown spec shows Affliction.
+
+### TC-83 Classes without a guide
+- **PRD:** FR-31
+- **Steps:** Load `#/guide/mage` and click the "Warlock" link.
+- **Expected:** "Mage guide coming soon" is shown; the link opens the Warlock guide.
+
+### TC-84 Leveling plan recommends one spec and shows the rotation for my level
+- **PRD:** FR-32, FR-33, FR-36
+- **Steps:** Load `#/guide/warlock/destruction`; enter 20 in "My level"; click "41–60"; enter 5.
+- **Expected:** "Leveling plan: Affliction" carries a "Recommended" badge and only Affliction is marked "Leveling" in the spec picker. "1–3" is selected at first; level 20 selects "20–29", which has Drain Life and no Wrack; in "41–60" Wrack is dimmed, tagged "level 41" and "new in this range"; level 5 selects "4–7".
+
+### TC-85 Talent order build at my level opens in the calculator
+- **PRD:** FR-34
+- **Steps:** Load `#/guide/warlock`, enter 25 in "My level" and click "Open level 25 build in the calculator".
+- **Expected:** The leveling plan reads "Level 60 build: 37 / 14 / 0", then "Build at level 25: 16 / 0 / 0"; the calculator shows 16 / 51 points, build 16 / 0 / 0, required level 25.
+
+### TC-86 Spell list filter and training priorities
+- **PRD:** FR-37
+- **Steps:** Load `#/guide/warlock`, click the "Pet" filter, enter 25 in "My level".
+- **Expected:** Bane of Agony has a NEW badge and "Must train"; Drain Soul reads "Must train: 10 · Skip: 24, 38, 52"; Curse of Shadow is absent; the Pet filter shows 6 spells; Summon Felhunter is dimmed.
+
+### TC-88 Trainer plan
+- **PRD:** FR-35
+- **Steps:** Load `#/guide/warlock`; tick "Show ranks to skip"; enter 34 in "My level".
+- **Expected:** Level 10 lists Drain Soul as "Must train"; Drain Soul rank 2 (level 24) and Searing Pain (level 26) are hidden until skipped ranks are shown, then marked "Skip". At 34 the status reads "Next trainer visit at level 36: must train: Life Tap (rank 4); recommended: …", level 36 is marked next and level 34 done.
+
+### TC-89 Gear upgrades
+- **PRD:** FR-38
+- **Steps:** Load `#/guide/warlock`; click the "Auction house" filter, then "All"; enter 17 in "My level"; clear "Hide outgrown items".
+- **Expected:** Gravestone Scepter shows "Blackfathom Deeps (dungeon, levels 24–32)" and links to `https://www.wowhead.com/forever/item=7001`; there is no outgrown toggle until a level is entered. The filter shows only auction house items. At 17 the status reads "Coming up by level 22: Gravestone Scepter (18), Small Soul Pouch (20), Staff of Soran'ruk (20).", Greater Magic Wand is "Use now" and Lesser Magic Wand is hidden; with the toggle cleared it shows as outgrown.
+
+### TC-90 The class guide opens on the Warlock and keeps the calculator's build
+- **PRD:** FR-21, FR-31
+- **Steps:** Load `#/mage/25` (7 points), click "Class guide", pick Druid, click "Talents"; then load `#/guide`.
+- **Expected:** The guide opens at `#/guide/warlock` with Warlock selected; Druid shows "Druid guide coming soon" at `#/guide/druid`; "Talents" shows the Mage calculator with its 7 points. `#/guide` opens `#/guide/warlock`.
+
+### TC-91 Section navigation
+- **PRD:** FR-39
+- **Steps:** Load `#/guide/warlock`; click "Gear", "Spells", then "Talents" in the "Guide sections" bar.
+- **Expected:** "Rotation" is current at first and the bar holds "My level". Each click marks that button current, focuses its section and brings it into view, with the bar still visible.
+
+### TC-92 Rotation modes
+- **PRD:** FR-33
+- **Steps:** Load `#/guide/warlock`; click "Dungeons"; click "10–13", then "20–29", then "10–13"; click "World PvP"; enter 45 in "My level".
+- **Expected:** "Leveling" is selected at first. Dungeons at 1–3 reads "No dungeon yet: Ragefire Chasm, the first one, is level 13."; at 10–13 the heading is "Dungeons, levels 10–13", the pet is the Imp, Immolate's note says "Bosses only" and nothing is tagged "new in this range"; at 20–29 the pet reads "Imp (Succubus or Incubus when the group needs crowd control on humanoids)" and a tip explains Seduction. World PvP at 10–13 reads "Nobody to fight yet…". Level 45 shows "World PvP, levels 41–60" opening with Corruption and including Fear and Death Coil.
+
+### TC-87 Class guide fits a 375 px phone
+- **PRD:** UX "Layout", User story 7
+- **Preconditions:** viewport 375×812
+- **Steps:** Load each Warlock spec's guide and enter 30 in "My level".
+- **Expected:** No horizontal scroll.
+
+## O. Profession guides
+
+Automated in [`e2e/professions.spec.ts`](../e2e/professions.spec.ts).
+
+### TC-93 Header opens the profession guides
+- **PRD:** FR-21, FR-40
+- **Steps:** Load `#/mage/25522252231-235523`; click "Professions"; click "Talents".
+- **Expected:** The hash is `#/professions/tailoring`, the subtitle reads "Horde Profession Guides", "Professions" is marked current, Tailoring is pressed and there is no class picker. Back on Talents the hash is the same Mage build.
+
+### TC-94 Profession picker and profession URLs
+- **PRD:** FR-40, FR-41
+- **Steps:** Load `#/professions/tailoring`; click "Enchanting"; load `#/professions/enchanting`; load `#/professions/alchemy`.
+- **Expected:** Clicking Enchanting sets `#/professions/enchanting`, shows "Leveling Enchanting 1–300" and Hgarth in Stonetalon as Expert trainer. The enchanting link restores Enchanting; the unknown id shows Tailoring and rewrites the hash to `#/professions/tailoring`.
+
+### TC-95 The Tailoring route covers 1–300
+- **PRD:** FR-41, FR-42
+- **Steps:** Load `#/professions/tailoring`.
+- **Expected:** The first step is 1–38 (Bolt of Linen Cloth, 2 Linen Cloth) and the last 286–300; Linen Bag uses 3 Bolt of Linen Cloth and 3 Coarse Thread. The Expert rank lists Josef Gregorian in Undercity. Runecloth Belt says "Not confirmed: the beta stops at skill 225…"; Azure Silk Hood says its Forever skill thresholds are not datamined; Azure Silk Pants has no such note.
+
+### TC-96 My skill
+- **PRD:** FR-41, FR-42, FR-43
+- **Steps:** Load `#/professions/tailoring`; enter 130 in "My skill"; then 300.
+- **Expected:** Empty, the materials heading reads "Materials for the whole route". At 130 the status reads "At skill 130: make 14 × Bolt of Silk Cloth (orange) to reach 141. Next trainer rank: Artisan at skill 200 (level 35).", Bolt of Silk Cloth is the only step marked now, 9 steps are done, Artisan is the next rank, and "Materials from skill 130" lists Mageweave Cloth but no Linen Cloth. At 300 the status reads "You have finished the route at skill 300." and materials say "Nothing left to buy.".
+
+### TC-97 Colour thresholds and switching profession
+- **PRD:** FR-40, FR-42
+- **Steps:** Load `#/professions/enchanting`; enter 20 in "My skill"; click "Tailoring".
+- **Expected:** Enchant Chest – Inferior Stamina shows its colours (orange from 15, yellow 70, green 90, grey 110); at 20 the status says "make 56 × Enchant Chest – Inferior Stamina (orange) to reach 75". After switching to Tailoring "My skill" is empty.
+
+### TC-98 Section navigation and phones
+- **PRD:** FR-40, UX "Layout", User story 7
+- **Steps:** Load `#/professions/tailoring`; click "Materials", "Tips" and "Route" in the navigation bar; then at 375×812 load each profession with the Warlock focus (`#/professions/<id>/warlock`) and enter 150 in "My skill".
+- **Expected:** Each section is focused and in view. No horizontal scroll at 375 px.
+
+### TC-99 Class focus
+- **PRD:** FR-44
+- **Steps:** Load `#/professions/tailoring`; click "Warlock" under "Focus on a class"; enter 120 in "My skill"; click "Enchanting"; click "Mage"; click "None".
+- **Expected:** The hash becomes `#/professions/tailoring/warlock` and "Tailoring for Warlocks" appears, with a "Warlock items" button in the navigation bar. Items are sorted by skill (Novice Arcanist's Sash, skill 50, first) and each shows a Skill and a Level badge; Shadow Gown shows skill 110 and level 22, "pattern costs 30 Merchant's Favor" and Jim'bek; Black Slippers says "no pattern to buy"; the Runecloth Cloak route step has a Warlock tag. At 120, Shadow Gown is marked "Can make" and Shadow Leggings is not. On Enchanting (`#/professions/enchanting/warlock`) Brilliant Wand's pattern costs 180 Merchant's Favor and Greater Magic Wand shows level 13. Mage shows "Mage items coming soon"; None removes the section and the class from the hash.
+
+### TC-100 Pairing with Enchanting
+- **PRD:** FR-45
+- **Steps:** Load `#/professions/tailoring`; tick "I also level Enchanting"; untick it; click "Enchanting".
+- **Expected:** Ticked, the 56–70 step is Brown Linen Pants marked "For enchanters" with "Disenchant all 24: about 29 Strange Dust, 7 Lesser Magic Essence", Linen Belt is gone and a "Disenchant yield" list includes Strange Dust. Unticked, Linen Belt is back. Enchanting has no such checkbox.
+
 ---
 
 ## Acceptance criteria coverage
@@ -897,6 +1006,8 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | Route map labels don't overlap each other or markers at the whole-continent view | TC-80 |
 | Zone map opens from the step or route map, pins hubs with the step's highlighted, switches trips and steps in place, fits 375 px | TC-76, TC-77, TC-78, TC-79 |
 | "My level" lookup; progress survives reload and resets | TC-70, TC-71 |
+| Class guide opens on the Warlock with section navigation; Warlock class guide: recommended leveling spec, rotation by level and mode, talent order, trainer plan, gear upgrades, specs at 60, spells, "My level", "coming soon", 375 px | TC-81–TC-92; Vitest `src/lib/classGuide.test.ts` checks the talent orders and data |
+| Profession guides: header link, picker and URLs, Horde trainers, 1–300 route with steps past 225 not confirmed, "My skill", Warlock focus, pairing with Enchanting, 375 px | TC-93–TC-100; Vitest `src/lib/professions.test.ts` checks the routes and data |
 | Route rule tests pass; guide has no horizontal scroll at 375 px | Vitest `src/lib/leveling.test.ts`; TC-72 |
 | Data quality tests pass for all 9 class files | Not a browser test (Vitest `src/data/classes/classes.test.ts`); TC-10 checks the visible counts |
 
@@ -924,7 +1035,7 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-18 | TC-60 |
 | FR-19 | TC-61 |
 | FR-20 | TC-62 |
-| FR-21 | TC-65, TC-73 |
+| FR-21 | TC-65, TC-73, TC-81, TC-90, TC-93 |
 | FR-22 | TC-66 |
 | FR-23 | TC-67 |
 | FR-24 | TC-68 |
@@ -933,6 +1044,21 @@ Answers are matched by the start of their label. Tank answers used below, in que
 | FR-27 | TC-70 |
 | FR-28 | TC-71 |
 | FR-30 | TC-76, TC-77, TC-78, TC-79 |
+| FR-31 | TC-81, TC-82, TC-83, TC-90 |
+| FR-32 | TC-84 |
+| FR-33 | TC-84, TC-92 |
+| FR-34 | TC-85 |
+| FR-35 | TC-88 |
+| FR-36 | TC-82, TC-84 |
+| FR-37 | TC-86 |
+| FR-38 | TC-89 |
+| FR-39 | TC-91 |
+| FR-40 | TC-93, TC-94, TC-97, TC-98 |
+| FR-41 | TC-94, TC-95, TC-96 |
+| FR-42 | TC-95, TC-96, TC-97 |
+| FR-43 | TC-96 |
+| FR-44 | TC-98, TC-99 |
+| FR-45 | TC-100 |
 | FR-29 | Not automated: check the "Left out on purpose" panel lists the skipped zones and dungeons with reasons |
 
 ## Suspected discrepancies between code and PRD (to confirm during execution)

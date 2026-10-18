@@ -126,17 +126,6 @@ export function LevelingGuide({ start, onStartChange }: Props) {
         })}
       </div>
 
-      <section className="guide-panel" aria-labelledby="timeline-title">
-        <h3 id="timeline-title" className="panel-title">
-          Your route at a glance
-        </h3>
-        <p className="panel-intro">
-          Each bar is one visit, placed at the levels you do it. Zones with quests across many levels, like the
-          Barrens, come back several times so every quest is done close to its level.
-        </p>
-        <LevelTimeline route={route} selected={selected} done={done} onSelect={select} />
-      </section>
-
       <div className="guide-columns">
         <section className="guide-panel guide-steps" aria-labelledby="steps-title">
           <h3 id="steps-title" className="panel-title">
@@ -205,6 +194,17 @@ export function LevelingGuide({ start, onStartChange }: Props) {
           <RouteMap route={route} selected={selected} done={done} onSelect={select} onOpenZone={setOpenZone} />
         </section>
       </div>
+
+      <section className="guide-panel" aria-labelledby="timeline-title">
+        <h3 id="timeline-title" className="panel-title">
+          Your route at a glance
+        </h3>
+        <p className="panel-intro">
+          Each bar is one visit, placed at the levels you do it. Zones with quests across many levels, like the
+          Barrens, come back several times so every quest is done close to its level.
+        </p>
+        <LevelTimeline route={route} selected={selected} done={done} onSelect={select} />
+      </section>
 
       <section className="guide-panel" aria-labelledby="skipped-title">
         <h3 id="skipped-title" className="panel-title">
