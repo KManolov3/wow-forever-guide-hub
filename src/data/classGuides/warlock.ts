@@ -837,6 +837,7 @@ export const WARLOCK_GUIDE: ClassGuide = {
             ],
             tips: [
               "Ragefire Chasm opens at 13. Let the tank hit each mob twice before your first DoT.",
+              "The Imp stays at range away from cleaves and area damage, costs no Soul Shard to resummon after a death, buffs the whole party's Stamina, and its Fire Shield on the tank hurts whatever hits the tank.",
               "Hand out Healthstones before the first pull.",
             ],
           },
@@ -870,6 +871,7 @@ export const WARLOCK_GUIDE: ClassGuide = {
             ],
             tips: [
               "Don't Fear in dungeons: a feared mob runs into the next pack.",
+              "The Imp stays at range away from cleaves and area damage, costs no Soul Shard to resummon after a death, buffs the whole party's Stamina, and its Fire Shield on the tank hurts whatever hits the tank.",
               "From 18, keep a Soulstone on the healer.",
             ],
           },
@@ -908,7 +910,7 @@ export const WARLOCK_GUIDE: ClassGuide = {
             tips: ["Swap Demon Skin for Demon Armor at 20 and keep it up.", "Fel Concentration (22–24) stops mobs pushing back your drains."],
           },
           dungeons: {
-            pet: "Imp",
+            pet: "Imp (Succubus or Incubus when the group needs crowd control on humanoids)",
             steps: [
               { ability: "bane-of-agony", note: "On anything that lives 10 seconds or more." },
               { ability: "corruption", note: "On every mob in the pull that the tank holds." },
@@ -919,6 +921,7 @@ export const WARLOCK_GUIDE: ClassGuide = {
             ],
             tips: [
               "Fel Concentration stops pushback when an add turns on you.",
+              "Switch to the Succubus or Incubus when the group needs crowd control on humanoids: Seduction holds one, while Banish only works on demons and elementals. She hits harder than the Imp too, but she fights in melee, so keep her out of cleaves and send her in only after the tank has threat.",
               "Keep a Soulstone on the healer and a Healthstone for everyone.",
             ],
           },
@@ -960,7 +963,7 @@ export const WARLOCK_GUIDE: ClassGuide = {
             ],
           },
           dungeons: {
-            pet: "Imp",
+            pet: "Imp (Succubus or Incubus when the group needs crowd control on humanoids)",
             steps: [
               { ability: "bane-of-agony", note: "On the kill target and any mob that lives 10 seconds or more." },
               { ability: "corruption", note: "On every mob the tank holds." },
@@ -972,6 +975,7 @@ export const WARLOCK_GUIDE: ClassGuide = {
             ],
             tips: [
               "DoTs on several mobs build a lot of threat: stop after two or three and let the tank catch up.",
+              "Switch to the Succubus or Incubus when the group needs crowd control on humanoids: Seduction holds one, while Banish only works on demons and elementals. She hits harder than the Imp too, but she fights in melee, so keep her out of cleaves and send her in only after the tank has threat.",
             ],
           },
           pvp: {
@@ -1013,7 +1017,7 @@ export const WARLOCK_GUIDE: ClassGuide = {
             tips: ["Spread all three DoTs over two or three mobs and Howl of Terror if the Voidwalker loses them."],
           },
           dungeons: {
-            pet: "Imp",
+            pet: "Imp (Succubus or Incubus when the group needs crowd control on humanoids)",
             steps: [
               { ability: "bane-of-agony", note: "On the boss; on trash, only on mobs that live 10 seconds or more." },
               { ability: "corruption", note: "On every mob the tank holds." },
@@ -1026,6 +1030,7 @@ export const WARLOCK_GUIDE: ClassGuide = {
             ],
             tips: [
               "In Blackrock Depths and later, ask which curse the group needs before you put your Bane on the boss.",
+              "Switch to the Succubus or Incubus when the group needs crowd control on humanoids: Seduction holds one, while Banish only works on demons and elementals. She hits harder than the Imp too, but she fights in melee, so keep her out of cleaves and send her in only after the tank has threat.",
             ],
           },
           pvp: {

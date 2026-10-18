@@ -207,6 +207,14 @@ test.describe("N. Class guide", () => {
     await expect(rotation.locator("h4")).toHaveText("Dungeons, levels 10–13");
     await expect(rotation.locator(".rotation-steps li").filter({ hasText: "Immolate" })).toContainText("Bosses only");
     await expect(rotation.locator(".added-tag")).toHaveCount(0);
+    await expect(rotation.locator(".rotation-context")).toHaveText("Pet: Imp");
+
+    await brackets.getByRole("button", { name: "20–29" }).click();
+    await expect(rotation.locator(".rotation-context")).toHaveText(
+      "Pet: Imp (Succubus or Incubus when the group needs crowd control on humanoids)",
+    );
+    await expect(rotation.locator(".rotation-tips")).toContainText("Seduction holds one");
+    await brackets.getByRole("button", { name: "10–13" }).click();
 
     await modes.getByRole("button", { name: "World PvP" }).click();
     await expect(rotation).toContainText("Nobody to fight yet");

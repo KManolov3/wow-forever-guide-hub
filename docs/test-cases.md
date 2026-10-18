@@ -928,8 +928,8 @@ Automated in [`e2e/class-guide.spec.ts`](../e2e/class-guide.spec.ts).
 
 ### TC-92 Rotation modes
 - **PRD:** FR-33
-- **Steps:** Load `#/guide/warlock`; click "Dungeons"; click "10–13"; click "World PvP"; enter 45 in "My level".
-- **Expected:** "Leveling" is selected at first. Dungeons at 1–3 reads "No dungeon yet: Ragefire Chasm, the first one, is level 13."; at 10–13 the heading is "Dungeons, levels 10–13", Immolate's note says "Bosses only" and nothing is tagged "new in this range". World PvP at 10–13 reads "Nobody to fight yet…". Level 45 shows "World PvP, levels 41–60" opening with Corruption and including Fear and Death Coil.
+- **Steps:** Load `#/guide/warlock`; click "Dungeons"; click "10–13", then "20–29", then "10–13"; click "World PvP"; enter 45 in "My level".
+- **Expected:** "Leveling" is selected at first. Dungeons at 1–3 reads "No dungeon yet: Ragefire Chasm, the first one, is level 13."; at 10–13 the heading is "Dungeons, levels 10–13", the pet is the Imp, Immolate's note says "Bosses only" and nothing is tagged "new in this range"; at 20–29 the pet reads "Imp (Succubus or Incubus when the group needs crowd control on humanoids)" and a tip explains Seduction. World PvP at 10–13 reads "Nobody to fight yet…". Level 45 shows "World PvP, levels 41–60" opening with Corruption and including Fear and Death Coil.
 
 ### TC-87 Class guide fits a 375 px phone
 - **PRD:** UX "Layout", User story 7
